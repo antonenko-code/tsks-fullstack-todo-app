@@ -1,0 +1,36 @@
+import com.avast.gradle.dockercompose.RemoveImages
+
+plugins {
+    id 'com.github.node-gradle.node' version '5.0.0'
+    id 'com.avast.gradle.docker-compose' version '0.16.11'
+}
+
+apply plugin: 'docker-compose'
+
+subprojects { project ->
+    group 'com.todoapp'
+    version '1.0'
+
+    node {
+        version = '18.14.2'
+        npmVersion = '9.8.1'
+        download = true
+    }
+}
+
+task runBackend(type: Task, dependsOn: ':backend:compileTs') {
+    description 'Runs backend and DB in the docker'
+}
+
+dockerCompose {
+    dev {
+        useComposeFiles = ['docker-compose.yml']
+        isRequiredBy(runBackend)
+        stopContainers = false
+        removeContainers = false
+        removeVolumes = false
+        removeImages = RemoveImages.None
+        projectName = 'todoapp'
+        forceRecreate = true
+    }
+}

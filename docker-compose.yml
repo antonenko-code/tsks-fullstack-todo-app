@@ -13,3 +13,12 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: qwerty
       MONGO_INITDB_DATABASE: todoapp
     command: [--auth]
+  todo-app-backend:
+    container_name: todoapp_backend
+    build:
+      context: backend/.
+      args:
+        TODO_APP_BACKEND_PORT: 4444
+    restart: always
+    ports:
+      - 4444:4444
