@@ -1,0 +1,17 @@
+apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'base'
+
+task compileTs(type: NpmTask, dependsOn: npmInstall) {
+    description 'Build the Express.js application'
+    args = ['run', 'build']
+}
+
+task start(type: NpmTask, dependsOn: npmInstall) {
+    description 'Start the Express.js application'
+    args = ['run', 'start']
+}
+
+task dev(type: NpmTask, dependsOn: npmInstall) {
+    description 'Run tests for the Express.js application'
+    args = ['run', 'dev']
+}

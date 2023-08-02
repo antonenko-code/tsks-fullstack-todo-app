@@ -18,10 +18,6 @@ app.post('/auth/login', (req, res) => {
   })
 })
 
-app.listen(4444, (err) => {
-  if (err) {
-    return console.log(err)
-  }
-
+app.listen(4444, () => {
   console.log('Server OK')
 })
