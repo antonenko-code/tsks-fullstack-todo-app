@@ -1,6 +1,5 @@
 import React from 'react';
 import './assets/styles/index.scss';
-import { Providers } from './providers';
 import { Routing } from '../pages';
 
 export const App = () => {
@@ -11,4 +10,3 @@ export const App = () => {
   )
 }
 
-export default Providers(App)
