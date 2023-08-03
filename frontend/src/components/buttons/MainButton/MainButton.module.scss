@@ -1,0 +1,22 @@
+@import 'src/app/assets/styles/utils';
+
+.button {
+  box-sizing: border-box;
+  padding: 12px 16px;
+  min-width: 150px;
+  background-color: $secondary-accent-color;
+  color: $main-font-color;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 12px;
+  border: none;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.gradient {
+  background-image: $gradient-accent-color;
+}
