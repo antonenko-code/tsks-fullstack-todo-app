@@ -1,0 +1,24 @@
+@import 'src/app/assets/styles/utils';
+
+.button {
+  min-width: max-content;
+  padding: 8px 16px;
+  background-color: $main-background-color;
+  font-family: 'Montserrat Alternates', sans-serif;
+  color: $main-font-color;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 2px solid #646475;
+  }
+}
+
+.border {
+  border: 2px solid #646475;
+}
+
+
+
+
