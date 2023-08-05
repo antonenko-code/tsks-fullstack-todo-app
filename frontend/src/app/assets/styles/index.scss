@@ -6,9 +6,15 @@
 }
 
 body {
+  padding: 48px 36px;
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: white;
   background: #1D1D26 fixed;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
 }
