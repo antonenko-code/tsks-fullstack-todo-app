@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import style from './RegistrationBtn.module.scss';
+import styles from './HeaderBtn.module.scss';
 import classNames from 'classnames';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   border?: boolean,
 };
 
-export const RegistrationBtn: FC<Props> = ({
+export const HeaderBtn: FC<Props> = ({
   text,
   border,
 }) => {
@@ -15,8 +15,8 @@ export const RegistrationBtn: FC<Props> = ({
     <button
       name={text}
       type='button'
-      className={classNames(style.button, {
-        [style.border]: border
+      className={classNames(styles.button, {
+        [styles.border]: border
       })}
     >
       {text}
