@@ -5,7 +5,9 @@ import { Routing } from '../pages';
 export const App = () => {
   return (
     <div className="App">
-      <Routing />
+      <div className="container">
+        <Routing />
+      </div>
     </div>
   )
 }

@@ -3,7 +3,7 @@
  * 1 | @import 'src/app/assets/styles/utils';
  *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *   '
- *   RegistrationBtn.module.scss 1:9  root stylesheet */
+ *   HeaderButton.module.scss 1:9  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
