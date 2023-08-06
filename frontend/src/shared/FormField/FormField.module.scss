@@ -1,0 +1,29 @@
+@import '../../app/assets/styles/index';
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.inputWrapper {
+  display: flex;
+  min-height: 56px;
+  padding: 16px 24px;
+  align-items: center;
+  justify-content:space-between;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 1px solid $secondary-accent-color;
+}
+
+.input {
+  background: none;
+  border: none;
+  color: $secondary-font-color;
+  outline: none;
+  font-size: 16px;
+}
