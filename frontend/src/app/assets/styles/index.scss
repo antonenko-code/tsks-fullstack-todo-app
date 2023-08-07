@@ -1,12 +1,23 @@
 @import 'normalize.css';
-@import 'utils';
+@import './utils';
+
+html {
+  scroll-behavior: smooth;
+}
 
 * {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
 body {
+  margin: 0;
   padding: 48px 36px;
+  height: 100vh;
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 18px;
   font-weight: 400;
