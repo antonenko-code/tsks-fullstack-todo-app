@@ -28,7 +28,7 @@ export const Header: FC = () => {
             <HeaderButton text="Sing In" />
           </Link>
 
-          <Link to='sing-up'>
+          <Link to='/sing-up'>
             <HeaderButton text="Sing Up" border={true} />
           </Link>
         </div>
