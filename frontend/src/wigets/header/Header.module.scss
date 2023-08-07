@@ -1,4 +1,4 @@
-@import '../frontend/src/app/assets/styles/utils';
+@import './src/app/assets/styles/index';
 
 .header {
   margin: 0 0 48px 0;
@@ -7,6 +7,7 @@
   align-items: center;
   text-decoration: none;
 }
+
 .logoBlock {
   display: flex;
   align-items: center;
@@ -22,9 +23,19 @@
   border-radius: 12px;
   background-image: $gradient-accent-color;
 }
+
 .logoText {
   font-size: 24px;
   font-weight: 700;
   color: $main-font-color;
   text-decoration: none;
+}
+
+.blockButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  cursor: pointer;
 }

@@ -1,7 +1,7 @@
 /* Error: Can't find stylesheet to import.
  *   ,
- * 1 | @import 'src/app/assets/styles/utils';
- *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ * 1 | @import './src/app/assets/styles/index';
+ *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *   '
  *   HeaderButton.module.scss 1:9  root stylesheet */
 
@@ -13,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import 'src/app/assets/styles/utils';\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   RegistrationBtn.module.scss 1:9  root stylesheet";
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import './src/app/assets/styles/index';\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   HeaderButton.module.scss 1:9  root stylesheet";
 }

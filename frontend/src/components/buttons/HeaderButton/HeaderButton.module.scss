@@ -1,4 +1,4 @@
-@import './src/app/assets/styles/utils';
+@import './src/app/assets/styles/index';
 
 .button {
   min-width: max-content;
@@ -9,16 +9,19 @@
   border: 2px solid transparent;
   border-radius: 12px;
   box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     border: 2px solid #646475;
+    cursor: pointer;
   }
 }
 
 .border {
+  transition: all 0.3s ease-in-out;
   border: 2px solid #646475;
+
+  &:hover {
+    background-color: $secondary-background-color;
+  }
 }
-
-
-
-
