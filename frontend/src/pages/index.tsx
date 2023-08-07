@@ -5,7 +5,9 @@ import { StartPage } from './StartPage';
 export const Routing = () => {
   return (
     <Routes>
-      <Route path="/" element={<StartPage />} />
+      <Route path="/*">
+        <Route index element={<StartPage />} />
+      </Route>
     </Routes>
   )
 }
