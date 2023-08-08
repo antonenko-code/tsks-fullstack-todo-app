@@ -1,3 +1,31 @@
+@import "../../app/assets/styles/index";
+
 .block {
-  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  margin-bottom: 10px;
+  font-size: 72px;
+  font-weight: 400;
+}
+
+.highlight {
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-bottom: 36px;
+  color: $secondary-font-color;
+}
+
+.buttons {
+  display: flex;
+  gap: 24px;
+}
+
+.banner {
+  width: 300px;
+  height: 300px;
 }
