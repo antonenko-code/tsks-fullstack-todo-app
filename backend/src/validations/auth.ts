@@ -1,5 +1,5 @@
 import { body, ValidationChain } from 'express-validator';
-import User from '../models/User';
+import User from '../models/user-model';
 
 const registrationSchema: ValidationChain[] = [
   body('firstName')

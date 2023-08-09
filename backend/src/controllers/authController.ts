@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import authService from '../service/authService';
+import UserService from '../service/userService';
 
 class authController {
   async registration(req: Request, res: Response) {
@@ -11,13 +11,19 @@ class authController {
         throw { errors: errors.array() }
       }
 
-      await authService.createNewUser(req.body);
+      const userData = await UserService.createNewUser(req.body);
 
-      return res.json({message: 'Registration was successful'});
+      return res.json({
+        success: true,
+        message: 'Registration was successful',
+        data: userData,
+      });
     } catch (e: any) {
+      console.error(e)
       res.status(400).json({
+        success: false,
         message: 'Registration failed',
-        errors: e.errors
+        errors: e.errors,
       })
     }
   }
@@ -26,8 +32,31 @@ class authController {
     try {
 
     } catch (e) {
-      console.error(e);
-      res.status(400).json({message: 'Login failed'})
+
+    }
+  }
+
+  async logout(req: Request, res: Response) {
+    try {
+
+    } catch (e) {
+
+    }
+  }
+
+  async activate(req: Request, res: Response) {
+    try {
+      res.json('Hello world')
+    } catch (e) {
+
+    }
+  }
+
+  async refresh(req: Request, res: Response) {
+    try {
+
+    } catch (e) {
+
     }
   }
 }
