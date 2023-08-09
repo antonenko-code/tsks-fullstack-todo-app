@@ -46,9 +46,12 @@ class authController {
 
   async activate(req: Request, res: Response) {
     try {
-      res.json('Hello world')
-    } catch (e) {
+      const activationLink = req.params.link;
+      await UserService.activate(activationLink);
 
+      return res.redirect(process.env.CLIENT_URL as string)
+    } catch (e) {
+      console.error(e)
     }
   }
 

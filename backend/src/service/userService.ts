@@ -1,4 +1,4 @@
-import User from '../models/user-model';
+import UserModel, { UserDocument } from '../models/user-model';
 import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 import MailService from './mailService';
@@ -17,7 +17,7 @@ class UserService {
     const hashPassword = bcrypt.hashSync(password, 7);
     const activationLink = v4();
 
-    const user = new User({firstName, secondName, email, password: hashPassword, activationLink});
+    const user = new UserModel({firstName, secondName, email, password: hashPassword, activationLink});
     await user.save();
 
     await MailService.sendActivationMail(email, `${process.env.APP_URL}/auth/activate/${activationLink}`);
@@ -25,6 +25,17 @@ class UserService {
     const userDto = new UserDto(user)
 
     return {user: userDto}
+  }
+
+  async activate(activationLink: string) {
+    const user: UserDocument | null = await UserModel.findOne({activationLink});
+
+    if (!user) {
+      throw new Error('Invalid activation link')
+    }
+
+    user.isActivated = true;
+    await user.save();
   }
 }
 
