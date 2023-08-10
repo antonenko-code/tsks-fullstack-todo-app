@@ -1,0 +1,48 @@
+@import 'src/app/assets/styles/index';
+
+.container {
+  display: flex;
+  min-width: 220px;
+  padding: 16px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  background: $secondary-background-color;
+  border-radius: 24px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.taskDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.date {
+  color: $secondary-font-color;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.dateWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+

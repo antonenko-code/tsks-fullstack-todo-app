@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './CategoryItem.module.scss'
+import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -12,11 +12,10 @@ type Props = {
   iconName?: string,
 }
 
-export const CategoryItem: React.FC<Props> = ({
+export const CollectionItem: React.FC<Props> = ({
   title,
   completed,
   total,
-  // iconName,
 }) => {
   const [color, setColor] = useState('');
   const { colors } = useAppSelector(state => state.collections);
