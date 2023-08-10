@@ -1,0 +1,9 @@
+@import '../../app/assets/styles/index';
+
+.block {
+  display: flex;
+  padding: 8px 24px;
+  color: $main-font-color;
+  background-color: $secondary-accent-color;
+  border-radius: 40px;
+}
