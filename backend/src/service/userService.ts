@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 import MailService from './mailService';
 import UserDto from '../dtos/userDto';
+import RegisterError from '../errors/registerError';
 
 type RequestBody = {
   firstName: string,
@@ -12,17 +13,27 @@ type RequestBody = {
 }
 
 class UserService {
+  async findUserByEmail(email: string) {
+    return UserModel.findOne({email});
+  }
+
   async createNewUser(request: RequestBody) {
     const { firstName, secondName, email, password} = request;
+
+    const user: UserDocument | null = await this.findUserByEmail(email)
+
+    if (user) {
+      throw new RegisterError('User with this email already exists')
+    }
+
     const hashPassword = bcrypt.hashSync(password, 7);
     const activationLink = v4();
 
-    const user = new UserModel({firstName, secondName, email, password: hashPassword, activationLink});
-    await user.save();
+    const newUser = new UserModel({firstName, secondName, email, password: hashPassword, activationLink});
+    await newUser.save();
 
     await MailService.sendActivationMail(email, `${process.env.APP_URL}/auth/activate/${activationLink}`);
-
-    const userDto = new UserDto(user)
+    const userDto = new UserDto(newUser)
 
     return {user: userDto}
   }
@@ -31,7 +42,7 @@ class UserService {
     const user: UserDocument | null = await UserModel.findOne({activationLink});
 
     if (!user) {
-      throw new Error('Invalid activation link')
+      throw new RegisterError('Invalid activation link')
     }
 
     user.isActivated = true;
