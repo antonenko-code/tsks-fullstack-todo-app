@@ -1,5 +1,4 @@
 import { body, ValidationChain } from 'express-validator';
-import User from '../models/user-model';
 
 const registrationSchema: ValidationChain[] = [
   body('firstName')
@@ -12,14 +11,19 @@ const registrationSchema: ValidationChain[] = [
     .notEmpty()
     .withMessage('error.validation.password'),
   body('email')
+    .isEmail()
     .normalizeEmail()
-    .custom((value) => {
-      return User.findOne({ email: value }).then((user) => {
-        if (user) {
-          return Promise.reject('User with this email already exists');
-        }
-      });
-    }),
+    .withMessage('error.validation.email'),
 ];
 
-export default registrationSchema;
+const loginSchema: ValidationChain[] = [
+  body('password')
+    .notEmpty()
+    .withMessage('error.validation.password'),
+  body('email')
+    .isEmail()
+    .normalizeEmail()
+    .withMessage('error.validation.email'),
+];
+
+export { registrationSchema, loginSchema };
