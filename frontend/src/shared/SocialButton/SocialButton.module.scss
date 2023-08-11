@@ -6,4 +6,11 @@
   color: $main-font-color;
   background-color: $secondary-accent-color;
   border-radius: 40px;
+  transition: all 0.3s;
+;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $secondary-background-color;
+  }
 }
