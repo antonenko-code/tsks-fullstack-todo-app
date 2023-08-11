@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './Account.module.scss';
+import { PageLayout } from '../../shared/PageLayout';
+import { PageTitle } from '../../shared/PageTitle';
 
 export const Account: React.FC = () => {
   return (
-    <div className={styles.block}>
-      <h2>
-        My Account
-      </h2>
-    </div>
+    <PageLayout>
+      <PageTitle title={'My Account'} button={true} />
+    </PageLayout>
   );
 };
