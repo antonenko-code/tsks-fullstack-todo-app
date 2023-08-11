@@ -9,11 +9,12 @@ type Props = {
   onClick?: () => void,
 }
 
-export const PageTitle:React.FC<Props> = ({title, button}) => {
+export const PageTitle:React.FC<Props> = ({title, button, onClick}) => {
   return (
     <div className={classNames(styles.titleWrapper, {[styles.withButton]: button} )}>
       {button && <button
         className={styles.button}
+        onClick={onClick}
       >
         <Icons name={'arrowLeft'}/>
       </button>}
