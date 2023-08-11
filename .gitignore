@@ -31,3 +31,7 @@ yarn-error.log*
 .gradle
 build
 dist
+
+*.css
+*.map
+

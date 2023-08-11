@@ -12,6 +12,10 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 48px 36px;
@@ -23,9 +27,17 @@ body {
   background: #1D1D26 fixed;
 }
 
+.App {
+  height: 100%;
+}
+
 .container {
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   max-width: 1280px;
+  display: flex;
+  flex-direction: column;
 }
 
 .block {
