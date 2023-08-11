@@ -46,6 +46,11 @@ body {
   color: #FFFFFF;
   background-color: #464654;
   border-radius: 40px;
+  transition: all 0.3s;
+}
+.block:hover {
+  cursor: pointer;
+  background-color: #292934;
 }
 
 /*# sourceMappingURL=SocialButton.module.css.map */
