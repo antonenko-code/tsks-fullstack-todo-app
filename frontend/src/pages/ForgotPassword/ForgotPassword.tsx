@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './ForgotPassword.module.scss';
+import { PageTitle } from '../../shared/PageTitle';
+import { PageLayout } from '../../shared/PageLayout';
 
 export const ForgotPassword: React.FC = () => {
   return (
-    <div className={styles.block}>
-      <h2>
-        Forgot Password?
-      </h2>
-    </div>
+    <PageLayout>
+      <PageTitle title={'Forgot Password?'} />
+    </PageLayout>
   );
 };

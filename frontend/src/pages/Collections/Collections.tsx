@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './Collections.module.scss';
+import { PageLayout } from '../../shared/PageLayout';
+import { PageTitle } from '../../shared/PageTitle';
 
 export const Collections: React.FC = () => {
   return (
-    <div className={styles.block}>
-      <h2>
-        Collections
-      </h2>
-    </div>
+    <PageLayout>
+      <PageTitle title={'Collections'} button={true}/>
+    </PageLayout>
   );
 };
