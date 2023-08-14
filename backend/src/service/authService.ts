@@ -2,6 +2,7 @@ import UserModel, { UserDocument } from '../models/user-model';
 import AuthError from '../errors/authError';
 import bcrypt from 'bcryptjs';
 import UserDto from '../dtos/userDto';
+import TokenService from './tokenService';
 
 class AuthService {
   async login(email: string, password: string) {
@@ -22,8 +23,10 @@ class AuthService {
     }
 
     const userDto = new UserDto(user)
+    const tokens = TokenService.generateTokens({...userDto});
+    await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
-    return {user: userDto}
+    return {...tokens, user: userDto}
   }
 }
 
