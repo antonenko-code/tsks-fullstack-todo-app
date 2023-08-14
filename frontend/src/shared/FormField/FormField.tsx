@@ -7,7 +7,6 @@ interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLIn
 
 export const FormField: FC<Props> = ({children, ...props}) => {
   return (
-    <div>
       <label
         className={styles.block}
       >
@@ -23,7 +22,5 @@ export const FormField: FC<Props> = ({children, ...props}) => {
           {children}
         </div>
       </label>
-    </div>
-
   );
 };
