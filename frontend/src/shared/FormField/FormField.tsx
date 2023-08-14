@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import styles from './FormField.module.scss'
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>{
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const FormField: FC<Props> = ({children, ...props}) => {

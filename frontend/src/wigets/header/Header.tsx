@@ -24,12 +24,12 @@ export const Header: FC = () => {
         </Link>
 
         <div className={styles.blockButtons}>
-          <Link to='/sing-in' className={styles.button}>
-            <HeaderButton text="Sing In" />
+          <Link to='/sign-in' className={styles.button}>
+            <HeaderButton text="Sign In" />
           </Link>
 
-          <Link to='/sing-up'>
-            <HeaderButton text="Sing Up" border={true} />
+          <Link to='/sign-up'>
+            <HeaderButton text="Sign Up" border={true} />
           </Link>
         </div>
       </header>

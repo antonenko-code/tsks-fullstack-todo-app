@@ -1,0 +1,65 @@
+@import '../../app/assets/styles/index';
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iconWrapper {
+  //align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.link {
+  color: $link-color;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration-line: underline;
+  display: flex;
+  justify-content: flex-end;
+
+
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.socialButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: stretch;
+  justify-content: center;
+}
+
+.span {
+  color: $main-font-color;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.socialButtonsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.registrationBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+
