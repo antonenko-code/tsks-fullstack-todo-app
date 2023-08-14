@@ -31,6 +31,7 @@ class authController {
     const {email, password} = req.body;
     const userData = await AuthService.login(email, password);
 
+
     return res.json({
       success: true,
       message: 'Login was successful',
