@@ -76,11 +76,11 @@ export const Registration: React.FC = () => {
               <Icons name={isSecondOpenEye ? 'eyeOpen' : 'eyeClose'} />
             </div>
           </FormField>
+
+          <FormCheckbox description={'I Agree to Privacy Policy'} />
+
+          <MainButton text={'Sign up'} gradient={true} fullwidth={true} />
         </form>
-
-        <FormCheckbox description={'I Agree to Privacy Policy'} />
-
-        <MainButton text={'Sign up'} gradient={true} fullwidth={true} />
       </FormLayout>
     </PageLayout>
   );
