@@ -1,4 +1,5 @@
 import {Schema, Document, model} from 'mongoose';
+import transactionPlugin from "../transactions/transactionPlugin";
 
 export interface UserDocument extends Document {
   firstName: string,
@@ -17,5 +18,7 @@ const UserSchema = new Schema<UserDocument>({
   isActivated: {type: Boolean, default: false},
   activationLink: {type: String},
 })
+
+UserSchema.plugin(transactionPlugin);
 
 export default model('User', UserSchema);

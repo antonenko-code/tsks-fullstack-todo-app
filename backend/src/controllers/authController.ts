@@ -11,7 +11,6 @@ class authController {
     if (!errors.isEmpty()) {
       throw new ValidationError(errors.array());
     }
-
     const userData = await UserService.createNewUser(req.body);
 
     return res.json({

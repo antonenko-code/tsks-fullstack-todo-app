@@ -13,5 +13,14 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=userAdmin
       - MONGO_INITDB_ROOT_PASSWORD=userPassword
       - MONGO_INITDB_DATABASE=todoapp
+  todo-app-backend:
+    container_name: todoapp_backend
+    build:
+      context: backend/.
+      args:
+        TODO_APP_BACKEND_PORT: 8080
+    restart: always
+    ports:
+      - 8080:8080
 volumes:
   mongodb_data: {}
