@@ -1,3 +1,4 @@
+import Transactional from "../transactions/transactional";
 import UserModel, { UserDocument } from '../models/user-model';
 import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
@@ -17,6 +18,7 @@ class UserService {
     return UserModel.findOne({email});
   }
 
+  @Transactional()
   async createNewUser(request: RequestBody) {
     const { firstName, secondName, email, password} = request;
 

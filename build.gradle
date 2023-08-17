@@ -24,7 +24,7 @@ task runBackend(type: Task, dependsOn: ':backend:compileTs') {
 
 dockerCompose {
     dev {
-        useComposeFiles = ['docker-compose.yml']
+        useComposeFiles = ['docker-compose_with_backend.yml']
         isRequiredBy(runBackend)
         stopContainers = false
         removeContainers = false
