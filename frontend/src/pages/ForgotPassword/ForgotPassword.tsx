@@ -25,7 +25,7 @@ export const ForgotPassword: React.FC = () => {
             required
             // onChange={}
           />
-          <MainButton text={'Submit'} gradient={true} fullwidth={true} />
+          <MainButton name={'Submit'} gradient={true} fullwidth={true} />
         </form>
       </FormLayout>
     </PageLayout>

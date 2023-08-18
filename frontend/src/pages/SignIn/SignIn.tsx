@@ -44,7 +44,7 @@ export const SignIn: React.FC = () => {
             Forgot Password?
           </Link>
         </form>
-        <MainButton text={'Sign in'} gradient={true} fullwidth={true} />
+        <MainButton name={'Sign in'} gradient={true} fullwidth={true} />
         <div className={styles.socialButtonsContainer}>
           <span className={styles.span}>or continue with</span>
           <div className={styles.socialButtonsWrapper}>

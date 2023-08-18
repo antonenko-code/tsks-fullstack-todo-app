@@ -21,9 +21,9 @@ export const StartPage = () => {
           </p>
 
           <div className={styles.buttons}>
-            <MainButton text={'Get Started'} gradient={true} />
+            <MainButton name={'Get Started'} gradient={true} />
 
-            <MainButton text={'Try Demo'} />
+            <MainButton name={'Try Demo'} />
           </div>
         </div>
 
