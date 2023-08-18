@@ -6,7 +6,7 @@ import { FormField } from '../../shared/FormField';
 import { Icons } from '../../shared/Icons/Icons';
 import { Link } from 'react-router-dom';
 import styles from './SignIn.module.scss'
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 import { SocialButton } from '../../shared/SocialButton';
 
 export const SignIn: React.FC = () => {
@@ -43,8 +43,8 @@ export const SignIn: React.FC = () => {
           <Link to={'../forgot-password'} className={styles.link}>
             Forgot Password?
           </Link>
+          <MainButton name={'Sign in'} gradient={true} fullwidth={true} />
         </form>
-        <MainButton name={'Sign in'} gradient={true} fullwidth={true} />
         <div className={styles.socialButtonsContainer}>
           <span className={styles.span}>or continue with</span>
           <div className={styles.socialButtonsWrapper}>

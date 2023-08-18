@@ -1,0 +1,70 @@
+import React, { forwardRef } from 'react';
+import ReactDatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import './DatePicker.scss';
+import { Icons } from '../../shared/Icons/Icons';
+
+// TODO! Move to parent component!
+// const [date, setDate] = useState<Date | null>(new Date())
+// TODO! END
+
+
+
+type Props = {
+  date: Date | null,
+  setDate: (newDate: Date | null) => void,
+};
+
+const CustomInput = forwardRef((props: any, ref) => {
+  return (
+    <div className="dateInput">
+      <div className='dateIcon iconLeft'>
+        <Icons name='calendar'/>
+      </div>
+      <input {...props} ref={ref} type="text" />
+      <div className='dateIcon iconRight'>
+        <Icons name='arrowDown'/>
+      </div>
+    </div>
+  )
+});
+
+export const DatePicker: React.FC<Props> = ({ date, setDate }) => {
+  return (
+    <ReactDatePicker
+      renderCustomHeader={({
+        monthDate,
+        decreaseMonth,
+        increaseMonth,
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled,
+      }) => (
+        <div
+          style={{
+            marginBottom: 10,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+            <Icons name='arrowLeft' />
+          </button>
+          <span>{monthDate.toLocaleString("en-US", {
+            month: "long",
+            year: "numeric",
+          })}</span>
+          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+            <Icons name='arrowRight' />
+          </button>
+        </div>
+      )}
+      dateFormat='dd.MM.yyyy'
+      customInput={<CustomInput />}
+      showIcon
+      selected={date}
+      onChange={(date) => setDate(date)}
+      calendarClassName="calendar"
+    />
+  );
+};

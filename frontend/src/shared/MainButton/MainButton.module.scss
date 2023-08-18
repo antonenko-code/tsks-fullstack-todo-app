@@ -1,4 +1,4 @@
-@import 'src/app/assets/styles/utils';
+@import '../../app/assets/styles/index';
 
 .button {
   box-sizing: border-box;
@@ -30,6 +30,7 @@
 
 .gradient {
   background: none;
+  border: none;
   &::before,
   &::after {
     background-image: $gradient-accent-color;
@@ -50,6 +51,7 @@
   }
 
     &:hover {
+      border: none;
       &:after {
         opacity: 1;
         cursor: pointer;

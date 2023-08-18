@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.scss'
-import { HeaderButton } from '../../components/buttons/HeaderButton';
+import { HeaderButton } from '../../shared/HeaderButton';
 import { Icons } from '../../shared/Icons/Icons';
 
 export const Header: FC = () => {
