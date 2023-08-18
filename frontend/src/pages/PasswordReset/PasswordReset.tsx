@@ -56,7 +56,7 @@ export const PasswordReset: React.FC = () => {
               <Icons name={isSecondOpenEye ? 'eyeOpen' : 'eyeClose'} />
             </div>
           </FormField>
-          <MainButton text={'Apply'} gradient={true} fullwidth={true} />
+          <MainButton name={'Apply'} gradient={true} fullwidth={true} />
         </form>
       </FormLayout>
     </PageLayout>
