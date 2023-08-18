@@ -79,7 +79,7 @@ export const Registration: React.FC = () => {
 
           <FormCheckbox description={'I Agree to Privacy Policy'} />
 
-          <MainButton text={'Sign up'} gradient={true} fullwidth={true} />
+          <MainButton name={'Sign up'} gradient={true} fullwidth={true} />
         </form>
       </FormLayout>
     </PageLayout>
