@@ -39,7 +39,7 @@ export const Icons: React.FC<Props> = ({ name, className }) => {
       )
     case 'calendar':
       return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
           <path d="M8.25 9.75H12M6 9.75H6.00673M9.75 12.75H6M12 12.75H11.9933" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M13.5 1.5V3M4.5 1.5V3" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M1.875 9.1824C1.875 5.91446 1.875 4.28046 2.81409 3.26523C3.75318 2.25 5.26462 2.25 8.2875 2.25H9.7125C12.7354 2.25 14.2469 2.25 15.1859 3.26523C16.125 4.28046 16.125 5.91446 16.125 9.1824V9.5676C16.125 12.8356 16.125 14.4695 15.1859 15.4848C14.2469 16.5 12.7354 16.5 9.7125 16.5H8.2875C5.26462 16.5 3.75318 16.5 2.81409 15.4848C1.875 14.4695 1.875 12.8356 1.875 9.5676V9.1824Z" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -70,7 +70,19 @@ export const Icons: React.FC<Props> = ({ name, className }) => {
     case 'arrowLeft':
       return (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M17.5001 7L11.325 13.175C10.9361 13.5639 10.7417 13.7584 10.7417 14C10.7417 14.2416 10.9361 14.4361 11.325 14.8249L17.5001 21" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M17.5001 7L11.325 13.175C10.9361 13.5639 10.7417 13.7584 10.7417 14C10.7417 14.2416 10.9361 14.4361 11.325 14.8249L17.5001 21" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    case 'arrowRight':
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M10.5 21L16.675 14.825C17.0639 14.4361 17.2584 14.2416 17.2584 14C17.2584 13.7584 17.0639 13.5639 16.675 13.1751L10.5 7" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    case 'arrowDown':
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6 9L11.2929 14.2929C11.6262 14.6262 11.7929 14.7929 12 14.7929C12.2071 14.7929 12.3738 14.6262 12.7071 14.2929L18 9" stroke="#8C8C9E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       )
     case 'arrowDown':

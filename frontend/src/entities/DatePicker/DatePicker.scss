@@ -1,0 +1,174 @@
+@import '../../app/assets/styles/index';
+
+.react-datepicker {
+  &__tab-loop {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.calendar {
+  background-color: $secondary-background-color;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid $secondary-accent-color;
+  border-radius: 12px;
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+
+  .react-datepicker {
+    &__tab-loop {
+      position: absolute;
+      top: 0;
+    }
+
+    &__month-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__header {
+      color: $secondary-font-color;
+      background: none;
+      border-bottom: 1px solid $secondary-accent-color;
+      padding: 0 0 8px;
+
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        svg {
+          path {
+            stroke: $secondary-font-color;
+            transition: all 0.3s ease-in-out;
+          }
+        }
+
+        &:hover {
+          svg {
+            path {
+              stroke: white;
+            }
+          }
+        }
+      }
+    }
+
+    &__triangle {
+      display: none;
+    }
+
+    &__month {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__week {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    &__day-names {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+      gap: 8px;
+    }
+
+    &__day-name {
+      color: $secondary-font-color;
+      width: max-content;
+    }
+
+    &__day {
+      width: 28px;
+      font-size: 20px;
+      line-height: 28px;
+      color: white;
+      margin: 0;
+      transition: all 0.3s ease-in-out;
+      border-radius: 8px;
+
+      &--today {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-image: $gradient-accent-color;
+        }
+      }
+
+      &--selected {
+        background-image: $gradient-accent-color;
+        box-shadow: 2px 4px 17px 0 $main-box-shadow-color, 2px 2px 3px 0 $secondary-box-shadow-color;
+
+        &::before {
+          display: none;
+        }
+      }
+
+      &--keyboard-selected {
+        background-color: $secondary-accent-color;
+
+        &:hover {
+          background-image: $gradient-accent-color;
+        }
+      }
+
+      &:hover {
+        background-color: $secondary-accent-color;
+      }
+    }
+  }
+}
+
+.dateInput {
+  position: relative;
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content:space-between;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 1px solid $secondary-accent-color;
+
+  input {
+    background: none;
+    padding: 16px 24px 16px 58px;
+    width: 100%;
+    border: none;
+    color: $secondary-font-color;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+}
+
+.dateIcon {
+  position: absolute;
+  pointer-events: none;
+}
+
+.iconLeft {
+  left: 24px;
+}
+
+.iconRight {
+  right: 24px;
+  cursor: pointer;
+}
+

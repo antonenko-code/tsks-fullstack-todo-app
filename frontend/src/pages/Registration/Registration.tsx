@@ -3,7 +3,7 @@ import { PageLayout } from '../../shared/PageLayout';
 import { PageTitle } from '../../shared/PageTitle';
 import { FormLayout } from '../../shared/FormLayout';
 import { FormField } from '../../shared/FormField';
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 import { FormCheckbox } from '../../shared/FormCheckbox';
 import styles from './Registration.module.scss';
 import { Icons } from '../../shared/Icons/Icons';

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './StartPage.module.scss'
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 import { PageLayout } from '../../shared/PageLayout';
 import banner from '../../app/assets/images/banner.png';
 

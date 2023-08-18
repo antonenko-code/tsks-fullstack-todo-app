@@ -1,8 +1,8 @@
 import React from 'react';
 import './assets/styles/index.scss';
 import { Routing } from '../pages';
-import { Header } from '../wigets/header';
-import { Footer } from '../wigets/footer';
+import { Header } from '../widgets/header';
+import { Footer } from '../widgets/footer';
 
 export const App = () => {
   return (

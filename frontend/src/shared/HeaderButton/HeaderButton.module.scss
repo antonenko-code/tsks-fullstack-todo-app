@@ -1,10 +1,12 @@
-@import './src/app/assets/styles/index';
+@import '../../app/assets/styles/index';
 
 .button {
   min-width: max-content;
   padding: 8px 16px;
   background-color: $main-background-color;
   font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   color: $main-font-color;
   border: 2px solid transparent;
   border-radius: 12px;
