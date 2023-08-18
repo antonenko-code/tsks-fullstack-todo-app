@@ -5,7 +5,7 @@ import { FormLayout } from '../../shared/FormLayout';
 import styles from './PasswordReset.module.scss';
 import { Icons } from '../../shared/Icons/Icons';
 import { FormField } from '../../shared/FormField';
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 
 export const PasswordReset: React.FC = () => {
   const [isOpenEye, setIsOpenEye] = useState(false);

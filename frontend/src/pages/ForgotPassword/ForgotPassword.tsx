@@ -4,7 +4,7 @@ import { PageLayout } from '../../shared/PageLayout';
 import { FormLayout } from '../../shared/FormLayout';
 import styles from './ForgotPassword.module.scss';
 import { FormField } from '../../shared/FormField';
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 
 export const ForgotPassword: React.FC = () => {
   return (
