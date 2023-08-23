@@ -4,23 +4,16 @@ import classNames from 'classnames';
 
 type Props = {
   closeModal: () => void,
-  hideModal: boolean,
+  isHideModal: boolean,
   children: ReactNode,
 }
 
-export const ModalWindow: React.FC<Props> = ({ children, closeModal, hideModal
-}) => {
+export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal}) => {
   const ref = useRef<HTMLDivElement | null>(null);
-
-
 
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as HTMLDivElement)) {
-        // setOpenModal(false)
-        // setHideModal(true);
-        // const timer = setTimeout(() => closeModal(), 600);
-        // return () => clearTimeout(timer);
         closeModal();
       }
     }
@@ -33,10 +26,9 @@ export const ModalWindow: React.FC<Props> = ({ children, closeModal, hideModal
   return (
     <div className={styles.background}>
       <div
-        className={classNames([styles.container],
-          {[styles.containerHide]: hideModal}
-        )}
-        ref={ref}>
+        className={classNames([styles.container], {[styles.containerHide]: isHideModal})}
+        ref={ref}
+      >
         {children}
       </div>
     </div>
