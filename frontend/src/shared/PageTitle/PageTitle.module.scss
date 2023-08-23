@@ -27,5 +27,20 @@
   border-radius: 12px;
   border: none;
   background: $secondary-background-color;
+  cursor: pointer;
+
+  svg {
+    path {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &:hover {
+    svg {
+      path {
+        stroke: white;
+      }
+    }
+  }
 }
 

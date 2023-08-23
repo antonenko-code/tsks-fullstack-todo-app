@@ -6,12 +6,13 @@ import { PasswordReset } from './PasswordReset';
 import { Registration } from './Registration';
 import { Account } from './Account';
 import { Collections } from './Collections';
-import { StartPage } from './StartPage';
+import { Home } from './Home';
+import { Tasks } from './Tasks';
 
 export const Routing = () => {
   return (
     <Routes>
-      <Route path='/' element={<StartPage />} />
+      <Route path='/' element={<Home />} />
 
       <Route path='sign-in' element={<SignIn />} />
 
@@ -23,14 +24,9 @@ export const Routing = () => {
 
       <Route path='account' element={<Account />} />
 
-      <Route
-        path='collections'
-        element={<Collections />}
-      >
-        <Route
-          index
-          element={<Collections />}
-        />
+      <Route path="collections">
+        <Route index element={<Collections />} />
+        <Route path=":id" element={<Tasks />} />
       </Route>
     </Routes>
   )

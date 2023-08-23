@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
@@ -22,7 +22,8 @@ export const CollectionItem: React.FC<Props> = ({
   const [newTitle, setNewTitle] = useState(title);
   const dispatch = useAppDispatch();
 
-  const handleDeleteCollection = () => {
+  const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
     dispatch(deleteCollection({
       title,
       color,
