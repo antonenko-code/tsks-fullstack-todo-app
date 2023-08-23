@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from './StartPage.module.scss'
+import styles from './Home.module.scss'
 import { MainButton } from '../../shared/MainButton';
 import { PageLayout } from '../../shared/PageLayout';
 import banner from '../../app/assets/images/banner.png';
+import { Link } from 'react-router-dom';
 
-export const StartPage = () => {
+export const Home = () => {
   return (
     <PageLayout>
       <div className={styles.block}>
@@ -21,9 +22,12 @@ export const StartPage = () => {
           </p>
 
           <div className={styles.buttons}>
-            <MainButton name={'Get Started'} gradient={true} />
-
-            <MainButton name={'Try Demo'} />
+            <Link to='/sign-in'>
+              <MainButton name={'Get Started'} gradient={true} />
+            </Link>
+            <Link to='/collections'>
+              <MainButton name={'Try Demo'} />
+            </Link>
           </div>
         </div>
 

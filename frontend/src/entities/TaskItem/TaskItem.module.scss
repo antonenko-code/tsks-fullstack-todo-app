@@ -1,23 +1,20 @@
-@import 'src/app/assets/styles/index';
+@import '../../app/assets/styles/index';
 
 .container {
-  display: flex;
+  flex: 0;
+  width: 100%;
   min-width: 220px;
   padding: 16px 24px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-  align-self: stretch;
   background: $secondary-background-color;
   border-radius: 24px;
+  filter: blur(0px);
+  transition: all 0.6s ease-in-out;
 }
 
 .block {
   display: flex;
   align-items: center;
   gap: 16px;
-  align-self: stretch;
 }
 
 .taskDetails {
@@ -44,5 +41,13 @@
   align-items: center;
   gap: 8px;
   align-self: stretch;
+}
+
+.blur-x1 {
+  filter: blur(1px);
+}
+
+.blur-x2 {
+  filter: blur(2px);
 }
 

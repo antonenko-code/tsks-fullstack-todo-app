@@ -88,7 +88,6 @@ export const Collections: React.FC = () => {
             to={collectionItem.id}
             className={styles.link}
             key={collectionItem.id}
-            onClick={(event) => event.preventDefault()}
           >
             <CollectionItem
               title={collectionItem.title}
