@@ -16,8 +16,8 @@ import { Link } from 'react-router-dom';
 const MAX_LENGTH = 12;
 
 export const Collections: React.FC = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [hideModal, setHideModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isHideModal, setIsHideModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newItemTitle, setNewItemTitle] = useState('');
   const { icons, colors, collections } = useAppSelector(state => state.collections);
@@ -30,16 +30,16 @@ export const Collections: React.FC = () => {
     } else {
       setErrorMessage(null);
     }
-  }
+  };
 
   const closeModal = () => {
-    setHideModal(true);
+    setIsHideModal(true);
     const timer = setTimeout(() => {
-      setOpenModal(false);
-      setHideModal(false);
+      setIsOpenModal(false);
+      setIsHideModal(false);
     }, 500);
     return () => clearTimeout(timer);
-  }
+  };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
@@ -81,6 +81,7 @@ export const Collections: React.FC = () => {
   return (
     <PageLayout>
       <PageTitle title={'Collections'} button={true}/>
+
       <div className={styles.collectionContainer}>
         {collections.map((collectionItem) => (
           <Link
@@ -97,58 +98,62 @@ export const Collections: React.FC = () => {
             />
           </Link>
         ))}
-        {collections.length < MAX_LENGTH && (<button
-          className={styles.addCollectionItemBtn}
-          onClick={(event) => {
-            event.stopPropagation();
-            setOpenModal(!openModal);
-          }}
-        >
-          <Icons name={'plus'}/>
-        </button>)}
-          {
-            openModal && (
-              <ModalWindow
-                closeModal={closeModal}
-                hideModal={hideModal}
+
+        {collections.length < MAX_LENGTH && (
+          <button
+            className={styles.addCollectionItemBtn}
+            onClick={(event) => {
+              event.stopPropagation();
+              setIsOpenModal(!isOpenModal);
+            }}
+          >
+            <Icons name={'plus'} />
+          </button>
+        )}
+
+          {isOpenModal && (
+            <ModalWindow
+              closeModal={closeModal}
+              isHideModal={isHideModal}
+            >
+              <form
+                className={styles.form}
+                onSubmit={handleOnSubmit}
               >
-                <form
-                  className={styles.form}
-                  onSubmit={handleOnSubmit}
-                >
-                  <div className={styles.modalIconSelectorWrapper}>
-                    <IconsSelector
-                      selectedIcon={selectedIcon}
-                      setSelectedIcon={setSelectedIcon}
-                    />
-                    <FormField
-                      placeholder={'Some text'}
-                      value={newItemTitle}
-                      maxLength={12}
-                      onChange={handleOnChange}
-                    />
-                    {
-                      errorMessage && (
-                        <div className={styles.errorMessage}>{errorMessage}</div>
-                      )
-                    }
-                  </div>
-                  <div className={styles.modalBtnWrapper}>
-                    <MainButton
-                      name={'Create'}
-                      gradient={true}
-                      type={'submit'}
-                    />
-                    <MainButton
-                      name={'Cancel'}
-                      type={'button'}
-                      onClick={closeModal}
-                    />
-                  </div>
-                </form>
-              </ModalWindow>
-          )
-        }
+                <div className={styles.modalIconSelectorWrapper}>
+                  <IconsSelector
+                    selectedIcon={selectedIcon}
+                    setSelectedIcon={setSelectedIcon}
+                  />
+
+                  <FormField
+                    placeholder={'Some text'}
+                    value={newItemTitle}
+                    maxLength={12}
+                    onChange={handleOnChange}
+                  />
+
+                  {errorMessage && (
+                      <div className={styles.errorMessage}>{errorMessage}</div>
+                    )}
+                </div>
+
+                <div className={styles.modalBtnWrapper}>
+                  <MainButton
+                    name={'Create'}
+                    gradient={true}
+                    type={'submit'}
+                  />
+
+                  <MainButton
+                    name={'Cancel'}
+                    type={'button'}
+                    onClick={closeModal}
+                  />
+                </div>
+              </form>
+            </ModalWindow>
+          )}
       </div>
     </PageLayout>
   );
