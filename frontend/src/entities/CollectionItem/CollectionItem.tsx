@@ -1,49 +1,106 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { deleteColor } from './reducers/collectionsSlice';
+import { useAppDispatch } from '../../app/hooks';
+import { deleteCollection, changeCollection } from './reducers/collectionsSlice';
 
 type Props = {
   title: string,
-  total: number,
-  completed: number,
-  iconName?: string,
+  color: string,
+  iconName: string,
+  id: string,
 }
 
 export const CollectionItem: React.FC<Props> = ({
   title,
-  completed,
-  total,
+  color,
+  iconName,
+  id,
 }) => {
-  const [color, setColor] = useState('');
-  const { colors } = useAppSelector(state => state.collections);
+  const [inputField, setInputField] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    setColor(colors[randomIndex]);
-    dispatch(deleteColor(randomIndex));
-  }, [])
+  const handleDeleteCollection = () => {
+    dispatch(deleteCollection({
+      title,
+      color,
+      iconName,
+      id,
+    }));
+  };
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
+
+    if (!regex.test(event.target.value)) {
+      return;
+    }
+    setNewTitle(event.target.value);
+  };
+
+  const handlerOnBlur = () => {
+    setInputField(false)
+    if (newTitle.length) {
+      dispatch(changeCollection({id, title: newTitle}))
+    } else {
+      setNewTitle(title)
+    }
+  }
+
+  const handleOnKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handlerOnBlur();
+    }
+    console.log(event.key)
+
+  }
 
   return (
     <div className={styles.block}>
-      <div className={styles.iconWrapper} style={{background: `${color}`}}>
-        <Icons name={'checked'} />
+      <div className={styles.iconsWrapper}>
+        <div className={styles.iconWrapper} style={{background: `${color}`}}>
+          <Icons name={iconName} />
+        </div>
+        <div
+          className={styles.closeBtn}
+          onClick={handleDeleteCollection}
+        >
+          <Icons name={'cross'} />
+        </div>
       </div>
-      <div className={styles.title}>{title}</div>
+      <div
+        className={styles.title}
+        onDoubleClick={() => setInputField(true)}
+        onBlur={handlerOnBlur}
+        onSubmit={() => setInputField(false)}
+      >
+        {inputField ?
+          (
+            <input
+              className={styles.input}
+              value={newTitle}
+              maxLength={12}
+              onChange={handleOnChange}
+              onKeyDown={handleOnKeyDown}
+              required
+            >
+            </input>
+          ) : (newTitle)
+        }
+      </div>
       <div className={styles.blockProgress}>
         <div className={styles.tasksContainer}>
           <span className={styles.span}>tasks:</span>
           <div className={styles.infoProgress}>
-            {completed < total
-              ? (`${completed}/${total} done`)
-              : (`All ${total} done`)
-            }
+            {/*{completed < total*/}
+            {/*  ? (`${completed}/${total} done`)*/}
+            {/*  : (`All ${total} done`)*/}
+            {/*}*/}
           </div>
         </div>
-        <RadialChart total={total} completed={completed} color={color} />
+        {/*<RadialChart total={total} completed={completed} color={'blue'} />*/}
       </div>
     </div>
   );

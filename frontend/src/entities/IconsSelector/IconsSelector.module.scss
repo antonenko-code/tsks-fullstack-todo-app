@@ -2,6 +2,7 @@
 
 .blockSelect {
   position: relative;
+  width: max-content;
   cursor: pointer;
 }
 
@@ -20,14 +21,17 @@
   top: 110%;
   left: 0;
   display: none;
+  justify-content: space-between;
   gap: 22px;
-  width: 200px;
+  width: 232px;
   height: min-content;
   overflow-y: auto;
   padding: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px $secondary-box-shadow-color;
   border: 1px solid $secondary-accent-color;
   border-radius: 12px;
+  background-color: $secondary-background-color;
+  z-index: 999;
 }
 
 .open .options {
@@ -38,6 +42,10 @@
 
 .option {
   display: flex;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
   transition: transform 0.3s;
 
   &:hover {
@@ -53,5 +61,5 @@
   align-items: center;
   border-radius: 24px;
   background: $gradient-accent-color;
-  box-shadow: 4px 7px 24px 0px rgba(245, 110, 166, 0.25), 3px 3px 4px 0px rgba(0, 0, 0, 0.20);
+  box-shadow: 4px 7px 24px 0 $main-box-shadow-color, 3px 3px 4px 0 $secondary-box-shadow-color;
 }

@@ -1,0 +1,53 @@
+@import "./src/app/assets/styles/index";
+
+.background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  width: 420px;
+  min-height: 320px;
+  height: max-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 24px;
+  background: $secondary-background-color;
+  animation: moveUp 0.5s ease-in-out forwards;
+  box-shadow: 7px 7px 23px 0 $modal-box-shadow-color, 2px 2px 12px 0 $secondary-modal-box-shadow-color;
+}
+
+.containerHide {
+  animation: moveDown 0.5s ease-in-out forwards;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translate(0%, -100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0%, -100%);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,59 @@
+@import "./src/app/assets/styles/index";
+
+.collectionContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.addCollectionItemBtn {
+  display: flex;
+  width: 220px;
+  height: 220px;
+  min-width: 220px;
+  min-height: 220px;
+  padding: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 24px;
+  border: 4px dashed $secondary-background-color;
+  background: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.link {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.form {
+  display: flex;
+  gap: 36px;
+  flex-direction: column;
+  width: 100%;
+  padding: 36px;
+}
+
+.modalIconSelectorWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.modalBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  z-index: 0;
+}
+
