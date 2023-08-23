@@ -63,6 +63,7 @@ export const CollectionItem: React.FC<Props> = ({
         <div className={styles.iconWrapper} style={{background: `${color}`}}>
           <Icons name={iconName} />
         </div>
+
         <div
           className={styles.closeBtn}
           onClick={handleDeleteCollection}
@@ -70,14 +71,14 @@ export const CollectionItem: React.FC<Props> = ({
           <Icons name={'cross'} />
         </div>
       </div>
+
       <div
         className={styles.title}
         onDoubleClick={() => setInputField(true)}
         onBlur={handlerOnBlur}
         onSubmit={() => setInputField(false)}
       >
-        {inputField ?
-          (
+        {inputField ? (
             <input
               className={styles.input}
               value={newTitle}
@@ -87,12 +88,13 @@ export const CollectionItem: React.FC<Props> = ({
               required
             >
             </input>
-          ) : (newTitle)
-        }
+          ) : (newTitle)}
       </div>
+
       <div className={styles.blockProgress}>
         <div className={styles.tasksContainer}>
           <span className={styles.span}>tasks:</span>
+
           <div className={styles.infoProgress}>
             {/*{completed < total*/}
             {/*  ? (`${completed}/${total} done`)*/}
@@ -100,6 +102,7 @@ export const CollectionItem: React.FC<Props> = ({
             {/*}*/}
           </div>
         </div>
+
         {/*<RadialChart total={total} completed={completed} color={'blue'} />*/}
       </div>
     </div>
