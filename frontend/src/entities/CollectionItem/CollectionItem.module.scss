@@ -7,17 +7,43 @@
   min-height: 220px;
   padding: 24px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   background: $secondary-background-color;
   border-radius: 24px;
   gap: 10px;
   flex-shrink: 0;
+  overflow: hidden;
+
+  &:hover {
+    .closeBtn {
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity ease 0.5s;
 }
 
 .title {
+  display: flex;
   font-size: 28px;
   font-weight: 700;
+  overflow-wrap: anywhere;
+  hyphenate-limit-chars: 9;
+  hyphens: auto;
+  hyphenate-character: '-';
 }
 
 .span {
@@ -46,6 +72,12 @@
   gap: 4px;
 }
 
+.iconsWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .iconWrapper {
   display: flex;
   width: 64px;
@@ -55,4 +87,19 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 24px;
+}
+
+.input {
+  background: none;
+  border: none;
+  color: $secondary-font-color;
+  outline: none;
+  font-family: Montserrat Alternates;
+  font-style: normal;
+  line-height: normal;
+  display: flex;
+  width: 100%;
+  font-size: 28px;
+  font-weight: 700;
+  text-overflow: ellipsis;
 }

@@ -1,41 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './IconsSelector.module.scss';
 import { Icons } from '../../shared/Icons/Icons';
+import { useAppSelector } from '../../app/hooks';
 
-type Props = {
+type OptionProps = {
   icon: string;
   onSelect: (option: string) => void
 };
 
-const OptionItem: React.FC<Props> = ({
+const OptionItem: React.FC<OptionProps> = ({
   icon,
   onSelect,
 }) => (
   <div
     className={styles.option}
-    onClick={() => onSelect(icon)}
+    onClick={(event) => {
+      event.stopPropagation();
+      onSelect(icon);
+    }}
   >
     <Icons name={icon} />
   </div>
 );
 
-export const IconsSelector: React.FC = () => {
-  const icons: string[] = [
-    'home',
-    'people',
-    'work',
-    'groceries',
-    'car',
-    'star',
-    'vacation',
-    'graduate',
-    'medal',
-    'workout',
-    'love',
-    'gift',
-  ];
+type SelectorProps = {
+  selectedIcon: string,
+  setSelectedIcon: (value: string) => void,
+
+}
+
+export const IconsSelector: React.FC<SelectorProps> = ({ selectedIcon, setSelectedIcon }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement | null>(null);
+  const { icons } = useAppSelector(state => state.collections);
+  const q = useAppSelector(state => state.collections)
+
 
   const handleClickOutside = (event: Event) => {
     if (selectorRef.current && !selectorRef.current.contains(event.target as Node)) {
@@ -47,21 +46,18 @@ export const IconsSelector: React.FC = () => {
     setIsOpen(!isOpen)
   };
 
+  const handleSelectIcon = (icon: string) => {
+    setSelectedIcon(icon);
+    setIsOpen(false);
+  }
+
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
-
-//TODO: move this code to parent
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(icons[0]);
-
-  const handleOptionSelect = (icon: string) => {
-    setSelectedIcon(icon);
-    setIsOpen(false);
-  };
-//--
 
   return (
     <div
@@ -91,7 +87,7 @@ export const IconsSelector: React.FC = () => {
             <OptionItem
               key={name}
               icon={name}
-              onSelect={handleOptionSelect}
+              onSelect={handleSelectIcon}
             />
           ))}
         </div>
