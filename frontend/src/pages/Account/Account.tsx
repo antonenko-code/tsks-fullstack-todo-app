@@ -5,7 +5,7 @@ import styles from './Account.module.scss';
 import avatar from  '../../app/assets/images/avatar.png';
 import { FormLayout } from '../../shared/FormLayout';
 import { AccountField } from '../../shared/AccountField';
-import { MainButton } from '../../components/buttons/MainButton';
+import { MainButton } from '../../shared/MainButton';
 import { Icons } from '../../shared/Icons/Icons';
 
 interface User {
@@ -15,7 +15,7 @@ interface User {
   email: string,
   password: string,
   isSubscribed: boolean,
-};
+}
 
 const user = {
   avatar: '/',
