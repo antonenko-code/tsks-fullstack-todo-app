@@ -25,11 +25,11 @@ export const Header: FC = () => {
 
         <div className={styles.blockButtons}>
           <Link to='/sign-in' className={styles.button}>
-            <HeaderButton text="Sign In" />
+            <HeaderButton name="Sign In" />
           </Link>
 
           <Link to='/sign-up'>
-            <HeaderButton text="Sign Up" border={true} />
+            <HeaderButton name="Sign Up" border={true} />
           </Link>
         </div>
       </header>

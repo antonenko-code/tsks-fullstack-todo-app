@@ -1,14 +1,39 @@
 @import '../../app/assets/styles/index';
 
+.title {
+  font-size: 16px;
+  color: $secondary-font-color;
+}
+
+.inputWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.value {
+  font-weight: 700;
+}
+
+.input {
+  padding: 0;
+  font-family: 'Montserrat Alternates', sans-serif;
+  color: $secondary-font-color;
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+  background: none;
+  border: none;
+}
+
 .button {
   box-sizing: border-box;
   padding: 12px 16px;
-  min-width: 150px;
+  min-width: min-content;
   background-color: $secondary-accent-color;
   color: $main-font-color;
   font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 16px;
   border-radius: 12px;
   border: 2px solid transparent;
   overflow: hidden;
@@ -24,13 +49,12 @@
   }
 }
 
-.fullwidth {
-  width: 100%;
+.signBtn {
+  width: 200px;
 }
 
 .gradient {
   background: none;
-  border: none;
   &::before,
   &::after {
     background-image: $gradient-accent-color;
@@ -51,10 +75,9 @@
   }
 
   &:hover {
-    border: none;
-      &:after {
-        opacity: 1;
-        cursor: pointer;
-      }
+    &:after {
+      opacity: 1;
+      cursor: pointer;
     }
+  }
 }
