@@ -1,0 +1,61 @@
+@import '../../app/assets/styles/index';
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.chooseAvatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $secondary-accent-color;
+  border: 2px solid $main-background-color;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.name {
+  font-size: 28px;
+}
+
+.statusWrapper {
+  padding: 2px;
+  width: min-content;
+  text-transform: uppercase;
+  background-clip: padding-box;
+  background-image: $gradient-accent-color;
+  border-radius: 12px;
+}
+
+.subscribeStatus {
+  padding: 8px 16px;
+  background: $main-background-color;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+.formWrapper {
+  display: flex;
+}
+
+
+
+

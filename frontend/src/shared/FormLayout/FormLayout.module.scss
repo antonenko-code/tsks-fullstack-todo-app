@@ -2,8 +2,7 @@
 
 .block {
   margin: 0 auto;
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -11,4 +10,8 @@
   gap: 36px;
   background-color: $secondary-background-color;
   border-radius: 24px;
+}
+
+.fullWidth {
+  width: 100%;
 }

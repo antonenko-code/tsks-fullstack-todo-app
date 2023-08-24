@@ -205,6 +205,21 @@ export const Icons: React.FC<Props> = ({ name, className }) => {
           <path d="M5 5L19 19" stroke="#717586" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       );
+    case 'pencil':
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <g clipPath="url(#clip0_29_647)">
+            <path d="M8.20966 2.26651C8.64436 1.79555 8.86171 1.56007 9.09265 1.42271C9.64991 1.09128 10.3361 1.08097 10.9027 1.39552C11.1375 1.52588 11.3615 1.75474 11.8096 2.21244C12.2576 2.67015 12.4817 2.899 12.6093 3.13888C12.9172 3.71765 12.9071 4.41863 12.5827 4.98791C12.4482 5.22384 12.2177 5.44587 11.7567 5.88992L6.27118 11.1733C5.39751 12.0149 4.96066 12.4356 4.4147 12.6488C3.86873 12.8621 3.26853 12.8464 2.06812 12.815L1.9048 12.8108C1.53936 12.8012 1.35664 12.7964 1.25043 12.6758C1.14421 12.5553 1.15871 12.3692 1.18771 11.997L1.20346 11.7948C1.28509 10.747 1.3259 10.2232 1.5305 9.75228C1.73509 9.28136 2.088 8.89904 2.79383 8.13429L8.20966 2.26651Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+            <path d="M7.58333 2.33333L11.6667 6.41667" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M8.16667 12.8333H12.8333" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_29_647">
+              <rect width="14" height="14" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+      );
     default:
       return null;
   }

@@ -3,23 +3,23 @@ import style from './HeaderButton.module.scss';
 import classNames from 'classnames';
 
 type Props = {
-  text: string,
+  name: string,
   border?: boolean,
 };
 
 export const HeaderButton: FC<Props> = ({
-  text,
+  name,
   border,
 }) => {
   return (
     <button
-      name={text}
+      name={name}
       type='button'
       className={classNames(style.button, {
         [style.border]: border
       })}
     >
-      {text}
+      {name}
     </button>
   );
 };
