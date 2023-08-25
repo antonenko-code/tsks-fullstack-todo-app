@@ -32,6 +32,15 @@ export const CollectionItem: React.FC<Props> = ({
     }));
   };
 
+  const handleOnClick = (event: React.MouseEvent) => {
+    if (event.detail === 1) {
+      event.preventDefault();
+    } else if (event.detail === 2) {
+      event.preventDefault();
+      setInputField(true);
+    }
+  }
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
 
@@ -75,7 +84,7 @@ export const CollectionItem: React.FC<Props> = ({
 
       <div
         className={styles.title}
-        onDoubleClick={() => setInputField(true)}
+        onClick={handleOnClick}
         onBlur={handlerOnBlur}
         onSubmit={() => setInputField(false)}
       >
