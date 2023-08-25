@@ -10,7 +10,7 @@ import { MainButton } from '../../shared/MainButton';
 import { CollectionItem } from '../../entities/CollectionItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {v4 as uuidv4} from 'uuid';
-import { addCollection, deleteColor } from '../../entities/CollectionItem/reducers/collectionsSlice';
+import { addCollection, deleteColor } from '../../features/Collections/reducers/collectionsSlice';
 import { Link } from 'react-router-dom';
 
 const MAX_LENGTH = 12;

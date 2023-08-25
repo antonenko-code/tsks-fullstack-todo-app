@@ -3,7 +3,7 @@ import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
 import { useAppDispatch } from '../../app/hooks';
-import { deleteCollection, changeCollection } from './reducers/collectionsSlice';
+import { deleteCollection, changeCollection } from '../../features/Collections/reducers/collectionsSlice';
 
 type Props = {
   title: string,
@@ -54,9 +54,7 @@ export const CollectionItem: React.FC<Props> = ({
     if (event.key === 'Enter') {
       handlerOnBlur();
     }
-    console.log(event.key)
-
-  }
+  };
 
   return (
     <div className={styles.block}>
