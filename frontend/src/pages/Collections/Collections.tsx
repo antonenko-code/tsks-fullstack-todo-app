@@ -9,31 +9,25 @@ import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
 import { CollectionItem } from '../../entities/CollectionItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { addCollection, deleteColor } from '../../features/Collections/reducers/collectionsSlice';
 import { Link } from 'react-router-dom';
+import { useForm, InputNames } from '../../utils/useForm';
 
 const MAX_LENGTH = 12;
 
 export const Collections: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isHideModal, setIsHideModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [newItemTitle, setNewItemTitle] = useState('');
   const { icons, colors, collections } = useAppSelector(state => state.collections);
   const [selectedIcon, setSelectedIcon] = useState<string>(icons[0]);
   const dispatch = useAppDispatch();
-
-  const validation = (value: string) => {
-    if (!value || !value.trim().length) {
-      throw (`Field can't be empty`);
-    } else {
-      setErrorMessage(null);
-    }
-  };
+  const [isSubmit, setIsSubmit] = useState(false);
+  const {onChange, values, errors} = useForm();
 
   const closeModal = () => {
     setIsHideModal(true);
+    setIsSubmit(false);
     const timer = setTimeout(() => {
       setIsOpenModal(false);
       setIsHideModal(false);
@@ -42,39 +36,28 @@ export const Collections: React.FC = () => {
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
-    if (!regex.test(event.target.value)) {
-      return;
-    }
-    if (newItemTitle.trim().length > 0) {
-      setErrorMessage(null);
-    }
-    setNewItemTitle(event.target.value);
+    onChange(event);
+    setIsSubmit(false);
   }
 
   const handleOnSubmit = (event: FormEvent) => {
     event.preventDefault();
-    try {
-      validation(newItemTitle);
+    setIsSubmit(true);
+    const collectionName = values.get(InputNames.CollectionName);
+    if (errors.size === 0 && collectionName) {
       const randomIndex = Math.floor(Math.random() * colors.length);
       const color = colors[randomIndex];
       dispatch(deleteColor(randomIndex));
       const id = uuidv4();
       const newCollection = {
-        title: newItemTitle,
+        title: collectionName,
         iconName: selectedIcon,
         color,
         id,
       };
-
       dispatch(addCollection(newCollection));
       closeModal();
-      setNewItemTitle('');
       setSelectedIcon(icons[0])
-    } catch (error: any) {
-      console.log('there')
-      setErrorMessage(error);
-      return;
     }
   };
 
@@ -127,14 +110,15 @@ export const Collections: React.FC = () => {
 
                   <FormField
                     placeholder={'Some text'}
-                    value={newItemTitle}
+                    name={InputNames.CollectionName}
+                    value={values.get(InputNames.CollectionName)}
                     maxLength={12}
                     onChange={handleOnChange}
                   />
 
-                  {errorMessage && (
-                      <div className={styles.errorMessage}>{errorMessage}</div>
-                    )}
+                  {errors.has(InputNames.CollectionName) && isSubmit && (
+                    <div>{errors.get(InputNames.CollectionName)}</div>
+                  )}
                 </div>
 
                 <div className={styles.modalBtnWrapper}>
