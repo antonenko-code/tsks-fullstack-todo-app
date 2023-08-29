@@ -50,6 +50,11 @@ class UserService {
     user.isActivated = true;
     await user.save();
   }
+
+  async getUsers() {
+    const users = await UserModel.find();
+    return users;
+  }
 }
 
 export default new UserService();
