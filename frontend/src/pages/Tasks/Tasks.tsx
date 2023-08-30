@@ -4,7 +4,6 @@ import { PageLayout } from '../../shared/PageLayout';
 import { PageTitle } from '../../shared/PageTitle';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icons } from '../../shared/Icons/Icons';
-
 import { ModalWindow } from '../../shared/ModalWindow';
 import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
@@ -14,6 +13,7 @@ import { add } from '../../features/todos/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { TaskItem } from '../../entities/TaskItem';
 import { Todo } from '../../types/Todo';
+import { Calendar } from '../../shared/Calendar';
 
 export const Tasks: React.FC = (props) => {
   const { collections } = useAppSelector(state => state.collections)
@@ -118,7 +118,7 @@ export const Tasks: React.FC = (props) => {
         button={true}
         onClick={handleGoBack}
       />
-
+      <Calendar />
       <div className={styles.tasksWrapper}>
         {!todos ? (
           <span className={styles.message}>There are no tasks yet!</span>
