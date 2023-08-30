@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import userService from '../service/userService';
 
 class userController {
-  async getUsers(req: Request, res: Response, next: NextFunction) {
-    const users = await userService.getUsers();
+  async getUser(req: Request, res: Response, next: NextFunction) {
+    const userId = req.params.id;
+    const users = await userService.getUser(userId);
 
     return res.json(users);
   }
