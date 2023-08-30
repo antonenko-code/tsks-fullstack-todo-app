@@ -51,9 +51,8 @@ class UserService {
     await user.save();
   }
 
-  async getUsers() {
-    const users = await UserModel.find();
-    return users;
+  async getUser(userId: string) {
+    return UserModel.findOne({_id: userId});
   }
 }
 
