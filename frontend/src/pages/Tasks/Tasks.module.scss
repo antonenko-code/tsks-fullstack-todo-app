@@ -64,3 +64,46 @@
     }
   }
 }
+
+.form {
+  display: flex;
+  gap: 36px;
+  flex-direction: column;
+  width: 100%;
+  padding: 36px;
+}
+.modalFormFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.daysBtnWrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.daysBtn {
+  padding: 8px  16px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  color: $secondary-font-color;
+  border-radius: 24px;
+  background: #33333E;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+
+  &:hover {
+    background: none;
+    border: 2px solid $secondary-accent-color;
+    cursor: pointer;
+  }
+}
+
+.modalBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  z-index: 0;
+}

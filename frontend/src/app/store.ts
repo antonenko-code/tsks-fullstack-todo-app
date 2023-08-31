@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import todosReducer from '../features/todos/todosSlice'
 import collectionsReducer from '../features/Collections/reducers/collectionsSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -11,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   collections: collectionsReducer,
+  todos: todosReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

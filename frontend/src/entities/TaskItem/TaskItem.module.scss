@@ -25,6 +25,7 @@
 .description {
   font-size: 18px;
   font-weight: 400;
+  line-height: 30px;
 }
 
 .date {
@@ -49,5 +50,20 @@
 
 .blur-x2 {
   filter: blur(2px);
+}
+
+.input {
+  padding: 0;
+  display: flex;
+  width: 100%;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  background: none;
+  border: none;
+  color: $secondary-font-color;
+  outline: none;
+  text-overflow: ellipsis;
 }
 

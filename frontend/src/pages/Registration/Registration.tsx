@@ -28,6 +28,8 @@ export const Registration: React.FC = () => {
       // TODO: Create Object for sending request to back-end
     }
   };
+  const [isChecked, setIsChecked] = useState(false);
+
 
   const handleShowPassword = (isFirst: boolean) => {
     if (isFirst) {
@@ -123,7 +125,11 @@ export const Registration: React.FC = () => {
             <div>{errors.get(InputNames.RepeatPassword)}</div>
           )}
 
-          <FormCheckbox description={'I Agree to Privacy Policy'} />
+          <FormCheckbox
+            description={'I Agree to Privacy Policy'}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+          />
 
           <MainButton
             name={'Sign up'}
