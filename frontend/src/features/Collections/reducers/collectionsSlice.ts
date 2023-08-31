@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Collection } from '../../../types/Collection';
 
-
 export interface CollectionsState {
   icons: string[],
   colors: string[],

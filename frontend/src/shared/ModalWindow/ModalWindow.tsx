@@ -26,8 +26,10 @@ export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal
   return (
     <div className={styles.background}>
       <div
-        className={classNames([styles.container], {[styles.containerHide]: isHideModal})}
-        ref={ref}
+        className={classNames([styles.container], {
+          [styles.containerHide]: isHideModal,
+        })}
+        // ref={ref}
       >
         {children}
       </div>
