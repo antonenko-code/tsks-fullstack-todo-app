@@ -21,6 +21,7 @@
   height: 36px;
   border-radius: 12px;
   background-image: $gradient-accent-color;
+  box-shadow: 4px 7px 24px 0px $main-box-shadow-color, 3px 3px 4px 0px $secondary-box-shadow-color;
 }
 
 .logoText {
