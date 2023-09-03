@@ -1,7 +1,7 @@
 import UserModel, { UserDocument } from '../models/user-model';
 import AuthError from '../errors/authError';
 import bcrypt from 'bcryptjs';
-import UserDto from '../dtos/userDto';
+import AuthUserDto from '../dtos/authUserDto';
 import TokenService from './tokenService';
 
 class AuthService {
@@ -22,7 +22,7 @@ class AuthService {
       throw new AuthError('Invalid password')
     }
 
-    const userDto = new UserDto(user)
+    const userDto = new AuthUserDto(user)
     const tokens = TokenService.generateTokens({...userDto});
     await TokenService.saveToken(userDto.id, tokens.refreshToken);
 

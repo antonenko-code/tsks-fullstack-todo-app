@@ -22,7 +22,7 @@ app.use(errorsMiddleware)
 
 const startServer = async () => {
   try {
-    await mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?authSource=admin`)
+    await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     new ConnectionStorage().setConnection(mongoose.connection);
     app.listen(PORT, () => {
       console.log(`Server started... on PORT = ${PORT}`)
