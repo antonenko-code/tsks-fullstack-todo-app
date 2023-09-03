@@ -7,7 +7,7 @@ export const errorsMiddleware = (err: Error, req: Request, res: Response, next: 
   console.error(err);
 
   if (err instanceof ValidationError) {
-    return res.status(err.status).json(err.errors);
+    return res.status(err.status).json({success: false, message: err.message, errors: err.errors});
   }
 
   if (err instanceof ApiError) {

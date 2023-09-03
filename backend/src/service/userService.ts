@@ -3,8 +3,9 @@ import UserModel, { UserDocument } from '../models/user-model';
 import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 import MailService from './mailService';
-import UserDto from '../dtos/userDto';
+import AuthUserDto from '../dtos/authUserDto';
 import RegisterError from '../errors/registerError';
+import UserDto from '../dtos/userDto';
 
 type RequestBody = {
   firstName: string,
@@ -35,7 +36,7 @@ class UserService {
     await newUser.save();
 
     await MailService.sendActivationMail(email, `${process.env.APP_URL}/auth/activate/${activationLink}`);
-    const userDto = new UserDto(newUser)
+    const userDto = new AuthUserDto(newUser)
 
     return {user: userDto}
   }
@@ -52,7 +53,9 @@ class UserService {
   }
 
   async getUser(userId: string) {
-    return UserModel.findOne({_id: userId});
+    const user = await UserModel.findOne({_id: userId});
+
+    return new UserDto(user);
   }
 }
 
