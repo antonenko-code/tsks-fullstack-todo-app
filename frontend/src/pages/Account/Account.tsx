@@ -36,8 +36,8 @@ export const Account: React.FC = () => {
     isSubscribed,
   } = user;
 
-  const name = `${firstName} ${lastName}`;
-  const [editName, setEditName] = useState<boolean>(false);
+  const fullName = `${firstName} ${lastName}`;
+  const [isEditName, setIsEditName] = useState<boolean>(false);
 
   return (
     <PageLayout>
@@ -54,7 +54,7 @@ export const Account: React.FC = () => {
 
         <div className={styles.user}>
           <span className={styles.name}>
-            {name}
+            {fullName}
           </span>
 
           <div className={styles.statusWrapper}>
@@ -71,8 +71,14 @@ export const Account: React.FC = () => {
 
       <FormLayout fullWidth={true}>
         <AccountField
-          titleField={'Display Name'}
-          inputValue={name}
+          titleField={'First Name'}
+          inputValue={firstName}
+          btnName={'Edit'}
+        />
+
+        <AccountField
+          titleField={'Last Name'}
+          inputValue={lastName}
           btnName={'Edit'}
         />
 
@@ -91,21 +97,30 @@ export const Account: React.FC = () => {
       </FormLayout>
 
       <FormLayout fullWidth={true}>
-        <AccountField
-          titleField={'Subscription'}
-          inputValue={
-            `${!isSubscribed ? (
-              'Tsks Free'
-            ) : (
-              'Paid'
-            )}`
-          }
-          btnName={'Upgrade to Pro'}
-          gradient={true}
-        />
+        <div className={styles.subscribeWrapper}>
+          <span
+            className={styles.title}
+          >
+            Subscription
+          </span>
+
+          <div className={styles.subscribeBlock}>
+            <span
+              className={styles.value}
+            >
+              {!isSubscribed ? (
+                'Tsks Free'
+              ) : (
+                'Paid'
+              )}
+            </span>
+
+            <MainButton name={'Upgrade to Pro'} gradient={true} />
+          </div>
+        </div>
       </FormLayout>
 
-      <div>
+      <div className={styles.signOutWrapper}>
         <MainButton name={'Sign out'} />
       </div>
     </PageLayout>

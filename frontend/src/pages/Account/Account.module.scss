@@ -45,6 +45,21 @@
   border-radius: 12px;
 }
 
+.title {
+  font-size: 16px;
+  color: $secondary-font-color;
+}
+
+.value {
+  font-weight: 700;
+}
+
+.subscribeBlock {
+  min-height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .subscribeStatus {
   padding: 8px 16px;
   background: $main-background-color;
