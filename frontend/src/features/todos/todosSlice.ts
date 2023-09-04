@@ -29,10 +29,16 @@ export const todosSlice = createSlice({
       }
     },
     changeTitle: (state: TodosState, action: PayloadAction<UpdateTitle>) => {
-      const todoIndex = state.todos.findIndex((todo) => todo.id === action.payload.id);
+      // const todoIndex = state.todos.findIndex((todo) => todo.id === action.payload.id);
+      //
+      // if (todoIndex !== -1) {
+      //   state.todos[todoIndex].title = action.payload.newTitle;
+      // }
 
-      if (todoIndex !== -1) {
-        state.todos[todoIndex].title = action.payload.newTitle;
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+
+      if (todo) {
+        todo.completed = !todo.completed;
       }
     },
   },

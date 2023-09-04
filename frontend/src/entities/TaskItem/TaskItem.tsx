@@ -42,22 +42,23 @@ export const TaskItem:React.FC<Props> = ({
     date,
     completed,
   } = todo;
+
   const [isBlurX1, setIsBlurX1] = useState<boolean>(false);
   const [isBlurX2, setIsBlurX2] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
   const [isChecked, setIsChecked] = useState<boolean>(completed);
-  const [inputField, setInputField] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title);
   const dispatch = useAppDispatch();
 
-  const handleOnClick = (event: React.MouseEvent) => {
+  const handleTitleClick = (event: React.MouseEvent) => {
     if (event.detail === 2) {
       event.preventDefault();
-      setInputField(true);
+      setIsEditing(true);
     }
   }
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
 
     if (!regex.test(event.target.value)) {
@@ -66,20 +67,19 @@ export const TaskItem:React.FC<Props> = ({
     setNewTitle(event.target.value);
   };
 
-  const handlerOnBlur = () => {
-    const prevTitle = title;
-    setInputField(false);
+  const handleApplyNewTitleOnBlur = () => {
+    setIsEditing(false);
 
     if (newTitle.length) {
       dispatch(changeTitle({ id, newTitle }))
     } else {
-      setNewTitle(prevTitle);
+      setNewTitle(title);
     }
   }
 
-  const handleOnKeyDown = (event: React.KeyboardEvent) => {
+  const handleApplyNewTitleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      handlerOnBlur();
+      handleApplyNewTitleOnBlur();
     }
   };
 
@@ -134,17 +134,16 @@ export const TaskItem:React.FC<Props> = ({
 
         <div
           className={styles.taskDetails}
-          onClick={handleOnClick}
-          onBlur={handlerOnBlur}
-          onSubmit={() => setInputField(false)}
+          onClick={handleTitleClick}
+          onBlur={handleApplyNewTitleOnBlur}
         >
-          {inputField ? (
+          {isEditing ? (
             <input
               className={styles.input}
               value={newTitle}
               maxLength={30}
-              onChange={handleOnChange}
-              onKeyDown={handleOnKeyDown}
+              onChange={handleTitleChange}
+              onKeyDown={handleApplyNewTitleKeyDown}
               required
             />
           ) : (

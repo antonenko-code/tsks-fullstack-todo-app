@@ -40,8 +40,6 @@ export const Tasks: React.FC = (props) => {
     if (collection) {
       const filteredTodos = todos.filter((todo) => todo.collectionId === collection.id);
       setVisibleTodos(filteredTodos);
-    } else {
-      setVisibleTodos(todos);
     }
   }, [collection, todos]);
 
