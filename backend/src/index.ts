@@ -8,6 +8,7 @@ import authRouter from './router/authRouter';
 import { errorsMiddleware } from './middlewares/errorsMiddleware';
 import ConnectionStorage from "./transactions/connectionStorage";
 import userRouter from './router/userRouter';
+import collectionsRouter from './router/collectionsRouter';
 dotenv.config({path: resolve(__dirname,"../.env")});
 
 const PORT = process.env.PORT || 8080;
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use('/auth', authRouter);
 app.use(userRouter);
+app.use(collectionsRouter);
 app.use(errorsMiddleware)
 
 const startServer = async () => {
