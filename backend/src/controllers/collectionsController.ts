@@ -17,16 +17,18 @@ class collectionsController {
   }
 
   async updateCollection(req: Request, res: Response, _next: NextFunction) {
+    const userId = req.user?.id;
     const id = req.params.id;
     const data = req.body;
-    const collection = await collectionsService.updateCollection(id, data);
+    const collection = await collectionsService.updateCollection(userId, id, data);
 
     return res.json(collection);
   }
 
   async deleteCollection(req: Request, res: Response, _next: NextFunction) {
+    const userId = req.user?.id;
     const id = req.params.id;
-    const collection = await collectionsService.deleteCollection(id);
+    const collection = await collectionsService.deleteCollection(userId, id);
 
     return res.json(collection);
   }

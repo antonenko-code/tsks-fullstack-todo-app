@@ -1,5 +1,6 @@
 import CollectionModel, { CollectionDocument } from '../models/collection-model';
 import CollectionDto from '../dtos/collectionDto';
+import ResponseError from '../errors/responseError';
 
 type RequestBody = {
   userId: string,
@@ -18,24 +19,38 @@ class CollectionsService {
     return new CollectionDto(collection);
   }
   async getCollections(userId: string) {
-    return CollectionModel.find({userId: userId})
+    const collections = await CollectionModel.find({userId: userId})
       .then(collections => {
         return collections.map((collection) => new CollectionDto(collection));
       });
+
+    if (!collections.length) {
+      throw new ResponseError('Collections not found')
+    }
+
+    return collections;
   }
 
-  async updateCollection(id: string, data: Partial<CollectionDocument>) {
+  async updateCollection(userId: string, id: string, data: Partial<CollectionDocument>) {
     const collection = await CollectionModel.findOneAndUpdate(
-      { _id: id },
+      { _id: id, userId },
       data,
       { new: true }
     );
 
+    if (!collection) {
+      throw new ResponseError('Collection not found')
+    }
+
     return new CollectionDto(collection);
   }
 
-  async deleteCollection(id: string) {
-    const collection = await CollectionModel.findOneAndDelete({_id: id});
+  async deleteCollection(userId: string, id: string) {
+    const collection = await CollectionModel.findOneAndDelete({_id: id, userId});
+
+    if (!collection) {
+      throw new ResponseError('Collection not found')
+    }
 
     return new CollectionDto(collection);
   }
