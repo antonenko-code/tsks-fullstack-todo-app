@@ -23,6 +23,13 @@ class collectionsController {
 
     return res.json(collection);
   }
+
+  async deleteCollection(req: Request, res: Response, _next: NextFunction) {
+    const id = req.params.id;
+    const collection = await collectionsService.deleteCollection(id);
+
+    return res.json(collection);
+  }
 }
 
 export default new collectionsController();

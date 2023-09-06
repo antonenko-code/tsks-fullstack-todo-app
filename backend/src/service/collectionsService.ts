@@ -33,6 +33,12 @@ class CollectionsService {
 
     return new CollectionDto(collection);
   }
+
+  async deleteCollection(id: string) {
+    const collection = await CollectionModel.findOneAndDelete({_id: id});
+
+    return new CollectionDto(collection);
+  }
 }
 
 export default new CollectionsService();
