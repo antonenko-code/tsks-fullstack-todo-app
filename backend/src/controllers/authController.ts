@@ -3,8 +3,11 @@ import { validationResult } from 'express-validator';
 import UserService from '../service/userService';
 import ValidationError from '../errors/validationError';
 import AuthService from '../service/authService';
+import ExceptionHandler from '../decorators/exceptionHandler';
 
 class authController {
+
+  @ExceptionHandler()
   async registration(req: Request, res: Response) {
     const errors = validationResult(req);
 
@@ -20,6 +23,7 @@ class authController {
     });
   }
 
+  @ExceptionHandler()
   async login(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);
 
@@ -38,6 +42,7 @@ class authController {
     });
   }
 
+  @ExceptionHandler()
   async logout(req: Request, res: Response) {
     try {
 
@@ -46,6 +51,7 @@ class authController {
     }
   }
 
+  @ExceptionHandler()
   async activate(req: Request, res: Response) {
     const activationLink = req.params.link;
     await UserService.activate(activationLink);
@@ -53,6 +59,7 @@ class authController {
     return res.redirect(process.env.CLIENT_URL as string)
   }
 
+  @ExceptionHandler()
   async refresh(req: Request, res: Response) {
     try {
 
