@@ -6,6 +6,7 @@ import MailService from './mailService';
 import AuthUserDto from '../dtos/authUserDto';
 import RegisterError from '../errors/registerError';
 import UserDto from '../dtos/userDto';
+import ValidationError from '../errors/validationError';
 
 type RequestBody = {
   firstName: string,

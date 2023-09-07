@@ -16,13 +16,3 @@ export const errorsMiddleware = (err: Error, req: Request, res: Response, next: 
 
   return res.status(500).json({success: false, message: "Internal Server Error"})
 }
-
-export function errorHandlerWrapper(controller: RequestHandler): RequestHandler {
-  return async (req, res, next) => {
-    try {
-      await controller(req, res, next)
-    } catch (e: any) {
-      next(e);
-    }
-  }
-}
