@@ -1,0 +1,127 @@
+@import '../../../app/assets/styles/index';
+
+.container {
+  display: flex;
+  gap: 10px;
+  min-width: 330px;
+  max-width: 770px;
+  height: auto;
+  border-radius: 24px;
+  background: $secondary-background-color;
+}
+
+.daysContainer {
+  display: flex;
+  gap: 10px;
+  height: auto;
+}
+
+.dateListScrollable {
+  display: flex;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+    -webkit-appearance: none;
+  }
+}
+
+.dateDayItem {
+  display: flex;
+  min-width: 100px;
+  padding: 16px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid $secondary-background-color;
+  border-radius: 24px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  color: $main-font-color;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: relative;
+
+  &:not(.dateDayItemSelected):hover  {
+    cursor: pointer;
+    border: 2px solid $secondary-accent-color;
+    transition: all 0.7s ease-in-out;
+  }
+}
+
+.dateDayItemSelected {
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    width: 100px;
+    height: 110px;
+    background: $gradient-accent-color;
+    content: "";
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &:after {
+    width: 98px;
+    height: 108px;
+    background: $secondary-background-color;
+    content: "";
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+}
+
+.dayLabel {
+  color: $main-font-color;
+  text-align: center;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  z-index: 3;
+}
+
+.dateLabel {
+  color: $main-font-color;
+  text-align: center;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  z-index: 3;
+}
+
+.active {
+  color: $secondary-font-color;
+}
+
+.markedLabel {
+  margin-top: 10px;
+}
+
+.pointHidden {
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  background: none;
+  z-index: 999;
+}
+
+.point {
+  background-image: $gradient-accent-color;
+}
