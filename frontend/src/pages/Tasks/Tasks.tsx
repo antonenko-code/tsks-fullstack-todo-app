@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useMemo, useState } from 'react';
 import styles from './Tasks.module.scss';
 import { PageLayout } from '../../shared/PageLayout';
 import { PageTitle } from '../../shared/PageTitle';
@@ -20,11 +20,11 @@ export const Tasks: React.FC = (props) => {
   const { todos } = useAppSelector(state => state.todos)
   const { id } = useParams();
   const navigate = useNavigate();
-  const [visibleTodos, setVisibleTodos] = useState<Todo[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isHideModal, setIsHideModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [date, setDate] = useState<Date | null>(new Date())
+  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();
 
@@ -32,16 +32,25 @@ export const Tasks: React.FC = (props) => {
     return collections.find(collection => collection.id === id);
   }, [id]);
 
+  const filteredByCollection = todos.filter((todo) => todo.collectionId === collection!.id);
+  const tasksDates = filteredByCollection.map(task => new Date(task.date).toDateString());
+
+  const filteredByDate = (tasks: Todo[], date: Date | null) => {
+    if (date) {
+      let stringDate = new Date(date).toDateString();
+      return tasks.filter(task =>  new Date(task.date).toDateString() === stringDate);
+    }
+    return tasks;
+  };
+
+  const tasksForView = useMemo(() => {
+    return filteredByDate(filteredByCollection, selectedDay)
+  }, [selectedDay, collection, filteredByCollection]);
+
+
   const handleGoBack = () => {
     navigate(-1);
-  }
-
-  useEffect(() => {
-    if (collection) {
-      const filteredTodos = todos.filter((todo) => todo.collectionId === collection.id);
-      setVisibleTodos(filteredTodos);
-    }
-  }, [collection, todos]);
+  };
 
   const handleOpenModal = (event: any) => {
     event.stopPropagation();
@@ -108,7 +117,6 @@ export const Tasks: React.FC = (props) => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     setDate(tomorrow)
-
   };
 
   return (
@@ -118,12 +126,18 @@ export const Tasks: React.FC = (props) => {
         button={true}
         onClick={handleGoBack}
       />
-      <Calendar />
+
+      <Calendar
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        tasksDates={tasksDates}
+      />
+
       <div className={styles.tasksWrapper}>
-        {!todos ? (
+        {!tasksForView.length ? (
           <span className={styles.message}>There are no tasks yet!</span>
         ) : (
-          visibleTodos.map((todo: Todo) => {
+          tasksForView.map((todo: Todo) => {
             return (
               <TaskItem
                 key={todo.id}
