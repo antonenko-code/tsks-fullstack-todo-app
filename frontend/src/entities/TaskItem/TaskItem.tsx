@@ -51,11 +51,6 @@ export const TaskItem:React.FC<Props> = ({
   const [newTitle, setNewTitle] = useState<string>(title);
   const dispatch = useAppDispatch();
 
-  console.log(newTitle);
-
-
-  console.log(todo.title, todo.completed);
-
   const handleTitleClick = (event: React.MouseEvent) => {
     if (event.detail === 2) {
       event.preventDefault();
