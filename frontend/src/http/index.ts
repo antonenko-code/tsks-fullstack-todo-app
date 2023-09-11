@@ -17,4 +17,29 @@ $api.interceptors.request.use(config => {
   return config;
 })
 
+$api.interceptors.response.use(config => {
+  return config;
+}, async (error) => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  const originalRequest = error.config;
+
+  if (error.response.status == 401 && error.config && !error.config._isRetry) {
+    originalRequest._isRetry = true;
+
+    try {
+      if (refreshToken) {
+        const response = await axios.post(`${API_URL}/refresh`, {refreshToken});
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+
+        return $api.request(originalRequest);
+      }
+
+    } catch (e) {
+    }
+  }
+
+  throw error;
+})
+
 export default $api;
