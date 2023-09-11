@@ -28,13 +28,6 @@ export const Tasks: React.FC = (props) => {
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();
 
-  const collection = useMemo(() => {
-    return collections.find(collection => collection.id === id);
-  }, [id]);
-
-  const filteredByCollection = todos.filter((todo) => todo.collectionId === collection!.id);
-  const tasksDates = filteredByCollection.map(task => new Date(task.date).toDateString());
-
   const filteredByDate = (tasks: Todo[], date: Date | null) => {
     if (date) {
       let stringDate = new Date(date).toDateString();
@@ -42,6 +35,18 @@ export const Tasks: React.FC = (props) => {
     }
     return tasks;
   };
+
+  const collection = useMemo(() => {
+    return collections.find(collection => collection.id === id);
+  }, [id]);
+
+  const filteredByCollection = useMemo(() => {
+    return todos.filter((todo) => todo.collectionId === collection!.id)
+  }, [todos]);
+
+  const tasksDates = useMemo(() => {
+    return filteredByCollection.map(task => new Date(task.date).toDateString())
+  }, [filteredByCollection]);
 
   const tasksForView = useMemo(() => {
     return filteredByDate(filteredByCollection, selectedDay)
