@@ -21,24 +21,20 @@ export const todosSlice = createSlice({
     add: (state: TodosState, action: PayloadAction<Todo>) => {
       state.todos.push(action.payload);
     },
+
     changeStatus: (state: TodosState, action: PayloadAction<string>) => {
-      const todoIndex = state.todos.findIndex((todo) => todo.id === action.payload);
-
-      if (todoIndex !== -1) {
-        state.todos[todoIndex].completed = !state.todos[todoIndex].completed;
-      }
-    },
-    changeTitle: (state: TodosState, action: PayloadAction<UpdateTitle>) => {
-      // const todoIndex = state.todos.findIndex((todo) => todo.id === action.payload.id);
-      //
-      // if (todoIndex !== -1) {
-      //   state.todos[todoIndex].title = action.payload.newTitle;
-      // }
-
-      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+      const todo = state.todos.find((todo) => todo.id === action.payload);
 
       if (todo) {
         todo.completed = !todo.completed;
+      }
+    },
+
+    changeTitle: (state: TodosState, action: PayloadAction<UpdateTitle>) => {
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+
+      if (todo) {
+        todo.title = action.payload.newTitle;
       }
     },
   },
