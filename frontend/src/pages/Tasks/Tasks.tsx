@@ -16,8 +16,8 @@ import { Todo } from '../../types/Todo';
 import { Calendar } from '../../shared/Calendar';
 
 export const Tasks: React.FC = (props) => {
-  const { collections } = useAppSelector(state => state.collections)
-  const { todos } = useAppSelector(state => state.todos)
+  const { collections } = useAppSelector(state => state.collections);
+  const { todos } = useAppSelector(state => state.todos);
   const { id } = useParams();
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
