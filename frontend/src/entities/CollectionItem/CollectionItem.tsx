@@ -1,8 +1,8 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEventHandler, useMemo, useState } from 'react';
 import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { deleteCollection, changeCollection } from '../../features/Collections/reducers/collectionsSlice';
 
 type Props = {
@@ -21,6 +21,17 @@ export const CollectionItem: React.FC<Props> = ({
   const [inputField, setInputField] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const dispatch = useAppDispatch();
+  const { todos } = useAppSelector(state => state.todos);
+
+  const totalTasks = useMemo(() => {
+    return todos.filter(todo => todo.collectionId === id);
+  }, [todos]);
+
+  const completedTasksCount = useMemo(() => {
+    return totalTasks.filter(task => task.completed).length;
+  }, [totalTasks]);
+
+  const totalTasksCount = totalTasks.length;
 
   const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
@@ -104,14 +115,18 @@ export const CollectionItem: React.FC<Props> = ({
           <span className={styles.span}>tasks:</span>
 
           <div className={styles.infoProgress}>
-            {/*{completed < total*/}
-            {/*  ? (`${completed}/${total} done`)*/}
-            {/*  : (`All ${total} done`)*/}
-            {/*}*/}
+            {completedTasksCount < totalTasksCount
+              ? (`${completedTasksCount}/${totalTasksCount} done`)
+              : (`All ${totalTasksCount} done`)
+            }
           </div>
         </div>
 
-        {/*<RadialChart total={total} completed={completed} color={'blue'} />*/}
+        <RadialChart
+          total={totalTasksCount}
+          completed={completedTasksCount}
+          color={color}
+        />
       </div>
     </div>
   );
