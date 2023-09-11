@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Token from '../models/token-model';
+import tokenModel from '../models/token-model';
 
 class TokenService {
   generateTokens(payload: any) {
@@ -41,6 +42,10 @@ class TokenService {
     await token.save();
 
     return token;
+  }
+
+  async findToken(token: string) {
+    return tokenModel.findOne({refreshToken: token});
   }
 }
 
