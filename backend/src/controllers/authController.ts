@@ -61,11 +61,14 @@ class authController {
 
   @ExceptionHandler()
   async refresh(req: Request, res: Response) {
-    try {
+    const { refreshToken } = req.body;
+    const userData = await AuthService.refresh(refreshToken);
 
-    } catch (e) {
-
-    }
+    return res.json({
+      success: true,
+      message: 'Token updated successfully',
+      data: userData,
+    });
   }
 }
 
