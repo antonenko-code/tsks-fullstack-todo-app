@@ -19,10 +19,6 @@ class AuthService {
       throw new AuthError('User does not exist');
     }
 
-    if (!user.isActivated) {
-      throw new AuthError('The user profile is not activated')
-    }
-
     const isPasswordEqual = await bcrypt.compare(password, user.password);
 
     if (!isPasswordEqual) {
