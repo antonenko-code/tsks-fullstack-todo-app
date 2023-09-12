@@ -8,15 +8,15 @@ import { Link } from 'react-router-dom';
 import styles from './SignIn.module.scss'
 import { MainButton } from '../../shared/MainButton';
 import { SocialButton } from '../../shared/SocialButton';
-import { useForm, InputNames } from '../../utils/useForm';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 export const SignIn: React.FC = () => {
   const [isOpenEye, setIsOpenEye] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const {onChange, values, errors} = useForm();
+  const {onChangeValidation, errors} = UseHandlingErrors();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+    onChangeValidation(event);
     setIsSubmit(false);
   };
 
@@ -41,7 +41,7 @@ export const SignIn: React.FC = () => {
             title={'Email'}
             name={InputNames.Email}
             type={'email'}
-            value={values.get(InputNames.Email)}
+            // value={}
             placeholder={'username@gmail.com'}
             onChange={handleOnChange}
           />
@@ -52,7 +52,7 @@ export const SignIn: React.FC = () => {
             title={'Password'}
             name={InputNames.Password}
             type={isOpenEye ? 'text' : 'password'}
-            value={values.get(InputNames.Password)}
+            // value={}
             placeholder={'Password'}
             onChange={handleOnChange}
           >

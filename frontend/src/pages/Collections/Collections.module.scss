@@ -1,4 +1,4 @@
-@import "./src/app/assets/styles/index";
+@import './src/app/assets/styles/index';
 
 .collectionContainer {
   display: flex;
@@ -57,3 +57,7 @@
   z-index: 0;
 }
 
+.errorMessage {
+  color: $hover-color;
+  font-size: 15px;
+}

@@ -1,3 +1,6 @@
+@import './src/app/assets/styles/index';
+
+
 .form {
   width: 100%;
   display: flex;
@@ -7,4 +10,9 @@
 
 .checkboxWrapper {
   margin-bottom: 30px;
+}
+
+.errorMessage {
+  color: $hover-color;
+  font-size: 15px;
 }

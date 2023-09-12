@@ -12,18 +12,21 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { v4 as uuidv4 } from 'uuid';
 import { addCollection, deleteColor } from '../../features/Collections/reducers/collectionsSlice';
 import { Link } from 'react-router-dom';
-import { useForm, InputNames } from '../../utils/useForm';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 const MAX_LENGTH = 12;
 
 export const Collections: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isHideModal, setIsHideModal] = useState(false);
+  const [title, setTitle] = useState({
+    collectionName: '',
+  });
   const { icons, colors, collections } = useAppSelector(state => state.collections);
   const [selectedIcon, setSelectedIcon] = useState<string>(icons[0]);
   const dispatch = useAppDispatch();
   const [isSubmit, setIsSubmit] = useState(false);
-  const {onChange, values, errors} = useForm();
+  const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
 
   const closeModal = () => {
     setIsHideModal(true);
@@ -36,14 +39,16 @@ export const Collections: React.FC = () => {
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+    onChangeValidation(event);
+    setTitle(({collectionName: event.target.value}));
     setIsSubmit(false);
   }
 
   const handleOnSubmit = (event: FormEvent) => {
     event.preventDefault();
     setIsSubmit(true);
-    const collectionName = values.get(InputNames.CollectionName);
+    onSubmitValidation(title, [InputNames.CollectionName]);
+    const collectionName = title.collectionName;
     if (errors.size === 0 && collectionName) {
       const randomIndex = Math.floor(Math.random() * colors.length);
       const color = colors[randomIndex];
@@ -56,6 +61,7 @@ export const Collections: React.FC = () => {
         id,
       };
       dispatch(addCollection(newCollection));
+      setTitle(({ collectionName: '' }));
       closeModal();
       setSelectedIcon(icons[0])
     }
@@ -111,13 +117,13 @@ export const Collections: React.FC = () => {
                   <FormField
                     placeholder={'Some text'}
                     name={InputNames.CollectionName}
-                    value={values.get(InputNames.CollectionName)}
+                    value={title.collectionName}
                     maxLength={12}
                     onChange={handleOnChange}
                   />
 
                   {errors.has(InputNames.CollectionName) && isSubmit && (
-                    <div>{errors.get(InputNames.CollectionName)}</div>
+                    <div className={styles.errorMessage}>{errors.get(InputNames.CollectionName)}</div>
                   )}
                 </div>
 

@@ -25,11 +25,11 @@ export const CollectionItem: React.FC<Props> = ({
 
   const totalTasks = useMemo(() => {
     return todos.filter(todo => todo.collectionId === id);
-  }, [todos]);
+  }, [id]);
 
   const completedTasksCount = useMemo(() => {
     return totalTasks.filter(task => task.completed).length;
-  }, [totalTasks]);
+  }, []);
 
   const totalTasksCount = totalTasks.length;
 
@@ -91,7 +91,7 @@ export const CollectionItem: React.FC<Props> = ({
         </div>
       </div>
 
-      <div
+      <form
         className={styles.title}
         onClick={handleOnClick}
         onBlur={handlerOnBlur}
@@ -108,16 +108,19 @@ export const CollectionItem: React.FC<Props> = ({
             >
             </input>
           ) : (newTitle)}
-      </div>
+      </form>
 
       <div className={styles.blockProgress}>
         <div className={styles.tasksContainer}>
           <span className={styles.span}>tasks:</span>
 
           <div className={styles.infoProgress}>
-            {completedTasksCount < totalTasksCount
-              ? (`${completedTasksCount}/${totalTasksCount} done`)
-              : (`All ${totalTasksCount} done`)
+            {totalTasksCount === 0
+              ? (`No tasks yet`)
+              : (completedTasksCount < totalTasksCount
+                ? (`${completedTasksCount}/${totalTasksCount} done`)
+                : (`All tasks done`)
+              )
             }
           </div>
         </div>
