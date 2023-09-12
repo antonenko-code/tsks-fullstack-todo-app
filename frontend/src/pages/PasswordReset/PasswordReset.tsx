@@ -6,16 +6,16 @@ import styles from './PasswordReset.module.scss';
 import { Icons } from '../../shared/Icons/Icons';
 import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
-import { useForm, InputNames } from '../../utils/useForm';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 export const PasswordReset: React.FC = () => {
   const [isOpenEye, setIsOpenEye] = useState(false);
   const [isSecondOpenEye, setIsSecondOpenEye] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const {onChange, values, errors} = useForm();
+  const {onChangeValidation, errors} = UseHandlingErrors();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+    onChangeValidation(event);
     setIsSubmit(false);
   };
 
@@ -52,7 +52,7 @@ export const PasswordReset: React.FC = () => {
             title={'Password'}
             name={InputNames.Password}
             type={isOpenEye ? 'text' : 'password'}
-            value={values.get(InputNames.Password)}
+            // value={}
             placeholder={'Password'}
             onChange={handleOnChange}
           >
@@ -71,7 +71,7 @@ export const PasswordReset: React.FC = () => {
             title={'Repeat password'}
             name={InputNames.RepeatPassword}
             type={isSecondOpenEye ? 'text' : 'password'}
-            value={values.get(InputNames.RepeatPassword)}
+            // value={}
             placeholder={'Repeat password'}
             onChange={handleOnChange}
           >

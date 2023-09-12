@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { PageLayout } from '../../shared/PageLayout';
 import { PageTitle } from '../../shared/PageTitle';
 import { FormLayout } from '../../shared/FormLayout';
@@ -7,7 +7,7 @@ import { MainButton } from '../../shared/MainButton';
 import { FormCheckbox } from '../../shared/FormCheckbox';
 import styles from './Registration.module.scss';
 import { Icons } from '../../shared/Icons/Icons';
-import { useForm, InputNames } from '../../utils/useForm';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 import { AuthService } from '../../services/AuthService';
 import { AxiosError } from 'axios';
 import { IBaseResponse } from '../../types/response/IBaseResponse';
@@ -21,7 +21,6 @@ const initialData = {
 
 export const Registration: React.FC = () => {
   const [data, setData] = useState(initialData);
-
   const {
     firstName,
     secondName,
@@ -30,34 +29,50 @@ export const Registration: React.FC = () => {
   } = data;
 
   const [isOpenEye, setIsOpenEye] = useState<boolean>(false);
+  const [isSecondOpenEye, setIsSecondOpenEye] = useState(false);
+  const [secondaryPassword, setSecondaryPassword] = useState({
+    repeatPassword: '',
+    errorMessage: false,
+  });
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const {onChange, errors} = useForm();
+  const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
   const [isCheckedAgree, setIsCheckedAgree] = useState<boolean>(false);
   const [error, setError] = useState<IBaseResponse<any, any> | null>(null);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
+    if (name === InputNames.RepeatPassword) {
+      setSecondaryPassword({ errorMessage: false, repeatPassword: value });
+    } else {
+      setData((prevState) => ({
+          ...prevState,
+          [name]: value.trim(),
+        })
+      );
+    }
 
-    setData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      })
-    )
     setError(null);
-    onChange(event);
+    onChangeValidation(event);
     setIsSubmit(false);
+    setSecondaryPassword(prevState => ({ ...prevState, errorMessage: false}));
   };
 
   const handleOnSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
     setIsSubmit(true);
+    onSubmitValidation(data, [InputNames.FirstName, InputNames.SecondName, InputNames.Email ,InputNames.Password]);
+
+    if (data.password !== secondaryPassword.repeatPassword) {
+      setSecondaryPassword(prevState => ({ ...prevState, errorMessage: true}));
+    }
 
     if (errors.size === 0 && isCheckedAgree) {
       try {
-        const res = await AuthService.registration(data)
+        const res = await AuthService.registration(data);
 
         if (res.data.success) {
-          await AuthService.login(data.email, data.password)
+          await AuthService.login(data.email, data.password);
         }
 
         setData(initialData);
@@ -74,6 +89,8 @@ export const Registration: React.FC = () => {
   const handleShowPassword = (isFirst: boolean) => {
     if (isFirst) {
       setIsOpenEye(prevState => !prevState)
+    } else {
+      setIsSecondOpenEye(prevState => !prevState)
     }
   }
 
@@ -94,44 +111,41 @@ export const Registration: React.FC = () => {
         >
           <FormField
             title={'First name'}
-            name={'firstName'}
+            name={InputNames.FirstName}
             value={firstName}
             placeholder={'First name'}
             onChange={handleOnChange}
           />
-
           {errors.has(InputNames.FirstName) && isSubmit && (
-            <div>{errors.get(InputNames.FirstName)}</div>
+            <div className={styles.errorMessage}>{errors.get(InputNames.FirstName)}</div>
           )}
 
           <FormField
             title={'Second name'}
-            name={'secondName'}
+            name={InputNames.SecondName}
             value={secondName}
             placeholder={'Second name'}
             onChange={handleOnChange}
           />
-
           {errors.has(InputNames.SecondName) && isSubmit && (
-            <div>{errors.get(InputNames.SecondName)}</div>
+            <div className={styles.errorMessage}>{errors.get(InputNames.SecondName)}</div>
           )}
 
           <FormField
             title={'Email'}
-            name={'email'}
+            name={InputNames.Email}
             type={'email'}
             value={email}
             placeholder={'username@gmail.com'}
             onChange={handleOnChange}
           />
-
           {errors.has(InputNames.Email) && isSubmit && (
-            <div>{errors.get(InputNames.Email)}</div>
+            <div className={styles.errorMessage}>{errors.get(InputNames.Email)}</div>
           )}
 
           <FormField
             title={'Password'}
-            name={'password'}
+            name={InputNames.Password}
             type={isOpenEye ? 'text' : 'password'}
             value={password}
             placeholder={'Password'}
@@ -143,9 +157,27 @@ export const Registration: React.FC = () => {
               <Icons name={isOpenEye ? 'eyeOpen' : 'eyeClose'} />
             </div>
           </FormField>
-
           {errors.has(InputNames.Password) && isSubmit && (
-            <div>{errors.get(InputNames.Password)}</div>
+            <div className={styles.errorMessage}>{errors.get(InputNames.Password)}</div>
+          )}
+
+          <FormField
+            title={'Repeat password'}
+            name={InputNames.RepeatPassword}
+            type={isSecondOpenEye ? 'text' : 'password'}
+            value={secondaryPassword.repeatPassword}
+            placeholder={'Repeat password'}
+            onChange={handleOnChange}
+          >
+            <div
+              className={styles.iconWrapper}
+              onClick={() => handleShowPassword(false)}
+            >
+              <Icons name={isSecondOpenEye ? 'eyeOpen' : 'eyeClose'} />
+            </div>
+          </FormField>
+          {isSubmit && secondaryPassword.errorMessage && (
+            <span className={styles.errorMessage}>Passwords should be same</span>
           )}
 
           <div className={styles.checkboxWrapper}>
@@ -154,10 +186,14 @@ export const Registration: React.FC = () => {
               isChecked={isCheckedAgree}
               setIsChecked={setIsCheckedAgree}
             />
+            {isSubmit && !isCheckedAgree && (
+              <span className={styles.errorMessage}>Policies should be accepted</span>
+            )}
+
           </div>
 
           {error && !error.success&& (
-            <div>{error.message}</div>
+            <div className={styles.errorMessage}>{error.message}</div>
           )}
 
           <MainButton

@@ -5,14 +5,14 @@ import { FormLayout } from '../../shared/FormLayout';
 import styles from './ForgotPassword.module.scss';
 import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
-import { useForm, InputNames } from '../../utils/useForm';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 export const ForgotPassword: React.FC = () => {
   const [isSubmit, setIsSubmit] = useState(false);
-  const {onChange, values, errors} = useForm();
+  const {onChangeValidation, errors} = UseHandlingErrors();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+    onChangeValidation(event);
     setIsSubmit(false);
   };
 
@@ -39,9 +39,9 @@ export const ForgotPassword: React.FC = () => {
           </div>
           <FormField
             title={'Email'}
-            name={'Email'}
+            name={InputNames.Email}
             type={'email'}
-            value={values.get(InputNames.Email)}
+            // value={}
             placeholder={'username@gmail.com'}
             onChange={handleOnChange}
           />
