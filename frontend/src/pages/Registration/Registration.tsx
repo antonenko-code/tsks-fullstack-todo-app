@@ -108,6 +108,7 @@ export const Registration: React.FC = () => {
           className={styles.form}
           noValidate
           onSubmit={handleOnSubmit}
+
         >
           <FormField
             title={'First name'}
