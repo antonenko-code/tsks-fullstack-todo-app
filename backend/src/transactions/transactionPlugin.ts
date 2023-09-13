@@ -26,7 +26,8 @@ export default function transactionPlugin(schema: Schema) {
     const sessionStorage = new SessionStorage();
     const operations = Object.keys(Operations);
     for (let i = 0; i < operations.length; i++) {
-        schema.pre(operations[i], async function (this: (Document | Query<any, any>),next: any) {
+        const operation = operations[i] as Operations;
+        schema.pre(Operations[operation], async function (this: (Document | Query<any, any>), next: any) {
             const session = sessionStorage.getSession();
             if (session) {
                 if (this instanceof Document) {
@@ -34,6 +35,9 @@ export default function transactionPlugin(schema: Schema) {
                 } else if (this instanceof Query) {
                     this.getOptions().session || this.session(session);
                 }
+            }
+            if (next && next instanceof Function) {
+                next();
             }
         });
     }
