@@ -30,12 +30,13 @@ export default function transactionPlugin(schema: Schema) {
             const session = sessionStorage.getSession();
             if (session) {
                 if (this instanceof Document) {
-                    this.$session() || this.$session(session);
+                    const doc = this as Document;
+                    doc.$session() || doc.$session(session);
                 } else if (this instanceof Query) {
-                    this.getOptions().session || this.session(session);
+                    const query = this as Query<any, any>;
+                    query.getOptions().session || query.session(session);
                 }
             }
-            next();
         });
     }
 }
