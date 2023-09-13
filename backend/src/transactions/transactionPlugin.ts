@@ -26,15 +26,13 @@ export default function transactionPlugin(schema: Schema) {
     const sessionStorage = new SessionStorage();
     const operations = Object.keys(Operations);
     for (let i = 0; i < operations.length; i++) {
-        schema.pre(operations[i], async function (next: any) {
+        schema.pre(operations[i], async function (this: (Document | Query<any, any>),next: any) {
             const session = sessionStorage.getSession();
             if (session) {
                 if (this instanceof Document) {
-                    const doc = this as Document;
-                    doc.$session() || doc.$session(session);
+                    this.$session() || this.$session(session);
                 } else if (this instanceof Query) {
-                    const query = this as Query<any, any>;
-                    query.getOptions().session || query.session(session);
+                    this.getOptions().session || this.session(session);
                 }
             }
         });
