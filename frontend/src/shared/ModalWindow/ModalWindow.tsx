@@ -13,11 +13,13 @@ export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal
 
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as HTMLDivElement)) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
         closeModal();
       }
     }
+
     document.addEventListener("click", checkIfClickedOutside)
+
     return () => {
       document.removeEventListener("click", checkIfClickedOutside)
     }
@@ -29,7 +31,7 @@ export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal
         className={classNames([styles.container], {
           [styles.containerHide]: isHideModal,
         })}
-        // ref={ref}
+        ref={ref}
       >
         {children}
       </div>
