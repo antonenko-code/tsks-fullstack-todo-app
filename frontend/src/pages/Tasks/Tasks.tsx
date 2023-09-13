@@ -15,7 +15,7 @@ import { TaskItem } from '../../entities/TaskItem';
 import { Todo } from '../../types/Todo';
 import { Calendar } from '../../shared/Calendar';
 
-export const Tasks: React.FC = (props) => {
+export const Tasks: React.FC = () => {
   const { collections } = useAppSelector(state => state.collections);
   const { todos } = useAppSelector(state => state.todos);
   const { id } = useParams();
@@ -59,7 +59,7 @@ export const Tasks: React.FC = (props) => {
 
   const handleOpenModal = (event: any) => {
     event.stopPropagation();
-    setIsOpenModal(res => !res);
+    setIsOpenModal(true);
   };
 
   const closeModal = () => {
@@ -67,6 +67,7 @@ export const Tasks: React.FC = (props) => {
     const timer = setTimeout(() => {
       setIsOpenModal(false);
       setIsHideModal(false);
+      setTitle('');
     }, 500);
     return () => clearTimeout(timer);
   };
@@ -92,12 +93,15 @@ export const Tasks: React.FC = (props) => {
 
   const handleOnSubmit = (event: FormEvent) => {
     event.preventDefault();
+
     try {
       validation(title);
       const id = uuidv4();
+
       if (!date) {
         return;
       }
+
       const newTodoItem = {
         title,
         id,
@@ -105,17 +109,19 @@ export const Tasks: React.FC = (props) => {
         date: date,
         collectionId: collection?.id,
       };
+
       dispatch(add(newTodoItem));
       closeModal();
       setTitle('');
     } catch (error: any) {
       setErrorMessage(error);
+
       return;
     }
   };
 
   const handelSetDataToday = () => {
-    setDate(new Date())
+    setDate(new Date());
   }
 
   const handelSetDataTomorrow = () => {
@@ -200,7 +206,6 @@ export const Tasks: React.FC = (props) => {
                 </div>
               </div>
             </div>
-
 
             <div className={styles.modalBtnWrapper}>
               <MainButton

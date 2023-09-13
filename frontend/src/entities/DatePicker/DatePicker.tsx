@@ -16,16 +16,25 @@ const CustomInput = forwardRef((props: any, ref) => {
         <Icons name='calendar'/>
       </div>
 
-      <input {...props} ref={ref} type="text" />
+      <input
+        {...props}
+        ref={ref}
+        type="text"
+      />
 
       <div className='dateIcon iconRight'>
         <Icons name='arrowDown'/>
       </div>
     </div>
   )
-});
+})
 
 export const DatePicker: React.FC<Props> = ({ date, setDate }) => {
+  const handleDateChange = (newDate: Date | null, event: React.MouseEvent) => {
+    setDate(newDate);
+    event.stopPropagation();
+  };
+
   return (
     <ReactDatePicker
       renderCustomHeader={({
@@ -43,8 +52,12 @@ export const DatePicker: React.FC<Props> = ({ date, setDate }) => {
             alignItems: "center",
           }}
         >
-          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-            <Icons name='arrowLeft' />
+          <button
+            type={'button'}
+            onClick={decreaseMonth}
+            disabled={prevMonthButtonDisabled}
+          >
+            <Icons name='arrowLeft'/>
           </button>
 
           <span>{monthDate.toLocaleString("en-US", {
@@ -52,7 +65,11 @@ export const DatePicker: React.FC<Props> = ({ date, setDate }) => {
             year: "numeric",
           })}</span>
 
-          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+          <button
+            type={'button'}
+            onClick={increaseMonth}
+            disabled={nextMonthButtonDisabled}
+          >
             <Icons name='arrowRight' />
           </button>
         </div>
@@ -61,7 +78,7 @@ export const DatePicker: React.FC<Props> = ({ date, setDate }) => {
       customInput={<CustomInput />}
       showIcon
       selected={date}
-      onChange={(date) => setDate(date)}
+      onChange={handleDateChange}
       calendarClassName="calendar"
     />
   );
