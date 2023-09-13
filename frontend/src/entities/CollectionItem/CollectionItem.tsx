@@ -50,7 +50,7 @@ export const CollectionItem: React.FC<Props> = ({
       event.preventDefault();
       setInputField(true);
     }
-  }
+  };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
@@ -68,7 +68,7 @@ export const CollectionItem: React.FC<Props> = ({
     } else {
       setNewTitle(title)
     }
-  }
+  };
 
   const handleOnKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {

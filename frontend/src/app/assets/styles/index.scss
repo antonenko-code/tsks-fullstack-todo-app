@@ -35,6 +35,18 @@ body {
   background: $main-background-color fixed;
 }
 
+input {
+  width: 100%;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-text-size-adjust: inherit;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: $secondary-font-color;
+  }
+}
+
 .App {
   height: 100%;
 }
