@@ -104,7 +104,6 @@ export const Registration: React.FC = () => {
         </p>
 
         <form
-          autoComplete={'off'}
           className={styles.form}
           noValidate
           onSubmit={handleOnSubmit}

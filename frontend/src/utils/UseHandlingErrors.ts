@@ -6,7 +6,8 @@ export enum InputNames {
   RepeatPassword ='repeatPassword',
   FirstName = 'firstName',
   SecondName = 'secondName',
-  CollectionName = 'collectionName'
+  CollectionName = 'collectionName',
+  TodoName= 'todoName'
 }
 
 export const UseHandlingErrors = () => {
@@ -48,6 +49,7 @@ export const UseHandlingErrors = () => {
         }
         break
       }
+      case InputNames.TodoName:
       case InputNames.FirstName:
       case InputNames.SecondName:
       case InputNames.CollectionName: {

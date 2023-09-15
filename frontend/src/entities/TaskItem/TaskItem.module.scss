@@ -20,6 +20,7 @@
 .taskDetails {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .description {
@@ -65,5 +66,10 @@
   color: $secondary-font-color;
   outline: none;
   text-overflow: ellipsis;
+}
+
+.errorMessage {
+  color: $hover-color;
+  font-size: 15px;
 }
 
