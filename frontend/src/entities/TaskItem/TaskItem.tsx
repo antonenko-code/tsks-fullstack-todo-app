@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { Todo } from '../../types/Todo';
 import { changeStatus, changeTitle } from '../../features/todos/todosSlice';
 import { useAppDispatch } from '../../app/hooks';
+import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 type Props = {
   todo: Todo,
@@ -45,41 +46,55 @@ export const TaskItem:React.FC<Props> = ({
 
   const [isBlurX1, setIsBlurX1] = useState<boolean>(false);
   const [isBlurX2, setIsBlurX2] = useState<boolean>(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLDivElement | null>(null);
   const [isChecked, setIsChecked] = useState<boolean>(completed);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title);
+  const [error, setError] = useState<boolean>(false);
+  const {onChangeValidation, errors} = UseHandlingErrors();
   const dispatch = useAppDispatch();
+
 
   const handleTitleClick = (event: React.MouseEvent) => {
     if (event.detail === 2) {
       event.preventDefault();
       setIsEditing(true);
+      setError(false);
     }
   }
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
+    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-'\s]*$/);
 
     if (!regex.test(event.target.value)) {
       return;
     }
+
+    onChangeValidation(event);
     setNewTitle(event.target.value);
   };
 
   const handleApplyNewTitleOnBlur = () => {
-    setIsEditing(false);
-
-    if (newTitle.length) {
-      dispatch(changeTitle({ id, newTitle }))
+    if (newTitle.length >= 2) {
+      setIsEditing(false);
+      setError(false);
+      dispatch(changeTitle({ id, newTitle }));
     } else {
-      setNewTitle(title);
+      setError(true);
     }
   }
 
   const handleApplyNewTitleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       handleApplyNewTitleOnBlur();
+    }
+  };
+
+  const handleContainerClick = () => {
+    if (isEditing) {
+      setNewTitle(title);
+      setIsEditing(false);
+      setError(false);
     }
   };
 
@@ -138,14 +153,22 @@ export const TaskItem:React.FC<Props> = ({
           onBlur={handleApplyNewTitleOnBlur}
         >
           {isEditing ? (
-            <input
-              className={styles.input}
-              value={newTitle}
-              maxLength={30}
-              onChange={handleTitleChange}
-              onKeyDown={handleApplyNewTitleKeyDown}
-              required
-            />
+            <>
+              <input
+                onBlur={handleContainerClick}
+                className={styles.input}
+                value={newTitle}
+                name={InputNames.TodoName}
+                maxLength={30}
+                onChange={handleTitleChange}
+                onKeyDown={handleApplyNewTitleKeyDown}
+                required
+              />
+
+              {errors.has(InputNames.TodoName) && error && (
+                <div className={styles.errorMessage}>{errors.get(InputNames.TodoName)}</div>
+              )}
+            </>
           ) : (
             <div className={styles.description}>
               {newTitle}
