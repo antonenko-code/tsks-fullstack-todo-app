@@ -25,7 +25,7 @@ class TasksService {
       });
 
     if (!tasks.length) {
-      throw new ResponseError('Tasks not found')
+      return [];
     }
 
     return tasks;

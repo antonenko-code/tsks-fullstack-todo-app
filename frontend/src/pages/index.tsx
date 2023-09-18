@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { SignIn } from './SignIn';
 import { ForgotPassword } from './ForgotPassword';
 import { PasswordReset } from './PasswordReset';
@@ -8,11 +8,14 @@ import { Account } from './Account';
 import { Collections } from './Collections';
 import { Home } from './Home';
 import { Tasks } from './Tasks';
+import { useAppSelector } from '../app/hooks';
 
 export const Routing = () => {
+  const { isAuth } = useAppSelector(state => state.auth);
+
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route path='/' element={isAuth ? <Navigate to='/collections' /> : <Home />} />
 
       <Route path='sign-in' element={<SignIn /> } />
 

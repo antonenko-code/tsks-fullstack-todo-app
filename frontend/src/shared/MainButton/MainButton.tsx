@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import style from './MainButton.module.scss';
 
@@ -7,12 +7,14 @@ interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLB
   fullwidth?: boolean,
   gradient?: boolean,
   onClick?: MouseEventHandler<HTMLButtonElement>,
+  children?: ReactNode,
 }
 
 export const MainButton: FC<Props> = ({
   name,
   fullwidth,
   gradient,
+  children,
   ...props
 }) => {
   return (
@@ -23,7 +25,7 @@ export const MainButton: FC<Props> = ({
       })}
       {...props}
     >
-      {name}
+      {children ? children : name}
     </button>
   );
 };

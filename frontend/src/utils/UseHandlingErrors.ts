@@ -71,21 +71,22 @@ export const UseHandlingErrors = () => {
 
   const onChangeValidation = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
-
     let { name, value } = event.target;
     validate(event, name, value);
   };
 
   const onSubmitValidation = (data: object, keys: string[]) => {
+    const newState = new Map(errors)
     Object.entries(data).forEach(entry => {
       const [key, value] = entry;
       if (keys.includes(key) && (!value || value.length === 0)) {
-        setErrors(prevState =>
-        prevState.set(key, 'Please, enter some text'))
+        newState.set(key, 'Please, enter some text');
       }
     })
+
+    setErrors(newState)
+    return newState;
   };
 
-  return({
-    errors, onChangeValidation, onSubmitValidation });
+  return { errors, onChangeValidation, onSubmitValidation };
 };

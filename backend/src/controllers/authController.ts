@@ -19,7 +19,7 @@ class authController {
     return res.json({
       success: true,
       message: 'Registration was successful',
-      data: userData,
+      ...userData,
     });
   }
 
@@ -38,7 +38,7 @@ class authController {
     return res.json({
       success: true,
       message: 'Login was successful',
-      data: userData,
+      ...userData,
     });
   }
 
@@ -67,7 +67,7 @@ class authController {
     return res.json({
       success: true,
       message: 'Token updated successfully',
-      data: userData,
+      ...userData,
     });
   }
 }

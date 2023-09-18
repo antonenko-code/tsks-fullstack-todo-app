@@ -1,7 +1,8 @@
-export interface IBaseResponse<T, E> {
+import { IUser } from '../IUser';
+
+export interface IBaseResponse<T> {
   success: boolean,
   message: string,
-  data?: T,
-  errors?: E,
+  errors?: T,
 }
 

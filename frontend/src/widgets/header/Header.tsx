@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.scss'
 import { HeaderButton } from '../../shared/HeaderButton';
 import { Icons } from '../../shared/Icons/Icons';
+import { Profile } from '../../shared/Profile';
+import { useAppSelector } from '../../app/hooks';
 
 export const Header: FC = () => {
+  const { isAuth } = useAppSelector(state => state.auth)
+
   return (
     <div>
       <header className={styles.header}>
@@ -24,13 +28,19 @@ export const Header: FC = () => {
         </Link>
 
         <div className={styles.blockButtons}>
-          <Link to='/sign-in' className={styles.button}>
-            <HeaderButton name="Sign In" />
-          </Link>
+          {isAuth ? (
+            <Profile />
+          ) : (
+            <>
+              <Link to='/sign-in' className={styles.button}>
+                <HeaderButton name="Sign In" />
+              </Link>
 
-          <Link to='/sign-up'>
-            <HeaderButton name="Sign Up" border={true} />
-          </Link>
+              <Link to='/sign-up'>
+                <HeaderButton name="Sign Up" border={true} />
+              </Link>
+            </>
+          )}
         </div>
       </header>
     </div>
