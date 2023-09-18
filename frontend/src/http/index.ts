@@ -8,10 +8,10 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
 
   if (token) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
@@ -28,7 +28,7 @@ $api.interceptors.response.use(config => {
 
     try {
       if (refreshToken) {
-        const response = await axios.post(`${API_URL}/refresh`, {refreshToken});
+        const response = await axios.post(`${API_URL}/auth/refresh`, {refreshToken});
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);
 

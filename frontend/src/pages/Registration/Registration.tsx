@@ -8,9 +8,15 @@ import { FormCheckbox } from '../../shared/FormCheckbox';
 import styles from './Registration.module.scss';
 import { Icons } from '../../shared/Icons/Icons';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
+import { useAppDispatch } from '../../app/hooks';
+import { setIsAuth, setUser } from '../../features/Auth/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../../services/AuthService';
+import { UserService } from '../../services/UserService';
 import { AxiosError } from 'axios';
 import { IBaseResponse } from '../../types/response/IBaseResponse';
+import { IValidationError } from '../../types/response/IValidationError';
+import { Loader } from '../../shared/Loader';
 
 const initialData = {
   firstName: '',
@@ -37,10 +43,15 @@ export const Registration: React.FC = () => {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
   const [isCheckedAgree, setIsCheckedAgree] = useState<boolean>(false);
-  const [error, setError] = useState<IBaseResponse<any, any> | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<IBaseResponse<IValidationError> | null>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    setError(null);
+
     if (name === InputNames.RepeatPassword) {
       setSecondaryPassword({ errorMessage: false, repeatPassword: value });
     } else {
@@ -51,7 +62,6 @@ export const Registration: React.FC = () => {
       );
     }
 
-    setError(null);
     onChangeValidation(event);
     setIsSubmit(false);
     setSecondaryPassword(prevState => ({ ...prevState, errorMessage: false}));
@@ -61,27 +71,29 @@ export const Registration: React.FC = () => {
     event.preventDefault();
 
     setIsSubmit(true);
-    onSubmitValidation(data, [InputNames.FirstName, InputNames.SecondName, InputNames.Email ,InputNames.Password]);
+    const validationErrors = onSubmitValidation(data, [InputNames.FirstName, InputNames.SecondName, InputNames.Email ,InputNames.Password]);
 
     if (data.password !== secondaryPassword.repeatPassword) {
       setSecondaryPassword(prevState => ({ ...prevState, errorMessage: true}));
     }
 
-    if (errors.size === 0 && isCheckedAgree) {
+    if (validationErrors.size === 0 && isCheckedAgree) {
+      setIsLoading(true);
+
       try {
-        const res = await AuthService.registration(data);
-
-        if (res.data.success) {
-          await AuthService.login(data.email, data.password);
-        }
-
-        setData(initialData);
+        await AuthService.registration(data);
+        const response = await AuthService.login({ email, password });
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        const user = await UserService.getUser();
+        dispatch(setUser(user.data))
+        dispatch(setIsAuth(true));
+        navigate('/');
       } catch (e) {
         const error = e as AxiosError
-
-        if (error.response?.data) {
-          setError(error.response.data as IBaseResponse<any, any>)
-        }
+        setError(error.response?.data as IBaseResponse<IValidationError>)
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -192,16 +204,18 @@ export const Registration: React.FC = () => {
 
           </div>
 
-          {error && !error.success&& (
+          {error && !error.success && (
             <div className={styles.errorMessage}>{error.message}</div>
           )}
 
           <MainButton
-            name={'Sign up'}
+            name={isLoading? '...Loading' : 'Sign up'}
             gradient={true}
             fullwidth={true}
             type={'submit'}
-          />
+          >
+            {isLoading && <Loader/>}
+          </MainButton>
         </form>
       </FormLayout>
     </PageLayout>

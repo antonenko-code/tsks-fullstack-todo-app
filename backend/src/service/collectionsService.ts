@@ -25,7 +25,7 @@ class CollectionsService {
       });
 
     if (!collections.length) {
-      throw new ResponseError('Collections not found')
+      return [];
     }
 
     return collections;
