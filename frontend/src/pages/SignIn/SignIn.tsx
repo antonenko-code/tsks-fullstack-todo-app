@@ -13,7 +13,7 @@ import { IBaseResponse } from '../../types/response/IBaseResponse';
 import { IValidationError } from '../../types/response/IValidationError';
 import { AuthService } from '../../services/AuthService';
 import { UserService } from '../../services/UserService';
-import { login, setIsAuth, setUser } from '../../features/Auth/reducers/authSlice';
+import { setIsAuth, setUser } from '../../features/Auth/reducers/authSlice';
 import { AxiosError } from 'axios';
 import { useAppDispatch } from '../../app/hooks';
 import { Loader } from '../../shared/Loader';
