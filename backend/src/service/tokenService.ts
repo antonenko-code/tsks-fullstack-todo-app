@@ -47,6 +47,10 @@ class TokenService {
   async findToken(token: string) {
     return tokenModel.findOne({refreshToken: token});
   }
+
+  async removeToken(refreshToken: string) {
+    return tokenModel.deleteOne({refreshToken});
+  }
 }
 
 export default new TokenService();

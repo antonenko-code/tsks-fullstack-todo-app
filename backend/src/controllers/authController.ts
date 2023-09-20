@@ -4,6 +4,7 @@ import UserService from '../service/userService';
 import ValidationError from '../errors/validationError';
 import AuthService from '../service/authService';
 import ExceptionHandler from '../decorators/exceptionHandler';
+import authService from '../service/authService';
 
 class authController {
 
@@ -44,11 +45,14 @@ class authController {
 
   @ExceptionHandler()
   async logout(req: Request, res: Response) {
-    try {
+    const { refreshToken } = req.body;
+    const token = await authService.logout(refreshToken);
 
-    } catch (e) {
-
-    }
+    return res.json({
+      success: true,
+      message: 'Logout was successful',
+      token,
+    });
   }
 
   @ExceptionHandler()

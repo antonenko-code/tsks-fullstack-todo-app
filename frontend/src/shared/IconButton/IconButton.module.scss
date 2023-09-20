@@ -1,0 +1,24 @@
+@import '../../app/assets/styles/index';
+
+.button {
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    path {
+      transition: stroke 0.3s ease-in-out;
+    }
+  }
+
+  &:hover {
+    svg {
+      path {
+        stroke: white;
+      }
+    }
+  }
+}
