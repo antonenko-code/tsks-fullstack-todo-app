@@ -1,5 +1,7 @@
 import React, { forwardRef } from "react";
 import styles from './HorizontalDatePicker.module.scss'
+import '../../../app/assets/styles/index.scss'
+
 import {
   addMonths,
   eachDayOfInterval,
@@ -10,6 +12,11 @@ import {
   startOfDay,
 } from 'date-fns';
 import classNames from 'classnames';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/scss'
+
+import { FreeMode, Mousewheel } from 'swiper'
+
 
 export type Props = {
   startDate?: Date;
@@ -23,11 +30,11 @@ export type Props = {
 };
 
 const eachDay = (start: Date, end: Date) => eachDayOfInterval({ start, end });
-
+const today = new Date().getDate() - 1;
 const eachMonth = (start: Date, end: Date) =>
   eachMonthOfInterval({ start, end });
 
-export const Datepicker = forwardRef<HTMLDivElement, Props>(
+export const HorizontalDatePicker = forwardRef<HTMLDivElement, Props>(
   (
     {
       locale,
@@ -35,8 +42,6 @@ export const Datepicker = forwardRef<HTMLDivElement, Props>(
       selectedDay,
       handleChangeCurrentDate,
       startDate,
-      endValue,
-      startValue,
       tasksDates,
     },
     ref,
@@ -64,87 +69,75 @@ export const Datepicker = forwardRef<HTMLDivElement, Props>(
     }, [startDate, endDate]);
 
     const onDateClick = (selectedDate: Date) => {
-      if (selectedDate === selectedDay) {
+      if (selectedDate.toDateString() === selectedDay?.toDateString()) {
+        console.log('if')
         handleChangeCurrentDate(null);
       } else {
         handleChangeCurrentDate(selectedDate);
       }
     };
 
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
-
-    const nextScroll = () => {
-      if (containerRef.current) {
-        containerRef.current.scrollBy({
-          left: +500,
-          behavior: "smooth",
-        });
-      }
-    };
-
-    const prevScroll = () => {
-      if (containerRef.current) {
-        containerRef.current.scrollBy({
-          left: -500,
-          behavior: "smooth",
-        });
-      }
-    };
-
     return (
-      <div ref={ref} className={styles.container}>
-        <div ref={containerRef} className={styles.dateListScrollable}>
-          {DATES.map(({ month, days }, idx) => {
-            const currentMonth = format(month, "LLLL", { locale });
-
-            return (
-              <div key={currentMonth + idx} className={styles.monthContainer}>
-                <div className={styles.daysContainer}>
-                  {days.map((date, idx) => {
-                    const isTask = tasksDates.find((d) => d === date.toDateString());
-                    const dayLabel = format(date, "EEE", { locale });
-                    const dateLabel = format(date, "d", { locale });
-                    const isDaySelected = selectedDay &&
-                      new Date(date).toDateString() === new Date(selectedDay).toDateString();
-                    return (
-                      <div
-                        key={dayLabel + idx + currentMonth}
-                        className={classNames(styles.dateDayItem, {
-                          [styles.dateDayItemSelected]: isDaySelected
-                        })}
-                        onClick={() => onDateClick(date)}
-                      >
-                        <div
-                          className={classNames(styles.dayLabel, {
-                            [styles.active]: !isTask
-                          })}
-                        >
-                          {dayLabel}
-                        </div>
-                        <div
-                          className={classNames(styles.dateLabel, {
-                            [styles.active]: !isTask
-                          })}
-                        >
-                          {dateLabel}
-                        </div>
-                        <span
-                          className={classNames(styles.pointHidden, {
-                            [styles.point]: isTask
-                          })}
-                        >
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <Swiper
+        className={styles.daysContainer}
+        direction={'horizontal'}
+        draggable={'true'}
+        slidesPerView={'auto'}
+        freeMode={true}
+        mousewheel={true}
+        modules={[FreeMode, Mousewheel]}
+        spaceBetween={10}
+        initialSlide={today}
+      >
+        {DATES.map(({ month, days }, idx) => {
+          const currentMonth = format(month, "LLLL", { locale });
+          return (
+            <div key={idx}>
+              {days.map((date, idx) => {
+                const isTask = tasksDates.find((d) => d === date.toDateString());
+                const dayLabel = format(date, "EEE", { locale });
+                const dateLabel = format(date, "d", { locale });
+                const isDaySelected = selectedDay &&
+                  new Date(date).toDateString() === new Date(selectedDay).toDateString();
+                const isToday = new Date(date).toDateString() === new Date().toDateString();
+                return (
+                  <SwiperSlide
+                    key={dayLabel + idx + currentMonth}
+                    className={classNames(styles.dateDayItem, {
+                      [styles.dateDayItemSelected]: isDaySelected,
+                      [styles.today]: isToday,
+                    })}
+                    onClick={() => onDateClick(date)}
+                  >
+                    <div
+                      className={classNames(styles.dayLabel, {
+                        [styles.active]: isTask,
+                      })}
+                    >
+                      {dayLabel}
+                    </div>
+                    <div
+                      className={classNames(styles.dateLabel, {
+                        [styles.active]: isTask,
+                      })}
+                    >
+                      {dateLabel}
+                    </div>
+                    <span
+                      className={classNames(styles.pointHidden, {
+                        [styles.point]: isTask
+                      })}
+                    >
+                    </span>
+                  </SwiperSlide>
+                );
+              })}
+            </div>
+          );
+        })}
+      </Swiper>
     );
   },
 );
 
-Datepicker.displayName = "Datepicker";
+HorizontalDatePicker.displayName = "Datepicker";

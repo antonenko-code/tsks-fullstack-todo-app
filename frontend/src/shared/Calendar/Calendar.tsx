@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Calendar.module.scss';
 import { Icons } from '../Icons/Icons';
 import { enUS } from "date-fns/locale";
-import { Datepicker } from './HoroizontalDatePicker';
+import { HorizontalDatePicker } from './HoroizontalDatePicker';
 
 type Props = {
   selectedDay: Date | null,
@@ -14,7 +14,9 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
   const TODAY = new Date();
   const [nameMonth, setNameMonth] = useState('');
   const [dateForView, setDateForView] = useState(TODAY);
+  const firstDayOfMonth = new Date(dateForView.getFullYear(), dateForView.getMonth(), 1);
   const handleChangeCurrentDate = (date: Date | null) => {
+    console.log('handleChangeCurrentDate', date)
     setSelectedDay(date);
   };
   const handleSelectAllTasks = () => {
@@ -81,7 +83,7 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
             <Icons name={'arrowRight'} />
           </button>
           <span className={styles.month}>{`${nameMonth}, `}</span>
-          <span className={styles.year}>{dateForView.getFullYear()}</span>
+          <span className={styles.year}>{selectedDay?.getFullYear() || dateForView.getFullYear()}</span>
         </div>
         <button
           className={styles.button}
@@ -91,10 +93,10 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
         </button>
       </div>
       <div className={styles.calendarWrapper}>
-        <Datepicker
+        <HorizontalDatePicker
           handleChangeCurrentDate={handleChangeCurrentDate}
           tasksDates={tasksDates}
-          startDate={dateForView}
+          startDate={firstDayOfMonth}
           startValue={dateForView}
           endValue={null}
           selectedDay={selectedDay}

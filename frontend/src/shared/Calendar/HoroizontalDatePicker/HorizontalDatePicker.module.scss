@@ -1,33 +1,5 @@
 @import '../../../app/assets/styles/index';
 
-.container {
-  display: flex;
-  gap: 10px;
-  min-width: 330px;
-  max-width: 770px;
-  height: auto;
-  border-radius: 24px;
-  background: $secondary-background-color;
-}
-
-.daysContainer {
-  display: flex;
-  gap: 10px;
-  height: auto;
-}
-
-.dateListScrollable {
-  display: flex;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-    -webkit-appearance: none;
-  }
-}
-
 .dateDayItem {
   display: flex;
   min-width: 100px;
@@ -38,7 +10,7 @@
   border: 2px solid $secondary-background-color;
   border-radius: 24px;
   font-family: 'Montserrat Alternates', sans-serif;
-  color: $main-font-color;
+  color: $secondary-font-color;
   text-align: center;
   font-size: 18px;
   font-style: normal;
@@ -51,11 +23,22 @@
     border: 2px solid $secondary-accent-color;
     transition: all 0.7s ease-in-out;
   }
+  &:not(.dateDayItemSelected):active {
+    cursor: grab;
+  }
+}
+
+.today {
+  border: 2px solid $secondary-accent-color;
 }
 
 .dateDayItemSelected {
   position: relative;
   cursor: pointer;
+
+  &:active {
+    cursor: grab;
+  }
 
   &:before {
     width: 100px;
@@ -85,7 +68,6 @@
 }
 
 .dayLabel {
-  color: $main-font-color;
   text-align: center;
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 18px;
@@ -96,7 +78,6 @@
 }
 
 .dateLabel {
-  color: $main-font-color;
   text-align: center;
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 24px;
@@ -107,7 +88,7 @@
 }
 
 .active {
-  color: $secondary-font-color;
+  color: $main-font-color;
 }
 
 .markedLabel {

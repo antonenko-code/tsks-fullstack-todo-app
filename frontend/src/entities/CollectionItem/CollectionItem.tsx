@@ -4,6 +4,8 @@ import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { deleteCollection, changeCollection } from '../../features/Collections/reducers/collectionsSlice';
+import { InputNames, UseHandlingErrors } from '../../utils/UseHandlingErrors';
+import classNames from 'classnames';
 
 type Props = {
   title: string,
@@ -18,8 +20,10 @@ export const CollectionItem: React.FC<Props> = ({
   iconName,
   id,
 }) => {
+  const { onChangeValidation, errors } = UseHandlingErrors();
+
   const [inputField, setInputField] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
+  const [newTitle, setNewTitle] = useState<string>(title);
   const dispatch = useAppDispatch();
   const { todos } = useAppSelector(state => state.todos);
 
@@ -53,8 +57,9 @@ export const CollectionItem: React.FC<Props> = ({
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
+    onChangeValidation(event);
 
+    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
     if (!regex.test(event.target.value)) {
       return;
     }
@@ -63,7 +68,7 @@ export const CollectionItem: React.FC<Props> = ({
 
   const handlerOnBlur = () => {
     setInputField(false)
-    if (newTitle.length) {
+    if (newTitle.length && errors.size === 0) {
       dispatch(changeCollection({id, title: newTitle}))
     } else {
       setNewTitle(title)
@@ -92,7 +97,9 @@ export const CollectionItem: React.FC<Props> = ({
       </div>
 
       <form
-        className={styles.title}
+        className={classNames(styles.title,
+          {[styles.smallerTitle] : newTitle.length > 9}
+        )}
         onClick={handleOnClick}
         onBlur={handlerOnBlur}
         onSubmit={() => setInputField(false)}
@@ -101,6 +108,7 @@ export const CollectionItem: React.FC<Props> = ({
             <input
               className={styles.input}
               value={newTitle}
+              name={InputNames.CollectionName}
               maxLength={12}
               onChange={handleOnChange}
               onKeyDown={handleOnKeyDown}
