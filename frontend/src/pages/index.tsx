@@ -11,8 +11,7 @@ import { Tasks } from './Tasks';
 import { useAppSelector } from '../app/hooks';
 
 export const Routing = () => {
-  const { isAuth } = useAppSelector(state => state.auth);
-
+  const { isAuth } = useAppSelector(state => state.auth)
   return (
     <Routes>
       <Route path='/' element={isAuth ? <Navigate to='/collections' /> : <Home />} />

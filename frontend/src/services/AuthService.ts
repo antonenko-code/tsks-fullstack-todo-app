@@ -14,4 +14,8 @@ export class AuthService {
   static async registration(credentials: RequestRegistrationData): Promise<AxiosResponse<IBaseResponse<IValidationError[]>>> {
     return $api.post<IBaseResponse<IValidationError[]>>('/auth/registration', credentials)
   }
+
+  static async logout(refreshToken: string): Promise<AxiosResponse<IBaseResponse<any>>> {
+    return $api.post<IBaseResponse<any>>('/auth/logout', {refreshToken});
+  }
 }

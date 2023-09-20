@@ -51,6 +51,10 @@ class AuthService {
 
     return {...tokens, user: userDto}
   }
+
+  async logout(refreshToken: string) {
+    return tokenService.removeToken(refreshToken);
+  }
 }
 
 export default new AuthService();

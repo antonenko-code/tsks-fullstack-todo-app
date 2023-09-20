@@ -5,6 +5,7 @@ import { HeaderButton } from '../../shared/HeaderButton';
 import { Icons } from '../../shared/Icons/Icons';
 import { Profile } from '../../shared/Profile';
 import { useAppSelector } from '../../app/hooks';
+import { LogoutButton } from '../../features/LogoutButton';
 
 export const Header: FC = () => {
   const { isAuth } = useAppSelector(state => state.auth)
@@ -29,7 +30,10 @@ export const Header: FC = () => {
 
         <div className={styles.blockButtons}>
           {isAuth ? (
-            <Profile />
+            <>
+              <Profile />
+              <LogoutButton />
+            </>
           ) : (
             <>
               <Link to='/sign-in' className={styles.button}>
