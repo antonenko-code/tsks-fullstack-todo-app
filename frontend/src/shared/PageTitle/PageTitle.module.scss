@@ -18,6 +18,10 @@
   color: $main-font-color;
   font-size: 36px;
   font-weight: 700;
+
+  @include md-device {
+    font-size: 24px;
+  }
 }
 
 .button {
@@ -43,4 +47,3 @@
     }
   }
 }
-

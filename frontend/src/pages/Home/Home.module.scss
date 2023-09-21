@@ -4,16 +4,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @include md-device {
+    flex-direction: column-reverse;
+  }
 }
 
 .header {
   margin-bottom: 10px;
   font-size: 72px;
   font-weight: 400;
+
+  @include md-device {
+    font-size: 64px;
+  }
 }
 
 .highlight {
   font-weight: 700;
+}
+
+.textWrapper {
+  max-width: 360px;
+
+  @include md-device {
+    margin-bottom: 50px;
+  }
 }
 
 .subtitle {
@@ -24,4 +40,8 @@
 .buttons {
   display: flex;
   gap: 24px;
+}
+
+.image {
+  width: 100%;
 }
