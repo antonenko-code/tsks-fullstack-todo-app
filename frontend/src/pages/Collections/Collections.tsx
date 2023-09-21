@@ -11,7 +11,7 @@ import { CollectionItem } from '../../entities/CollectionItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { v4 as uuidv4 } from 'uuid';
 import { addCollection, deleteColor } from '../../features/Collections/reducers/collectionsSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
 const MAX_LENGTH = 12;
@@ -27,6 +27,8 @@ export const Collections: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isSubmit, setIsSubmit] = useState(false);
   const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
+  const { isAuth } = useAppSelector(state => state.auth)
+  const navigate = useNavigate();
 
   const closeModal = () => {
     setIsHideModal(true);
@@ -67,9 +69,18 @@ export const Collections: React.FC = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <PageLayout>
-      <PageTitle title={'Collections'} button={true} />
+      <PageTitle
+        title={'Collections'}
+        button={!isAuth}
+        onClick={handleGoBack}
+        isOnRight={true}
+      />
 
       <div className={styles.collectionContainer}>
         {collections.map((collectionItem) => (
