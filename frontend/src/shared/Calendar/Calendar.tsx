@@ -16,7 +16,6 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
   const [dateForView, setDateForView] = useState(TODAY);
   const firstDayOfMonth = new Date(dateForView.getFullYear(), dateForView.getMonth(), 1);
   const handleChangeCurrentDate = (date: Date | null) => {
-    console.log('handleChangeCurrentDate', date)
     setSelectedDay(date);
   };
   const handleSelectAllTasks = () => {
@@ -97,8 +96,6 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
           handleChangeCurrentDate={handleChangeCurrentDate}
           tasksDates={tasksDates}
           startDate={firstDayOfMonth}
-          startValue={dateForView}
-          endValue={null}
           selectedDay={selectedDay}
           locale={enUS}
         />
