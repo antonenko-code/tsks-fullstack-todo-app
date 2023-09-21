@@ -64,6 +64,10 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+  @include md-device {
+    font-size: 20px;
+  }
 }
 
 .year {
@@ -73,11 +77,15 @@
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+
+  @include md-device {
+    font-size: 20px;
+  }
 }
 
 .button {
   box-sizing: border-box;
-  padding: 12px 16px;
+  padding: 8px 16px;
   min-width: min-content;
   background: none;
   color: $main-font-color;
@@ -98,5 +106,9 @@
     background: $secondary-background-color;
     border: 2px solid $secondary-accent-color;
     cursor: pointer;
+  }
+
+  @include md-device {
+    font-size: 16px;
   }
 }

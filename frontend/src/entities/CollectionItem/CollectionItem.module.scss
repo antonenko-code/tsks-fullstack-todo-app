@@ -1,18 +1,16 @@
-@import 'src/app/assets/styles/index';
+@import "../../app/assets/styles/index";
 
 .block {
-  display: flex;
-  width: 220px;
-  height: 220px;
-  min-width: 220px;
-  min-height: 220px;
   padding: 24px;
+  width: 100%;
+  height: 220px;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
+  gap: 10px;
   background: $secondary-background-color;
   border-radius: 24px;
-  gap: 10px;
   flex-shrink: 0;
   overflow: hidden;
 
@@ -23,6 +21,11 @@
         opacity: 1;
       }
     }
+  }
+
+  @include md-device {
+    padding: 12px;
+    min-height: 200px;
   }
 }
 
@@ -45,6 +48,10 @@
   hyphenate-limit-chars: 9;
   hyphens: auto;
   hyphenate-character: '-';
+
+  @include md-device {
+    font-size: 24px;
+  }
 }
 
 .smallerTitle {
@@ -81,17 +88,28 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  @include md-device {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+  }
 }
 
 .iconWrapper {
   display: flex;
   width: 64px;
   height: 64px;
-  padding: 20px 18px 20px 19px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   border-radius: 24px;
+
+  @include md-device {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+  }
 }
 
 .input {

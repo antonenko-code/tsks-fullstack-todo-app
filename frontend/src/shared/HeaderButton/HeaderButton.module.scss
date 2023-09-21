@@ -17,6 +17,10 @@
     border: 2px solid #646475;
     cursor: pointer;
   }
+
+  @include md-device {
+    font-size: 16px;
+  }
 }
 
 .border {

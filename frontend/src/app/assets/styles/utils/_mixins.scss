@@ -1,7 +1,7 @@
 @import 'variables';
 
 @mixin md-device {
-  @media (min-width: $md-device-size) {
+  @media (max-width: $md-device-size) {
     @content;
   }
 }

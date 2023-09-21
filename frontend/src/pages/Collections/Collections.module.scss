@@ -1,17 +1,19 @@
-@import './src/app/assets/styles/index';
+@import "../../app/assets/styles/index";
 
 .collectionContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 36px;
+
+  @include md-device {
+    gap: 12px;
+  }
 }
 
 .addCollectionItemBtn {
-  display: flex;
-  width: 220px;
-  height: 220px;
-  min-width: 220px;
   min-height: 220px;
+  display: flex;
+  flex-basis: 30%;
   padding: 24px;
   flex-direction: column;
   justify-content: center;
@@ -25,11 +27,27 @@
   &:hover {
     cursor: pointer;
   }
+
+  @include md-device {
+    flex-basis: 46%;
+  }
+
+  @media (max-width: 792px) {
+    flex-basis: 46%;
+  }
 }
 
 .link {
+  display: flex;
+  flex-basis: 30%;
+  justify-content: center;
+
   &:hover {
     cursor: pointer;
+  }
+
+  @media (max-width: 792px) {
+    flex-basis: 46%;
   }
 }
 

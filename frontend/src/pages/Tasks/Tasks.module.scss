@@ -13,6 +13,10 @@
   color: $secondary-font-color;
   text-align: center;
   margin: auto;
+
+  @include md-device {
+    font-size: 30px;
+  }
 }
 
 .addButton {
@@ -62,6 +66,10 @@
     path {
       stroke: white;
     }
+  }
+
+  @include md-device {
+    padding: 24px;
   }
 }
 

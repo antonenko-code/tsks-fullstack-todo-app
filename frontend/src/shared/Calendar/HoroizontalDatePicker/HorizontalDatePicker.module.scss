@@ -23,6 +23,11 @@
     border: 2px solid $secondary-accent-color;
     transition: all 0.7s ease-in-out;
   }
+
+  @include md-device {
+    padding: 16px 12px;
+    gap: 8px;
+  }
   &:not(.dateDayItemSelected):active {
     cursor: grab;
   }
