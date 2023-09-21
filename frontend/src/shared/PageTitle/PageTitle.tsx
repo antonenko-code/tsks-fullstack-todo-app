@@ -7,11 +7,12 @@ type Props = {
   title: string,
   button?: boolean,
   onClick?: () => void,
+  isOnRight?: boolean,
 }
 
-export const PageTitle:React.FC<Props> = ({title, button, onClick}) => {
+export const PageTitle:React.FC<Props> = ({title, button, onClick, isOnRight = false}) => {
   return (
-    <div className={classNames(styles.titleWrapper, {[styles.withButton]: button} )}>
+    <div className={classNames(styles.titleWrapper, {[styles.onRight]: isOnRight} )}>
       {button && <button
         className={styles.button}
         onClick={onClick}
