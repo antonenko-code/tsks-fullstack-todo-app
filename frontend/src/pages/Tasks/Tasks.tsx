@@ -136,7 +136,7 @@ export const Tasks: React.FC = () => {
         title={collection!.title}
         button={true}
         onClick={handleGoBack}
-        isOnRight={true}
+        isOnLeft={true}
       />
 
       <Calendar

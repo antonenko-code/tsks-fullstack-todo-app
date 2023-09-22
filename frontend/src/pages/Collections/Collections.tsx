@@ -79,7 +79,7 @@ export const Collections: React.FC = () => {
         title={'Collections'}
         button={!isAuth}
         onClick={handleGoBack}
-        isOnRight={true}
+        isOnLeft={true}
       />
 
       <div className={styles.collectionContainer}>
