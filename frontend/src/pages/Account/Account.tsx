@@ -41,7 +41,7 @@ export const Account: React.FC = () => {
 
   return (
     <PageLayout>
-      <PageTitle title={'My Account'} button={true} />
+      <PageTitle title={'My Account'} button={true} isOnLeft={true} />
 
       <div className={styles.userWrapper}>
         <div className={styles.avatarWrapper}>
