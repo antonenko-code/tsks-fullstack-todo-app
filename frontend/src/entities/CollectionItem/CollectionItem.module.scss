@@ -6,7 +6,7 @@
   height: 220px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
   background: $secondary-background-color;
@@ -24,7 +24,7 @@
   }
 
   @include md-device {
-    padding: 12px;
+    padding: 20px 12px;
     min-height: 200px;
   }
 }
@@ -90,7 +90,6 @@
   justify-content: space-between;
 
   @include md-device {
-    width: 48px;
     height: 48px;
     border-radius: 16px;
   }
