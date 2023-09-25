@@ -3,7 +3,7 @@ import styles from './CollectionItem.module.scss'
 import { Icons } from '../../shared/Icons/Icons';
 import { RadialChart } from '../../shared/RadialChart';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { deleteCollection, changeCollection } from '../../features/Collections/reducers/collectionsSlice';
+import { changeCollection } from '../../features/Collections/reducers/collectionsSlice';
 import { InputNames, UseHandlingErrors } from '../../utils/UseHandlingErrors';
 import classNames from 'classnames';
 

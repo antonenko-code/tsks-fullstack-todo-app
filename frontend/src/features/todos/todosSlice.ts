@@ -41,9 +41,13 @@ export const todosSlice = createSlice({
     deleteAllByCollectionId: (state: TodosState, action: PayloadAction<string>) => {
       state.todos = state.todos.filter(todo => todo.collectionId !== action.payload)
     },
+
+    deleteTask: (state: TodosState, action: PayloadAction<string>) => {
+      state.todos = state.todos.filter(todo => todo.id !== action.payload)
+    },
   },
 });
 
-export const { add, changeStatus, changeTitle, deleteAllByCollectionId } = todosSlice.actions;
+export const { add, changeStatus, changeTitle, deleteAllByCollectionId, deleteTask } = todosSlice.actions;
 
 export default todosSlice.reducer;

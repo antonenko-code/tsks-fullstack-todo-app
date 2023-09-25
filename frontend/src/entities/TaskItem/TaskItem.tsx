@@ -4,7 +4,7 @@ import { FormCheckbox } from '../../shared/FormCheckbox';
 import { Icons } from '../../shared/Icons/Icons';
 import classNames from 'classnames';
 import { Todo } from '../../types/Todo';
-import { changeStatus, changeTitle } from '../../features/todos/todosSlice';
+import { changeStatus, changeTitle, deleteTask } from '../../features/todos/todosSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 
@@ -49,9 +49,11 @@ export const TaskItem:React.FC<Props> = ({
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [isChecked, setIsChecked] = useState<boolean>(completed);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [newTitle, setNewTitle] = useState<string>(title);
   const [error, setError] = useState<boolean>(false);
-  const {onChangeValidation, errors} = UseHandlingErrors();
+
+  const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
   const dispatch = useAppDispatch();
 
 
@@ -64,13 +66,12 @@ export const TaskItem:React.FC<Props> = ({
   }
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeValidation(event);
     const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-'\s]*$/);
 
     if (!regex.test(event.target.value)) {
       return;
     }
-
-    onChangeValidation(event);
     setNewTitle(event.target.value);
   };
 
@@ -96,6 +97,15 @@ export const TaskItem:React.FC<Props> = ({
       setIsEditing(false);
       setError(false);
     }
+  };
+
+  const handleDeleteTask = (id: string) => {
+    setIsDeleting(true)
+    const timer = setTimeout(() => {
+      dispatch(deleteTask(id));
+      setIsDeleting(false)
+    }, 800);
+    return () => clearTimeout(timer);
   };
 
   useEffect(() => {
@@ -138,6 +148,7 @@ export const TaskItem:React.FC<Props> = ({
       className={classNames(styles.container, {
         [styles['blur-x1']]: isBlurX1,
         [styles['blur-x2']]: isBlurX2,
+        [styles.deleting]: isDeleting,
       })
     }>
       <div className={styles.block}>
@@ -182,6 +193,13 @@ export const TaskItem:React.FC<Props> = ({
               {dateFowView}
             </span>
           </div>
+        </div>
+
+        <div
+          className={styles.closeBtn}
+          onClick={() => handleDeleteTask(id)}
+        >
+          <Icons name={'cross'} />
         </div>
       </div>
     </div>
