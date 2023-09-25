@@ -37,9 +37,13 @@ export const todosSlice = createSlice({
         todo.title = action.payload.newTitle;
       }
     },
+
+    deleteAllByCollectionId: (state: TodosState, action: PayloadAction<string>) => {
+      state.todos = state.todos.filter(todo => todo.collectionId !== action.payload)
+    },
   },
 });
 
-export const { add, changeStatus, changeTitle } = todosSlice.actions;
+export const { add, changeStatus, changeTitle, deleteAllByCollectionId } = todosSlice.actions;
 
 export default todosSlice.reducer;
