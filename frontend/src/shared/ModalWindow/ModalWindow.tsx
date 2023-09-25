@@ -5,10 +5,17 @@ import classNames from 'classnames';
 type Props = {
   closeModal: () => void,
   isHideModal: boolean,
+  isAccepting?: boolean,
   children: ReactNode,
+  titleModal?: string,
 }
 
-export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal}) => {
+export const ModalWindow: React.FC<Props> = ({
+  children,
+  closeModal,
+  isHideModal,
+  isAccepting,
+}) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -23,13 +30,14 @@ export const ModalWindow: React.FC<Props> = ({ children, closeModal, isHideModal
     return () => {
       document.removeEventListener("click", checkIfClickedOutside)
     }
-  }, []);
+  }, [isAccepting]);
 
   return (
     <div className={styles.background}>
       <div
-        className={classNames([styles.container], {
+        className={classNames([styles.containerModal], {
           [styles.containerHide]: isHideModal,
+          [styles.containerSmaller]: isAccepting,
         })}
         ref={ref}
       >

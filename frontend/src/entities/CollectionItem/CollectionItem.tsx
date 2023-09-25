@@ -12,6 +12,8 @@ type Props = {
   color: string,
   iconName: string,
   id: string,
+  setIsOpenAcceptingModal: (value: boolean) => void,
+  setDeletingId: (value: string) => void,
 }
 
 export const CollectionItem: React.FC<Props> = ({
@@ -19,6 +21,8 @@ export const CollectionItem: React.FC<Props> = ({
   color,
   iconName,
   id,
+  setIsOpenAcceptingModal,
+  setDeletingId,
 }) => {
   const { onChangeValidation, errors } = UseHandlingErrors();
 
@@ -39,12 +43,9 @@ export const CollectionItem: React.FC<Props> = ({
 
   const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
-    dispatch(deleteCollection({
-      title,
-      color,
-      iconName,
-      id,
-    }));
+    event.stopPropagation();
+    setIsOpenAcceptingModal(true);
+    setDeletingId(id);
   };
 
   const handleOnClick = (event: React.MouseEvent) => {

@@ -13,7 +13,7 @@
   z-index: 999;
 }
 
-.container {
+.containerModal {
   display: flex;
   width: 420px;
   min-height: 320px;
@@ -25,6 +25,15 @@
   background: $secondary-background-color;
   animation: moveUp 0.5s ease-in-out forwards;
   box-shadow: 7px 7px 23px 0 $modal-box-shadow-color, 2px 2px 12px 0 $secondary-modal-box-shadow-color;
+}
+
+.containerSmaller {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  min-height: 120px;
+  gap: 20px;
+  padding: 10px;
 }
 
 .containerHide {
