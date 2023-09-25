@@ -15,6 +15,15 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  &:hover {
+    .closeBtn {
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .taskDetails {
@@ -68,7 +77,33 @@
   text-overflow: ellipsis;
 }
 
+.closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity ease 0.5s;
+}
+
 .errorMessage {
   color: $hover-color;
   font-size: 15px;
+}
+
+.deleting {
+  animation: all 2s ease-in-out forwards;
+  @keyframes all {
+    from {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 }
