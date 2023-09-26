@@ -51,6 +51,18 @@ class TokenService {
   async removeToken(refreshToken: string) {
     return tokenModel.deleteOne({refreshToken});
   }
+
+  generateResetToken(userId: string) {
+    return jwt.sign({userId}, process.env.JWT_RESET_SECRET as string, {expiresIn: '30m'});
+  }
+
+  verifyResetToken(token: string) {
+    try {
+      return jwt.verify(token, process.env.JWT_RESET_SECRET as string);
+    } catch (e) {
+      return  null;
+    }
+  }
 }
 
 export default new TokenService();
