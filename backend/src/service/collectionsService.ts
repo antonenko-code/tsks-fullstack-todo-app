@@ -1,6 +1,7 @@
 import CollectionModel, { CollectionDocument } from '../models/collection-model';
 import CollectionDto from '../dtos/collectionDto';
 import ResponseError from '../errors/responseError';
+import TaskModel from '../models/task-model';
 
 type RequestBody = {
   userId: string,
@@ -51,6 +52,8 @@ class CollectionsService {
     if (!collection) {
       throw new ResponseError('Collection not found')
     }
+
+    await TaskModel.deleteMany({collectionId: id})
 
     return new CollectionDto(collection);
   }
