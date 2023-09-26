@@ -6,7 +6,9 @@ import MailService from './mailService';
 import AuthUserDto from '../dtos/authUserDto';
 import RegisterError from '../errors/registerError';
 import UserDto from '../dtos/userDto';
-import ValidationError from '../errors/validationError';
+import ResponseError from '../errors/responseError';
+import TokenService from './tokenService';
+import { JwtPayload } from 'jsonwebtoken';
 
 type RequestBody = {
   firstName: string,
@@ -36,7 +38,7 @@ class UserService {
     const newUser = new UserModel({firstName, secondName, email, password: hashPassword, activationLink});
     await newUser.save();
 
-    await MailService.sendActivationMail(email, `${process.env.APP_URL}/auth/activate/${activationLink}`);
+    await MailService.sendActivationMail(email, `${process.env.SERVER_URL}/auth/activate/${activationLink}`);
     const userDto = new AuthUserDto(newUser)
 
     return {user: userDto}
@@ -57,6 +59,33 @@ class UserService {
     const user = await UserModel.findOne({_id: userId});
 
     return new UserDto(user);
+  }
+
+  async generateResetToken(email: string) {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new ResponseError('User not found');
+    }
+
+    const resetToken = TokenService.generateResetToken(user._id);
+    user.resetToken = resetToken;
+    await user.save()
+
+    return resetToken;
+  }
+
+  async resetPassword(userId: string, password: string) {
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      throw new ResponseError('User not found');
+    }
+
+    user.password = bcrypt.hashSync(password, 7);
+    user.resetToken = undefined;
+
+    await user.save();
   }
 }
 

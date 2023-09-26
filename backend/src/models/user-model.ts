@@ -8,6 +8,7 @@ export interface UserDocument extends Document {
   password: string,
   isActivated: boolean,
   activationLink: string,
+  resetToken: string | undefined,
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -17,6 +18,7 @@ const UserSchema = new Schema<UserDocument>({
   password: {type: String, required: true},
   isActivated: {type: Boolean, default: false},
   activationLink: {type: String},
+  resetToken: {type: String},
 })
 
 UserSchema.plugin(transactionPlugin);

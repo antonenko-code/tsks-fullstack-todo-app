@@ -22,7 +22,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
 }));
 app.use('/auth', authRouter);
-app.use(userRouter);
+app.use('/user', userRouter);
 app.use(collectionsRouter);
 app.use(tasksRouter);
 app.use(errorsMiddleware)
