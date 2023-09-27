@@ -23,6 +23,5 @@ export const PageTitle:React.FC<Props> = ({title, button, onClick, isOnLeft = fa
         {title}
       </div>
     </div>
-
   );
 };

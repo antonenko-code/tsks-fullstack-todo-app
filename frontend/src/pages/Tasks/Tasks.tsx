@@ -18,15 +18,15 @@ import { Calendar } from '../../shared/Calendar';
 export const Tasks: React.FC = () => {
   const { collections } = useAppSelector(state => state.collections);
   const { todos } = useAppSelector(state => state.todos);
+  const dispatch = useAppDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isHideModal, setIsHideModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isHideModal, setIsHideModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [date, setDate] = useState<Date | null>(new Date())
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
-  const [title, setTitle] = useState('');
-  const dispatch = useAppDispatch();
+  const [title, setTitle] = useState<string>('');
 
   const filteredByDate = (tasks: Todo[], date: Date | null) => {
     if (date) {
@@ -38,11 +38,14 @@ export const Tasks: React.FC = () => {
 
   const collection = useMemo(() => {
     return collections.find(collection => collection.id === id);
-  }, [id]);
+  }, [id, collections]);
 
   const filteredByCollection = useMemo(() => {
-    return todos.filter((todo) => todo.collectionId === collection!.id)
-  }, [todos]);
+    if (!collection) {
+      return [];
+    }
+    return todos.filter((todo) => todo.collectionId === collection.id)
+  }, [todos, collection]);
 
   const tasksDates = useMemo(() => {
     return filteredByCollection.map(task => new Date(task.date).toDateString())
@@ -50,8 +53,7 @@ export const Tasks: React.FC = () => {
 
   const tasksForView = useMemo(() => {
     return filteredByDate(filteredByCollection, selectedDay)
-  }, [selectedDay, collection, filteredByCollection]);
-
+  }, [selectedDay, filteredByCollection]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -133,7 +135,7 @@ export const Tasks: React.FC = () => {
   return (
     <PageLayout>
       <PageTitle
-        title={collection!.title}
+        title={collection?.title || ''}
         button={true}
         onClick={handleGoBack}
         isOnLeft={true}

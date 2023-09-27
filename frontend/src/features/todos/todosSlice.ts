@@ -48,6 +48,12 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { add, changeStatus, changeTitle, deleteAllByCollectionId, deleteTask } = todosSlice.actions;
+export const {
+  add,
+  changeStatus,
+  changeTitle,
+  deleteAllByCollectionId,
+  deleteTask,
+} = todosSlice.actions;
 
 export default todosSlice.reducer;
