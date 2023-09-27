@@ -15,6 +15,7 @@ const initialState: CollectionsState = {
     iconName: 'home',
     color: '#ff758f',
     id: '0',
+    userId: '0',
   }],
 };
 

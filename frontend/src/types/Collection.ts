@@ -3,4 +3,5 @@ export type Collection = {
   iconName: string,
   color: string,
   id: string,
+  userId?: string,
 }

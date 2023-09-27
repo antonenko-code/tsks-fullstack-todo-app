@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { changeCollection } from '../../features/Collections/reducers/collectionsSlice';
 import { InputNames, UseHandlingErrors } from '../../utils/UseHandlingErrors';
 import classNames from 'classnames';
+import { CollectionsService } from '../../services/CollectionsService';
 
 type Props = {
   title: string,
@@ -26,25 +27,27 @@ export const CollectionItem: React.FC<Props> = ({
 }) => {
   const { onChangeValidation, errors } = UseHandlingErrors();
 
-  const [inputField, setInputField] = useState(false);
+  const [inputField, setInputField] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title);
-  const dispatch = useAppDispatch();
   const { todos } = useAppSelector(state => state.todos);
+  const { isAuth } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
 
   const totalTasks = useMemo(() => {
-    return todos.filter(todo => todo.collectionId === id);
-  }, [id]);
+    return todos.filter(todo => todo.collectionId === id) ;
+  }, [id, todos]);
 
   const completedTasksCount = useMemo(() => {
     return totalTasks.filter(task => task.completed).length;
-  }, []);
+  }, [totalTasks]);
 
   const totalTasksCount = totalTasks.length;
 
-  const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
+  const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setIsOpenAcceptingModal(true);
+
     setDeletingId(id);
   };
 
@@ -60,17 +63,24 @@ export const CollectionItem: React.FC<Props> = ({
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeValidation(event);
 
-    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
-    if (!regex.test(event.target.value)) {
+    const title = event.target.value;
+
+    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-'\s]*$/);
+    if (!regex.test(title)) {
       return;
     }
-    setNewTitle(event.target.value);
+
+    setNewTitle(title);
   };
 
-  const handlerOnBlur = () => {
+  const handlerOnBlur = async () => {
     setInputField(false)
     if (newTitle.length && errors.size === 0) {
-      dispatch(changeCollection({id, title: newTitle}))
+      if (isAuth) {
+        await CollectionsService.changeTitle(id, newTitle)
+      } else {
+        dispatch(changeCollection({id, title: newTitle}))
+      }
     } else {
       setNewTitle(title)
     }
