@@ -17,6 +17,11 @@ type RequestBody = {
   password: string,
 }
 
+type UpdatePasswordBody = {
+  password: string,
+  newPassword: string,
+}
+
 class UserService {
   async findUserByEmail(email: string) {
     return UserModel.findOne({email});
@@ -85,6 +90,49 @@ class UserService {
     user.password = bcrypt.hashSync(password, 7);
     user.resetToken = undefined;
 
+    await user.save();
+  }
+
+  async updateUser(userId: string, body: RequestBody) {
+    const { firstName, secondName } = body;
+
+    await UserModel.updateOne({_id: userId}, {firstName, secondName});
+
+    return this.getUser(userId);
+  }
+
+  async updateUserEmail(userId: string, body: RequestBody) {
+    const { email, password } = body;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      throw new ResponseError('User not found');
+    }
+
+    const isPasswordEqual = await bcrypt.compare(password, user.password);
+    if (!isPasswordEqual) {
+      throw new ResponseError('Incorrect password');
+    }
+
+    await UserModel.updateOne({_id: userId}, {email});
+
+    return this.getUser(userId);
+  }
+
+  async updateUserPassword(userId: string, body: UpdatePasswordBody) {
+    const { password, newPassword } = body;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      throw new ResponseError('User not found');
+    }
+
+    const isPasswordEqual = await bcrypt.compare(password, user.password);
+    if (!isPasswordEqual) {
+      throw new ResponseError('Incorrect password');
+    }
+
+    user.password = bcrypt.hashSync(newPassword, 7)
     await user.save();
   }
 }
