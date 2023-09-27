@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import { validationResult } from 'express-validator';
 import userService from '../service/userService';
 import { UserDocument } from '../models/user-model';
 import ExceptionHandler from '../decorators/exceptionHandler';
 import MailService from '../service/mailService';
 import TokenService from '../service/tokenService';
 import ResponseError from '../errors/responseError';
+import ValidationError from '../errors/validationError';
 import { JwtPayload } from 'jsonwebtoken';
 
 declare module 'express' {
@@ -63,6 +65,48 @@ class userController {
     res.json({
       success: true,
       message: 'Password reset successful',
+    })
+  }
+
+  @ExceptionHandler()
+  async updateUser(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new ValidationError(errors.array());
+    }
+
+    const userId = req.user?.id;
+    const user = await userService.updateUser(userId, req.body);
+
+    return res.json(user);
+  }
+
+  @ExceptionHandler()
+  async updateUserEmail(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new ValidationError(errors.array());
+    }
+
+    const userId = req.user?.id;
+    const user = await userService.updateUserEmail(userId, req.body);
+
+    return res.json(user);
+  }
+
+  @ExceptionHandler()
+  async updateUserPassword(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new ValidationError(errors.array());
+    }
+
+    const userId = req.user?.id;
+    await userService.updateUserPassword(userId, req.body);
+
+    res.json({
+      success: true,
+      message: 'Password was updated successfully',
     })
   }
 }
