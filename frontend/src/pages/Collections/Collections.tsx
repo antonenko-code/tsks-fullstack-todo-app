@@ -36,7 +36,7 @@ export const Collections: React.FC = () => {
   const navigate = useNavigate();
   const viewCollections = !isAuth? collections : collectionFromServer;
 
-  const fetchData = async () => {
+  const getCollectionData = async () => {
     try {
       const response = await CollectionsService.getCollection();
       setCollectionFromServer(response.data);
@@ -106,6 +106,7 @@ export const Collections: React.FC = () => {
       try {
         await CollectionsService.remove(deletingId);
         setCollectionFromServer(prevState => prevState.filter((item: Collection) => item.id !== deletingId));
+        //дописати логіку видалення всіх тасок коллекції з сервера
       } catch (error) {
         return
       }
@@ -123,7 +124,7 @@ export const Collections: React.FC = () => {
   }, [deletingId]);
 
   useEffect(() => {
-    fetchData();
+    getCollectionData();
   }, []);
 
   return (

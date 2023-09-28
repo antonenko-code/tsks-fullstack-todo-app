@@ -43,7 +43,7 @@ export const CollectionItem: React.FC<Props> = ({
 
   const totalTasksCount = totalTasks.length;
 
-  const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = async (event) => {
+  const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     event.stopPropagation();
     setIsOpenAcceptingModal(true);
