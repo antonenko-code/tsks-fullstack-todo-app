@@ -135,7 +135,7 @@ export const Tasks: React.FC = () => {
   return (
     <PageLayout>
       <PageTitle
-        title={collection?.title || ''}
+        title={collection?.title || ""}
         button={true}
         onClick={handleGoBack}
         isOnLeft={true}
