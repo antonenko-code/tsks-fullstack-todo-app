@@ -20,7 +20,7 @@ export const Routing = () => {
 
       <Route path='forgot-password' element={<ForgotPassword />} />
 
-      <Route path='password-reset' element={<PasswordReset />} />
+      <Route path='user/reset-password/:token' element={<PasswordReset />} />
 
       <Route path='sign-up' element={<Registration />} />
 
