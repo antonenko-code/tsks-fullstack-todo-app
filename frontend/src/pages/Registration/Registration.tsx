@@ -34,15 +34,15 @@ export const Registration: React.FC = () => {
     email,
   } = data;
 
-  const [isOpenEye, setIsOpenEye] = useState<boolean>(false);
+  const [isOpenEye, setIsOpenEye] = useState(false);
   const [isSecondOpenEye, setIsSecondOpenEye] = useState(false);
   const [secondaryPassword, setSecondaryPassword] = useState({
     repeatPassword: '',
     errorMessage: false,
   });
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
-  const [isCheckedAgree, setIsCheckedAgree] = useState<boolean>(false);
+  const [isCheckedAgree, setIsCheckedAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<IBaseResponse<IValidationError> | null>(null);
   const dispatch = useAppDispatch();

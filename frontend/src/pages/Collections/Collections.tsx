@@ -1,7 +1,7 @@
 import React, { FormEvent, useMemo, useEffect, useState } from 'react';
+import styles from './Collections.module.scss'
 import { PageLayout } from '../../shared/PageLayout';
 import { Icons } from '../../shared/Icons/Icons';
-import styles from './Collections.module.scss'
 import { PageTitle } from '../../shared/PageTitle';
 import { ModalWindow } from '../../shared/ModalWindow';
 import { IconsSelector } from '../../entities/IconsSelector';
@@ -9,8 +9,8 @@ import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
 import { CollectionItem } from '../../entities/CollectionItem';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addCollection, deleteCollection, deleteColor } from '../../features/Collections/reducers/collectionsSlice';
-import { deleteAllByCollectionId } from '../../features/todos/todosSlice';
+import { addCollection, deleteCollection } from '../../features/Collections/reducers/collectionsSlice';
+import { deleteAllByCollectionId } from '../../features/Tasks/TasksSlice';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 import { Collection } from '../../types/Collection';
 import { CollectionsService } from '../../services/CollectionsService';
@@ -26,8 +26,8 @@ export const Collections: React.FC = () => {
   const [title, setTitle] = useState({collectionName: ''});
   const [collectionsFromServer, setCollectionsFromServer] = useState<Collection[]>([]);
   const [collectionsFromStorage, setCollectionsFromStorage] = useState<Collection[]>([]);
-  const [deletingId, setDeletingId] = useState<string>('')
-  const { icons, colors, collections } = useAppSelector(state => state.collections);
+  const [deletingId, setDeletingId] = useState('')
+  const { icons, collections } = useAppSelector(state => state.collections);
   const [selectedIcon, setSelectedIcon] = useState(icons[0]);
   const dispatch = useAppDispatch();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -35,10 +35,19 @@ export const Collections: React.FC = () => {
   const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
   const { isAuth } = useAppSelector(state => state.auth);
   const navigate = useNavigate();
+  const colors = ['#f4d35e', '#aeb8fe', '#83c5be', '#ff36ab', '#ee9b00',
+    '#3a86ff', '#ef233c', '#80ed99', '#9b5de5', '#15616d', '#f75c03', '#ff758f'];
 
   const viewCollections = useMemo(() => {
     return isAuth ? collectionsFromServer : collectionsFromStorage;
   }, [isAuth, collectionsFromServer, collectionsFromStorage]);
+
+  viewCollections.forEach(collection => {
+    let index = colors.indexOf(collection.color);
+    if (index >= 0) {
+      colors.splice(index, 1);
+    }
+  });
 
   const getCollectionData = async () => {
     try {
@@ -80,7 +89,7 @@ export const Collections: React.FC = () => {
     if (errors.size === 0 && collectionName) {
       const randomIndex = Math.floor(Math.random() * colors.length);
       const color = colors[randomIndex];
-      dispatch(deleteColor(randomIndex));
+      colors.splice(randomIndex, 1);
       const id = uuidv4();
       const newCollection = {
         title: collectionName,
@@ -107,6 +116,9 @@ export const Collections: React.FC = () => {
   };
 
   const handleAcceptingDelete = async () => {
+    if (!colors.includes(collectionForDelete.color)) {
+      colors.push(collectionForDelete.color);
+    }
     if (!isAuth) {
       dispatch(deleteAllByCollectionId(deletingId));
       dispatch(deleteCollection(collectionForDelete));
@@ -132,8 +144,8 @@ export const Collections: React.FC = () => {
 
     useEffect(() => {
       getCollectionData();
-    }, []);
-
+    }, [collections, isAuth]);
+  console.log('render')
   return (
     <PageLayout>
       <PageTitle

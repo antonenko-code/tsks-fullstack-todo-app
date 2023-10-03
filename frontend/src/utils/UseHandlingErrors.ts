@@ -7,7 +7,7 @@ export enum InputNames {
   FirstName = 'firstName',
   SecondName = 'secondName',
   CollectionName = 'collectionName',
-  TodoName= 'todoName'
+  TaskName = 'taskName'
 }
 
 export const UseHandlingErrors = () => {
@@ -49,7 +49,7 @@ export const UseHandlingErrors = () => {
         }
         break
       }
-      case InputNames.TodoName:
+      case InputNames.TaskName:
       case InputNames.FirstName:
       case InputNames.SecondName:
       case InputNames.CollectionName: {

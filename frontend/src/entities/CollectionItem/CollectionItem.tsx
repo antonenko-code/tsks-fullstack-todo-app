@@ -32,21 +32,21 @@ export const CollectionItem: React.FC<Props> = ({
   const { onChangeValidation, errors } = UseHandlingErrors();
   const [inputField, setInputField] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
-  const { todos } = useAppSelector(state => state.todos);
+  const { tasks } = useAppSelector(state => state.tasks);
   const { isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
   const totalTasksCount = useMemo(() => {
     return taskAmount
       ? taskAmount
-      : todos.filter(todo => todo.collectionId === id).length ;
-  }, [id, todos, taskAmount]);
+      : tasks.filter(task => task.collectionId === id).length ;
+  }, [id, tasks, taskAmount]);
 
   const completedTasksCount = useMemo(() => {
     return finishedTaskAmount
       ? finishedTaskAmount
-      : todos.filter(task => task.completed).length;
-  }, [finishedTaskAmount, todos]);
+      : tasks.filter(task => task.completed).length;
+  }, [finishedTaskAmount, tasks]);
 
   const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();

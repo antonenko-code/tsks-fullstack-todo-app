@@ -17,7 +17,7 @@ export const ForgotPassword: React.FC = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState<IBaseResponse<IValidationError> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
