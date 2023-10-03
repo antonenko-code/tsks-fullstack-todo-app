@@ -230,7 +230,7 @@ export const Collections: React.FC = () => {
                 isAccepting={true}
               >
                 <div className={styles.acceptingTitle}>
-                  Acttention!
+                  Attention!
                 </div>
 
                 <div className={styles.acceptingText}>
