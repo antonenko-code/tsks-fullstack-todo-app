@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './assets/styles/index.scss';
 import { Routing } from '../pages';
 import { Header } from '../widgets/header';

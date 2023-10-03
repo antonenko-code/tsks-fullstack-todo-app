@@ -13,6 +13,8 @@ type Props = {
   color: string,
   iconName: string,
   id: string,
+  taskAmount?: number,
+  finishedTaskAmount?: number,
   setIsOpenAcceptingModal: (value: boolean) => void,
   setDeletingId: (value: string) => void,
 }
@@ -22,26 +24,29 @@ export const CollectionItem: React.FC<Props> = ({
   color,
   iconName,
   id,
+  taskAmount,
+  finishedTaskAmount,
   setIsOpenAcceptingModal,
   setDeletingId,
 }) => {
   const { onChangeValidation, errors } = UseHandlingErrors();
-
-  const [inputField, setInputField] = useState<boolean>(false);
-  const [newTitle, setNewTitle] = useState<string>(title);
+  const [inputField, setInputField] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
   const { todos } = useAppSelector(state => state.todos);
   const { isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
-  const totalTasks = useMemo(() => {
-    return todos.filter(todo => todo.collectionId === id) ;
-  }, [id, todos]);
+  const totalTasksCount = useMemo(() => {
+    return taskAmount
+      ? taskAmount
+      : todos.filter(todo => todo.collectionId === id).length ;
+  }, [id, todos, taskAmount]);
 
   const completedTasksCount = useMemo(() => {
-    return totalTasks.filter(task => task.completed).length;
-  }, [totalTasks]);
-
-  const totalTasksCount = totalTasks.length;
+    return finishedTaskAmount
+      ? finishedTaskAmount
+      : todos.filter(task => task.completed).length;
+  }, [finishedTaskAmount, todos]);
 
   const handleDeleteCollection: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();

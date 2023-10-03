@@ -2,6 +2,7 @@ import CollectionModel, { CollectionDocument } from '../models/collection-model'
 import CollectionDto from '../dtos/collectionDto';
 import ResponseError from '../errors/responseError';
 import TaskModel from '../models/task-model';
+import TasksService from './tasksService';
 
 type RequestBody = {
   userId: string,
@@ -19,17 +20,21 @@ class CollectionsService {
 
     return new CollectionDto(collection);
   }
+
   async getCollections(userId: string) {
     const collections = await CollectionModel.find({userId: userId})
       .then(collections => {
-        return collections.map((collection) => new CollectionDto(collection));
+        return collections.map(async (collection) => {
+          const tasks = await TasksService.getTasks(userId, collection.id);
+          const finishedAmount = tasks.filter(task => task.completed);
+          return new CollectionDto(collection, tasks.length, finishedAmount.length);
+        });
       });
 
     if (!collections.length) {
       return [];
     }
-
-    return collections;
+    return Promise.all(collections);
   }
 
   async updateCollection(userId: string, id: string, data: Partial<CollectionDocument>) {

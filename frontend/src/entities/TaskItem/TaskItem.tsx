@@ -4,12 +4,15 @@ import { FormCheckbox } from '../../shared/FormCheckbox';
 import { Icons } from '../../shared/Icons/Icons';
 import classNames from 'classnames';
 import { Todo } from '../../types/Todo';
-import { changeStatus, changeTitle, deleteTask } from '../../features/todos/todosSlice';
-import { useAppDispatch } from '../../app/hooks';
+import { changeStatus, changeTitle } from '../../features/todos/todosSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
+import { TasksService } from '../../services/TasksService';
 
 type Props = {
   todo: Todo,
+  deleteTaskItem: (value: string) => void,
+  setTasksFromServer: (value: (((prevState: Todo[]) => Todo[]) | Todo[])) => void
 }
 const TODAY = new Date();
 
@@ -36,6 +39,8 @@ function getCurrentDate(props: Date | string) {
 
 export const TaskItem:React.FC<Props> = ({
   todo,
+  deleteTaskItem,
+  setTasksFromServer,
 }) => {
   const {
     id,
@@ -44,25 +49,31 @@ export const TaskItem:React.FC<Props> = ({
     completed,
   } = todo;
 
-  const [isBlurX1, setIsBlurX1] = useState<boolean>(false);
-  const [isBlurX2, setIsBlurX2] = useState<boolean>(false);
+  const [isBlurX1, setIsBlurX1] = useState(false);
+  const [isBlurX2, setIsBlurX2] = useState(false);
   const elementRef = useRef<HTMLDivElement | null>(null);
-  const [isChecked, setIsChecked] = useState<boolean>(completed);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState(completed);
+  const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [newTitle, setNewTitle] = useState<string>(title);
-  const [error, setError] = useState<boolean>(false);
+  const [newTitle, setNewTitle] = useState(title);
+  const [error, setError] = useState(false);
+  const { isAuth } = useAppSelector(state => state.auth);
 
-  const {onChangeValidation, errors, onSubmitValidation} = UseHandlingErrors();
+  const {onChangeValidation, errors} = UseHandlingErrors();
   const dispatch = useAppDispatch();
 
+  const updateStatus = async () => {
+    const response = await TasksService.updateTask({completed: isChecked}, id);
+    setTasksFromServer(prevState => {
+      const editedTask = prevState.filter(task => task.id === id);
+      editedTask[0].completed = response.data.completed;
+      return prevState;
+    })};
 
   const handleTitleClick = (event: React.MouseEvent) => {
-    if (event.detail === 2) {
-      event.preventDefault();
-      setIsEditing(true);
-      setError(false);
-    }
+    event.preventDefault();
+    setIsEditing(true);
+    setError(false);
   }
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +86,20 @@ export const TaskItem:React.FC<Props> = ({
     setNewTitle(event.target.value);
   };
 
-  const handleApplyNewTitleOnBlur = () => {
+  const handleApplyNewTitleOnBlur = async () => {
     if (newTitle.length >= 2) {
       setIsEditing(false);
       setError(false);
-      dispatch(changeTitle({ id, newTitle }));
+      if (isAuth) {
+        const response = await TasksService.updateTask({title: newTitle}, id);
+        setTasksFromServer(prevState => {
+          const editedTask = prevState.filter(task => task.id === id);
+          editedTask[0].title = response.data.title;
+          return prevState;
+        })
+      } else {
+        dispatch(changeTitle({id, newTitle}));
+      }
     } else {
       setError(true);
     }
@@ -91,18 +111,10 @@ export const TaskItem:React.FC<Props> = ({
     }
   };
 
-  const handleContainerClick = () => {
-    if (isEditing) {
-      setNewTitle(title);
-      setIsEditing(false);
-      setError(false);
-    }
-  };
-
   const handleDeleteTask = (id: string) => {
-    setIsDeleting(true)
+    setIsDeleting(true);
     const timer = setTimeout(() => {
-      dispatch(deleteTask(id));
+      deleteTaskItem(id);
       setIsDeleting(false)
     }, 800);
     return () => clearTimeout(timer);
@@ -139,7 +151,11 @@ export const TaskItem:React.FC<Props> = ({
   }, [date]);
 
   useEffect(() => {
-    dispatch(changeStatus(id))
+    if (isAuth) {
+      updateStatus();
+    } else {
+      dispatch(changeStatus(id));
+    }
   }, [isChecked])
 
   return (
@@ -160,13 +176,12 @@ export const TaskItem:React.FC<Props> = ({
 
         <div
           className={styles.taskDetails}
-          onClick={handleTitleClick}
+          onDoubleClick={handleTitleClick}
           onBlur={handleApplyNewTitleOnBlur}
         >
           {isEditing ? (
             <>
               <input
-                onBlur={handleContainerClick}
                 className={styles.input}
                 value={newTitle}
                 name={InputNames.TodoName}

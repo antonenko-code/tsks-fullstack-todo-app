@@ -4,4 +4,6 @@ export type Collection = {
   color: string,
   id: string,
   userId?: string,
+  taskAmount?: number,
+  finishedTaskAmount?: number,
 }
