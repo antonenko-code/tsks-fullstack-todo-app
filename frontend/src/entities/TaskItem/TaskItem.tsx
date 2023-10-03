@@ -3,16 +3,16 @@ import styles from './TaskItem.module.scss'
 import { FormCheckbox } from '../../shared/FormCheckbox';
 import { Icons } from '../../shared/Icons/Icons';
 import classNames from 'classnames';
-import { Todo } from '../../types/Todo';
-import { changeStatus, changeTitle } from '../../features/todos/todosSlice';
+import { Task } from '../../types/Task';
+import { changeStatus, changeTitle } from '../../features/Tasks/TasksSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { UseHandlingErrors, InputNames } from '../../utils/UseHandlingErrors';
 import { TasksService } from '../../services/TasksService';
 
 type Props = {
-  todo: Todo,
+  task: Task,
   deleteTaskItem: (value: string) => void,
-  setTasksFromServer: (value: (((prevState: Todo[]) => Todo[]) | Todo[])) => void
+  setTasksFromServer: (value: (((prevState: Task[]) => Task[]) | Task[])) => void
 }
 const TODAY = new Date();
 
@@ -38,7 +38,7 @@ function getCurrentDate(props: Date | string) {
 }
 
 export const TaskItem:React.FC<Props> = ({
-  todo,
+  task,
   deleteTaskItem,
   setTasksFromServer,
 }) => {
@@ -47,7 +47,7 @@ export const TaskItem:React.FC<Props> = ({
     title,
     date,
     completed,
-  } = todo;
+  } = task;
 
   const [isBlurX1, setIsBlurX1] = useState(false);
   const [isBlurX2, setIsBlurX2] = useState(false);
@@ -184,15 +184,15 @@ export const TaskItem:React.FC<Props> = ({
               <input
                 className={styles.input}
                 value={newTitle}
-                name={InputNames.TodoName}
+                name={InputNames.TaskName}
                 maxLength={30}
                 onChange={handleTitleChange}
                 onKeyDown={handleApplyNewTitleKeyDown}
                 required
               />
 
-              {errors.has(InputNames.TodoName) && error && (
-                <div className={styles.errorMessage}>{errors.get(InputNames.TodoName)}</div>
+              {errors.has(InputNames.TaskName) && error && (
+                <div className={styles.errorMessage}>{errors.get(InputNames.TaskName)}</div>
               )}
             </>
           ) : (

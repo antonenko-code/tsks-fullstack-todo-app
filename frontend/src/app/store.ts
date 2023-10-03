@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
-import todosReducer from '../features/todos/todosSlice';
+import tasksReducer from '../features/Tasks/TasksSlice';
 import collectionsReducer from '../features/Collections/reducers/collectionsSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -14,7 +14,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   collections: collectionsReducer,
-  todos: todosReducer,
+  tasks: tasksReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

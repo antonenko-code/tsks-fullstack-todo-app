@@ -9,18 +9,18 @@ import { FormField } from '../../shared/FormField';
 import { MainButton } from '../../shared/MainButton';
 import { DatePicker } from '../../entities/DatePicker';
 import { v4 as uuidv4 } from 'uuid';
-import { add, deleteTask } from '../../features/todos/todosSlice';
+import { add, deleteTask } from '../../features/Tasks/TasksSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { TaskItem } from '../../entities/TaskItem';
-import { Todo } from '../../types/Todo';
+import { Task } from '../../types/Task';
 import { Calendar } from '../../shared/Calendar';
 import { TasksService } from '../../services/TasksService';
 import { Loader } from '../../shared/Loader';
 
 export const Tasks: React.FC = () => {
-  const { todos } = useAppSelector(state => state.todos);
-  const [tasksFromServer, setTasksFromServer] = useState<Todo[]>([]);
-  const [tasksFromStorage, setTasksFromStorage] = useState<Todo[]>([]);
+  const { tasks } = useAppSelector(state => state.tasks);
+  const [tasksFromServer, setTasksFromServer] = useState<Task[]>([]);
+  const [tasksFromStorage, setTasksFromStorage] = useState<Task[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -38,7 +38,7 @@ export const Tasks: React.FC = () => {
   const { state } = useLocation();
   const { collectionTitle, collectionId } = state;
 
-  const filteredByDate = (tasks: Todo[], date: Date | null) => {
+  const filteredByDate = (tasks: Task[], date: Date | null) => {
     if (date) {
       let stringDate = new Date(date).toDateString();
       return tasks.filter(task =>  new Date(task.date).toDateString() === stringDate);
@@ -51,7 +51,7 @@ export const Tasks: React.FC = () => {
       const response = await TasksService.getTasks(collectionId);
       setTasksFromServer(response.data);
     } catch (error) {
-      setTasksFromStorage(todos);
+      setTasksFromStorage(tasks);
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +61,7 @@ export const Tasks: React.FC = () => {
     if (isAuth) {
       return tasksForView;
     }
-    return tasksForView.filter((todo) => todo.collectionId === collectionId)
+    return tasksForView.filter((task) => task.collectionId === collectionId)
   }, [collectionId, isAuth, tasksForView]);
 
   const tasksDates = useMemo(() => {
@@ -128,14 +128,14 @@ export const Tasks: React.FC = () => {
         setTasksFromServer(prevState => [...prevState, response.data])
       } else {
         const id = uuidv4();
-        const newTodoItem = {
+        const newTaskItem = {
           title: title,
           id,
           completed: false,
           date: date,
           collectionId,
         };
-        dispatch(add(newTodoItem));
+        dispatch(add(newTaskItem));
       }
 
       closeModal();
@@ -167,10 +167,8 @@ export const Tasks: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isAuth) {
       getTasksFromServer();
-    }
-  }, [isAuth]);
+  }, [isAuth, tasks]);
 
   return (
     <PageLayout>
@@ -191,11 +189,11 @@ export const Tasks: React.FC = () => {
           {!filteredTasks.length ? (
             <span className={styles.message}>There are no tasks yet!</span>
           ) : (
-            filteredTasks.map((todo: Todo) => {
+            filteredTasks.map((task: Task) => {
               return (
                 <TaskItem
-                  key={todo.id}
-                  todo={todo}
+                  key={task.id}
+                  task={task}
                   deleteTaskItem={deleteTaskItem}
                   setTasksFromServer={setTasksFromServer}
                 />
