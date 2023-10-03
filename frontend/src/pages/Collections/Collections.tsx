@@ -230,7 +230,7 @@ export const Collections: React.FC = () => {
                 isAccepting={true}
               >
                 <div className={styles.acceptingTitle}>
-                  Action Confirmation
+                  Acttention!
                 </div>
 
                 <div className={styles.acceptingText}>
