@@ -65,7 +65,7 @@ export const ForgotPassword: React.FC = () => {
             Enter your email address below for password reset instructions.
           </div>
           <FormField
-            title={'First name'}
+            title={'Email'}
             placeholder={'username@gmail.com'}
             name={InputNames.Email}
             value={email}
