@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# TSKS - Frontend
+**TSKS** is a comprehensive **fullstack** todo application designed to empower users in efficiently managing their tasks and categories. Whether you're a seasoned user or just exploring, you have the flexibility to register for a personalized experience or simply try out our demo mode.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About Project
 
-## Available Scripts
+### Technologies Used
+- React, Redux Toolkit, Redux Persist | LocalStorage
+- TypeScript, JavaScript
+- Axios, Interceptors
+- React Hooks, React Router v6
+- CSS modules, SCSS
+- React Swiper
 
-In the project directory, you can run:
+## Getting Started
+Follow these detailed steps to get started with the TSKS Frontend:
 
-### `npm start`
+### Clone the Repository
+First, clone the TSKS repository to your local machine using the following command:
+```
+git clone https://github.com/your-username/todo-app.git
+cd todo-app
+```
+### Install Dependencies
+Navigate to the `frontend` directory and install the necessary dependencies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Frontend
+```
+cd frontend
+npm install
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Set up Environment Variables
+#### Frontend
+Create a `.env` file in the frontend root directory and add the following environment variables:
+```
+REACT_APP_API_URL=your_api_url
+```
+**Replace placeholders** with your actual configuration values.
 
-### `npm test`
+### Start the Frontend Server
+To run the frontend server, execute the following command from the frontend directory:
+```
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Open the App
+Open your web browser and visit the following URL: [TSKS App](http://localhost:3000)
 
-### `npm run build`
+Now you're ready to use the TSKS app on your local development environment.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Contributing
+Contributions to the Weather Forecast App are welcome! If you find any issues or have suggestions for improvements, feel free to open a new issue or submit a pull request.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for personal and commercial purposes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributors:
+- :ukraine: [Oleksandr Antonenko](https://github.com/Oleksandr-Antonenko) – Frontend/Backend Developer | Designer
+- :ukraine: [Serhii Vorobei](https://github.com/sergey-vorobei) – Frontend Developer
+- :ukraine: [Maryna Kucher](https://github.com/mary-kucher) – Frontend Developer
