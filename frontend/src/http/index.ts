@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-export const API_URL = 'http://localhost:8080';
-
 const $api = axios.create({
   withCredentials: true,
-  baseURL: API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
 })
 
 $api.interceptors.request.use(config => {
@@ -28,7 +26,7 @@ $api.interceptors.response.use(config => {
 
     try {
       if (refreshToken) {
-        const response = await axios.post(`${API_URL}/auth/refresh`, {refreshToken});
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`, {refreshToken});
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);
 

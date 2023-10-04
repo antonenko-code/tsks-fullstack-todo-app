@@ -1,46 +1,113 @@
-# Getting Started with Create React App
+![Weather Forecast](./frontend/public/images/app_preview_banner.jpg)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TSKS - Fullstack Todo App
+**TSKS** is a comprehensive **fullstack** todo application designed to empower users in efficiently managing their tasks and categories. Whether you're a seasoned user or just exploring, you have the flexibility to register for a personalized experience or simply try out our demo mode.
 
-## Available Scripts
+## Live Demo
+:rocket: [**Live Demo**](https://Oleksandr-Antonenko.github.io/weather-forecast-app)
 
-In the project directory, you can run:
+## About Project
 
-### `npm start`
+### Technologies Used
+- React, Redux Toolkit, Redux Persist | LocalStorage
+- TypeScript, JavaScript
+- Node.js, Express.js
+- MongoDB
+- Axios, Interceptors
+- CSS modules, SCSS
+- React Swiper
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Features
+* **Create** custom **categories** to organize tasks.
+* **Personalize** categories with **icons**.
+* Efficiently manage tasks, including **creation**, **updating**, and **deletion**.
+* **Set deadlines** for tasks to stay organized.
+* **Register** to unlock advanced features.
+* Explore the app in **Demo Mode** without registration.
+* Track task **completion progress**.
+* **Quickly filter** tasks by category, deadline, or priority.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
+Follow these detailed steps to get started with the TSKS Fullstack Todo App:
 
-### `npm test`
+### Clone the Repository
+First, clone the TSKS repository to your local machine using the following command:
+```
+git clone https://github.com/your-username/todo-app.git
+cd todo-app
+```
+### Install Dependencies
+Navigate to both the `frontend` and `backend` directories and install the necessary dependencies separately. Start with the frontend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Frontend
+```
+cd frontend
+npm install
+```
 
-### `npm run build`
+#### Backend
+```
+cd ../backend
+npm install
+```
+### Set up Your Database
+To manage authentication and data, you'll need a MongoDB database. Follow these steps:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Visit the [MongoDB website](https://www.mongodb.com/) and sign up to create a MongoDB Atlas account or set up a local MongoDB instance.
+2. Obtain your database connection details.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Set up Environment Variables
+#### Frontend
+Create a `.env` file in the frontend root directory and add the following environment variables:
+```
+REACT_APP_API_URL=your_api_url
+```
+**Replace placeholders** with your actual configuration values.
+#### Backend
+Create a `.env` file in the backend root directory and add the following environment variables:
+```
+PORT=your_port
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+DB_PORT=your_db_port
+DB_HOST=your_db_host
+DB_NAME=your_db_name
+JWT_ACCESS_SECRET=your_access_secret_key
+JWT_REFRESH_SECRET=your_refresh_secret_key
+JWT_RESET_SECRET=your_reset_secret_key
+SMTP_HOST=your_smtp_host
+SMTP_PORT=your_smtp_port
+SMTP_USER=your_smtp_user
+SMTP_PASSWORD=your_smtp_password
+SERVER_URL=http://localhost:your_backend_port
+CLIENT_URL=http://localhost:your_frontend_port
+```
+**Replace placeholders** with your actual configuration values.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Start the Backend Server
+To run the backend server, execute the following command from the backend directory:
+```
+npm run dev
+```
 
-### `npm run eject`
+### Start the Frontend Server
+To run the frontend server, execute the following command from the frontend directory:
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Open the App
+Open your web browser and visit the following URL: [TSKS App](http://localhost:3000)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now you're ready to use the TSKS app on your local development environment.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Contributing
+Contributions to the Weather Forecast App are welcome! If you find any issues or have suggestions for improvements, feel free to open a new issue or submit a pull request.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for personal and commercial purposes.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributors:
+- :ukraine: [Oleksandr Antonenko](https://github.com/Oleksandr-Antonenko) – Frontend/Backend Developer | Designer
+- :ukraine: [Serhii Vorobei](https://github.com/sergey-vorobei) – Frontend Developer
+- :ukraine: [Maryna Kucher](https://github.com/mary-kucher) – Frontend Developer
