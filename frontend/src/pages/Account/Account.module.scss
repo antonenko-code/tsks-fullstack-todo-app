@@ -70,3 +70,25 @@
 .formWrapper {
   display: flex;
 }
+
+.form {
+  display: flex;
+  gap: 36px;
+  flex-direction: column;
+  width: 100%;
+  padding: 36px;
+}
+
+.modalFormFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modalBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  z-index: 0;
+}
