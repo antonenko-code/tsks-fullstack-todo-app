@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 export const Profile: React.FC = () => {
   const { user } = useAppSelector(state => state.auth)
+
   return (
     <Link to={'/account'}>
       <div className={styles.wrapper}>
