@@ -2,7 +2,6 @@
 
 .dateDayItem {
   display: flex;
-  min-width: 100px;
   padding: 16px 24px;
   flex-direction: column;
   align-items: center;
@@ -25,9 +24,10 @@
   }
 
   @include md-device {
-    padding: 16px 12px;
-    gap: 8px;
+    padding: 8px 6px;
+    gap: 2px;
   }
+
   &:not(.dateDayItemSelected):active {
     cursor: grab;
   }
@@ -56,6 +56,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+
+    @include md-device {
+      width: 80px;
+      height: 83px;
+    }
   }
 
   &:after {
@@ -69,6 +74,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
+
+    @include md-device {
+      width: 78px;
+      height: 81px;
+    }
   }
 }
 

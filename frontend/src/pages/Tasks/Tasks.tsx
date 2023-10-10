@@ -256,11 +256,13 @@ export const Tasks: React.FC = () => {
                 name={'Add task'}
                 type={'submit'}
                 gradient={true}
+                fullwidth={true}
               />
 
               <MainButton
                 name={'Cancel'}
                 type={'button'}
+                fullwidth={true}
                 onClick={closeModal}
               />
             </div>

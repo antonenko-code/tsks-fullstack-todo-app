@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <PageLayout>
       <div className={styles.block}>
-        <div>
+        <div className={styles.textWrapper}>
           <div>
             <h1 className={styles.header}>
               <span className={styles.highlight}>tsks...</span>
@@ -24,16 +24,16 @@ export const Home = () => {
 
           <div className={styles.buttons}>
             <Link to="/sign-in">
-              <MainButton name={'Get Started'} gradient={true} />
+              <MainButton name={'Get Started'} gradient={true} fullwidth={true} />
             </Link>
             <Link to="/collections">
-              <MainButton name={'Try Demo'} />
+              <MainButton name={'Try Demo'} fullwidth={true} />
             </Link>
           </div>
         </div>
 
-        <div>
-          <img src={banner} alt="Happy girl" />
+        <div className={styles.imageWrapper}>
+          <img className={styles.image} src={banner} alt="Happy girl" />
         </div>
       </div>
     </PageLayout>

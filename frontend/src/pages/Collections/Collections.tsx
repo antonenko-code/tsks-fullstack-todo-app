@@ -224,11 +224,13 @@ export const Collections: React.FC = () => {
                       name={'Create'}
                       gradient={true}
                       type={'submit'}
+                      fullwidth={true}
                     />
 
                     <MainButton
                       name={'Cancel'}
                       type={'button'}
+                      fullwidth={true}
                       onClick={closeModal}
                     />
                   </div>
@@ -254,11 +256,13 @@ export const Collections: React.FC = () => {
                     name={'Delete'}
                     gradient={true}
                     type={'submit'}
+                    fullwidth={true}
                     onClick={() => handleAcceptingDelete()}
                   />
                   <MainButton
                     name={'Cancel'}
                     type={'button'}
+                    fullwidth={true}
                     onClick={closeModal}
                   />
                 </div>
