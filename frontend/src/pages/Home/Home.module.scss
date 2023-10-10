@@ -25,10 +25,13 @@
 }
 
 .textWrapper {
-  max-width: 360px;
+  position: relative;
+  flex-basis: 50%;
 
   @include md-device {
-    margin-bottom: 50px;
+    //top: -200px;
+    transform: translateY(-200px);
+    margin-bottom: -100px;
   }
 }
 
@@ -40,8 +43,24 @@
 .buttons {
   display: flex;
   gap: 24px;
+
+  a {
+    flex-basis: 50%;
+  }
+}
+
+.imageWrapper {
+  flex-basis: 50%;
+
+  @include md-device {
+    background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0) 25%, rgba(29, 29, 38, 1) 75%);
+  }
 }
 
 .image {
+  display:block;
+  position:relative;
   width: 100%;
+  object-fit: cover;
+  z-index:-1;
 }

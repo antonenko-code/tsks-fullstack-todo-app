@@ -1,9 +1,10 @@
-@import "./src/app/assets/styles/index";
+@import "../../app/assets/styles/index";
 
 .background {
   position: fixed;
   height: 100%;
   width: 100%;
+  padding: 24px 18px;
   background-color: rgba(0, 0, 0, 0.8);
   top: 0;
   left: 0;
@@ -15,7 +16,8 @@
 
 .containerModal {
   display: flex;
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   min-height: 320px;
   height: max-content;
   top: 50%;
@@ -32,8 +34,8 @@
   flex-direction: column;
   width: 400px;
   min-height: 120px;
-  gap: 20px;
-  padding: 10px;
+  gap: 36px;
+  padding: 36px;
 }
 
 .containerHide {

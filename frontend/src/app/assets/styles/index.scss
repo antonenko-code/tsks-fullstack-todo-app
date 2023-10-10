@@ -3,6 +3,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 * {
@@ -63,18 +64,24 @@ input {
   display: flex;
   flex-direction: column;
   gap: 36px;
+
+  @include md-device {
+    gap: 24px;
+  }
 }
 
 .swiper .swiper-slide {
   width: 100px;
   display: flex;
+
+  @include md-device {
+    width: 80px;
+  }
 }
 
 .swiper {
   display: flex;
   gap: 10px;
-  min-width: 330px;
-  max-width: 770px;
   height: auto;
   border-radius: 24px;
   background: $secondary-background-color;

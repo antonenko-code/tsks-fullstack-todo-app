@@ -66,7 +66,7 @@ export const Calendar: React.FC<Props> = ({ selectedDay, setSelectedDay, tasksDa
   }, [selectedDay, dateForView]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.monthWrapper}>
           <button
