@@ -18,46 +18,30 @@
   display: flex;
   text-align: center;
   align-items: center;
-  position: absolute;
   cursor: pointer;
 
   &:before {
+    position: absolute;
     width: 24px;
     height: 24px;
     background: $gradient-accent-color;
     content: "";
     border-radius: 6px;
-  }
-
-  &:after {
-    width: 20px;
-    height: 20px;
-    background: $secondary-background-color;
-    content: "";
-    border-radius: 4px;
-    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  @include md-device {
-    &:before {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      top: 0;
-      left: 0;
-    }
-
-    &:after {
-      width: 20px;
-      height: 20px;
-      top: 75%;
-      left: 75%;
-      border-radius: 4px;
-    }
+  &:after {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: $secondary-background-color;
+    content: "";
+    border-radius: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -78,25 +62,6 @@
     height: 35px;
     border-radius: 10px;
   }
-
-  @include md-device {
-    &:before {
-      position: absolute;
-      width: 39px;
-      height: 39px;
-      border-radius: 12px;
-      top: 0;
-      left: 0;
-    }
-
-    &:after {
-      width: 35px;
-      height: 35px;
-      top: 120%;
-      left: 120%;
-      border-radius: 10px;
-    }
-  }
 }
 
 .label {
@@ -108,7 +73,6 @@
   &:after {
     background: $gradient-accent-color;
     transform: translate(-50%, -50%);
-
   }
 }
 
@@ -116,13 +80,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-40%, -50%);
+  transform: translate(-50%, -50%);
   pointer-events: none;
-
-  @include md-device {
-    top: 80%;
-    left: 80%;
-    transform: translate(-100%, -100%);
-  }
 }
 
