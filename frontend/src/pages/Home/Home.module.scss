@@ -29,7 +29,6 @@
   flex-basis: 50%;
 
   @include md-device {
-    //top: -200px;
     transform: translateY(-200px);
     margin-bottom: -100px;
   }
