@@ -9,6 +9,11 @@ const initialState: TasksState = {
   tasks: [],
 }
 
+type UpdateStatus = {
+  id: string,
+  newStatus: boolean,
+}
+
 type UpdateTitle = {
   id: string,
   newTitle: string,
@@ -22,11 +27,11 @@ export const tasksSlice = createSlice({
       state.tasks.push(action.payload);
     },
 
-    changeStatus: (state: TasksState, action: PayloadAction<string>) => {
-      const task = state.tasks.find((task) => task.id === action.payload);
+    changeStatus: (state: TasksState, action: PayloadAction<UpdateStatus>) => {
+      const task = state.tasks.find((task) => task.id === action.payload.id);
 
       if (task) {
-        task.completed = !task.completed;
+        task.completed = action.payload.newStatus;
       }
     },
 

@@ -195,8 +195,8 @@ export const Registration: React.FC = () => {
           <div className={styles.checkboxWrapper}>
             <FormCheckbox
               description={'I Agree to Privacy Policy'}
-              isChecked={isCheckedAgree}
-              setIsChecked={setIsCheckedAgree}
+              handleChangeStatus={setIsCheckedAgree}
+              checked={isCheckedAgree}
             />
             {isSubmit && !isCheckedAgree && (
               <span className={styles.errorMessage}>Policies should be accepted</span>

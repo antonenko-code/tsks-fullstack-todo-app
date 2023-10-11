@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styles from './FormCheckbox.module.scss'
 import classNames from 'classnames';
 import { Icons } from '../Icons/Icons';
@@ -6,20 +6,17 @@ import { Icons } from '../Icons/Icons';
 type Props = {
   description?: string,
   isLarge?: boolean,
-  isChecked: boolean,
-  setIsChecked: (value: (boolean | ((value: boolean) => any))) => void,
+  checked: boolean,
+  handleChangeStatus: (value: boolean) => void,
 }
 
 export const FormCheckbox: FC<Props> = ({
   description,
   isLarge,
-  isChecked,
-  setIsChecked,
-
+  checked,
+  handleChangeStatus,
 }) => {
-  const handleChangeCheckbox = () => {
-    setIsChecked((prev) => !prev);
-  };
+  const [isChecked, setIsChecked] = useState(checked);
 
   return (
     <div className={styles.block}>
@@ -36,7 +33,10 @@ export const FormCheckbox: FC<Props> = ({
             [styles.inputLg] : isLarge,
           })}
           checked={isChecked}
-          onChange={handleChangeCheckbox}
+          onChange={() => {
+            setIsChecked((prev) => !prev);
+            handleChangeStatus(!isChecked)
+          }}
         />
 
         {isChecked && (
@@ -46,6 +46,5 @@ export const FormCheckbox: FC<Props> = ({
 
       <label className={styles.label}>{description}</label>
     </div>
-
   );
 };
