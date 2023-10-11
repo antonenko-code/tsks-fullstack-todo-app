@@ -52,7 +52,6 @@ export const TaskItem:React.FC<Props> = ({
   const [isBlurX1, setIsBlurX1] = useState(false);
   const [isBlurX2, setIsBlurX2] = useState(false);
   const elementRef = useRef<HTMLDivElement | null>(null);
-  const [isChecked, setIsChecked] = useState(completed);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
@@ -62,7 +61,7 @@ export const TaskItem:React.FC<Props> = ({
   const {onChangeValidation, errors} = UseHandlingErrors();
   const dispatch = useAppDispatch();
 
-  const updateStatus = async () => {
+  const updateStatus = async (isChecked: boolean) => {
     const response = await TasksService.updateTask({completed: isChecked}, id);
     setTasksFromServer(prevState => {
       const editedTask = prevState.filter(task => task.id === id);
@@ -150,13 +149,14 @@ export const TaskItem:React.FC<Props> = ({
     return getCurrentDate(date);
   }, [date]);
 
-  useEffect(() => {
+  const handleChangeStatus = (isChecked: boolean) => {
+    // setIsChecked((prev) => !prev);
     if (isAuth) {
-      updateStatus();
+      updateStatus(isChecked);
     } else {
-      dispatch(changeStatus(id));
+      dispatch(changeStatus({id, newStatus: isChecked}));
     }
-  }, [isChecked])
+  }
 
   return (
     <div
@@ -170,8 +170,8 @@ export const TaskItem:React.FC<Props> = ({
       <div className={styles.block}>
         <FormCheckbox
           isLarge={true}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
+          checked={task.completed}
+          handleChangeStatus={handleChangeStatus}
         />
 
         <div
