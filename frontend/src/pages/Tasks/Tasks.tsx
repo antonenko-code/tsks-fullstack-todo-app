@@ -136,6 +136,7 @@ export const Tasks: React.FC = () => {
           collectionId,
         };
         dispatch(add(newTaskItem));
+        setTasksFromStorage(prev => [...prev, newTaskItem]);
       }
 
       closeModal();
@@ -163,12 +164,15 @@ export const Tasks: React.FC = () => {
       setTasksFromServer(prevState => prevState.filter(task => task.id !== response.data.id))
     } else {
       dispatch(deleteTask(id));
+      setTasksFromStorage(prev => {
+        return prev.filter(task => task.id !== id);
+      });
     }
   };
 
   useEffect(() => {
       getTasksFromServer();
-  }, [isAuth, tasks]);
+  }, [isAuth]);
 
   return (
     <PageLayout>
