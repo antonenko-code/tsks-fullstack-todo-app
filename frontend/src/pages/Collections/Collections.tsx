@@ -154,7 +154,7 @@ export const Collections: React.FC = () => {
         onClick={handleGoBack}
         isOnLeft={true}
       />
-      {isLoading ? (<div className={styles.loaderContainer}><Loader/></div>) : (
+      {isLoading && !isOpenModal ? (<div className={styles.loaderContainer}><Loader/></div>) : (
         <div className={styles.collectionContainer}>
           {viewCollections.map((collectionItem) => (
             <Link
