@@ -107,6 +107,7 @@ export const Collections: React.FC = () => {
         }
       } else {
         dispatch(addCollection(newCollection));
+        setCollectionsFromStorage(prev => [...prev, newCollection])
       }
 
       setTitle(({ collectionName: '' }));
@@ -122,6 +123,9 @@ export const Collections: React.FC = () => {
     if (!isAuth) {
       dispatch(deleteAllByCollectionId(deletingId));
       dispatch(deleteCollection(collectionForDelete));
+      setCollectionsFromStorage(prevState => {
+        return prevState.filter(collection => collection !== collectionForDelete)
+      })
     } else {
       try {
         await CollectionsService.remove(deletingId);
@@ -144,7 +148,7 @@ export const Collections: React.FC = () => {
 
     useEffect(() => {
       getCollectionData();
-    }, [collections, isAuth]);
+    }, [isAuth]);
   console.log('render')
   return (
     <PageLayout>
