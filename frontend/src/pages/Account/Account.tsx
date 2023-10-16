@@ -158,8 +158,6 @@ export const Account: React.FC = () => {
     return () => clearTimeout(timer);
   };
 
-  //TODO move close background to CSS
-
   const updateSubmits: {[index: string]:any} = {
     [ChangeUser.FirstName]: UserService.updateName,
     [ChangeUser.SecondName]: UserService.updateName,
