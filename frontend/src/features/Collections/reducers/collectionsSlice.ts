@@ -38,6 +38,10 @@ export const collectionsSlice = createSlice({
   }
 });
 
-export const {addCollection, deleteCollection, changeCollection } = collectionsSlice.actions;
+export const {
+  addCollection,
+  deleteCollection,
+  changeCollection,
+} = collectionsSlice.actions;
 
 export default collectionsSlice.reducer;

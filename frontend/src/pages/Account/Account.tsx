@@ -1,152 +1,221 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { PageLayout } from '../../shared/PageLayout';
 import { PageTitle } from '../../shared/PageTitle';
 import styles from './Account.module.scss';
-import avatar from  '../../app/assets/images/avatar.png';
+import avatar from '../../app/assets/images/avatar.png';
 import { FormLayout } from '../../shared/FormLayout';
 import { AccountField } from '../../shared/AccountField';
 import { MainButton } from '../../shared/MainButton';
 import { Icons } from '../../shared/Icons/Icons';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
-import { ModalWindow } from '../../shared/ModalWindow';
-import { FormField } from '../../shared/FormField';
 import { UserService } from '../../services/UserService';
 import { IRequestUserData } from '../../types/request/IRequestUserData';
+import { UseHandlingErrors } from '../../utils/UseHandlingErrors';
+import { UpdateUserDataModal } from '../../features/UpdateUserDataModal';
 import { updateUser } from '../../features/Auth/reducers/authSlice';
+import { IBaseResponse } from '../../types/response/IBaseResponse';
+import { IValidationError } from '../../types/response/IValidationError';
+import { AxiosError } from 'axios';
 
-export enum FieldNames {
-  FirstName = 'firstName',
-  SecondName = 'secondName',
-  Email = 'email',
-  Password = 'password',
-  NewPassword = 'newPassword',
+export enum ChangeUser {
+  FirstName = 'changeUserFirstName',
+  SecondName = 'changeUserSecondName',
+  Email = 'changeUserEmail',
+  Password = 'changeUserPassword',
+}
+
+type Data = {
+  title: string,
+  value: string | unknown,
 };
 
 export const Account: React.FC = () => {
   const { user } = useAppSelector(state => state.auth);
-  const dispatch = useAppDispatch();
-  const [newValue, setNewValue] = useState<Partial<IRequestUserData>>({});
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [userInfo, setUserInfo] = useState<Data[]>([]);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fieldToChange, setFieldToChange] = useState<string>('');
+  const [fieldToChange, setFieldToChange] = useState('');
   const [isHideModal, setIsHideModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { onChangeValidation, onSubmitValidation, errors } = UseHandlingErrors();
+  const [errorMessageFromServer, setErrorMessageFromServer] = useState<IBaseResponse<any> | null>(null);
+  const dispatch = useAppDispatch();
+
+  type LoginData = {
+    [key: string]: {
+      inputTitle: string,
+      inputPlaceholder: string,
+      inputName: string,
+      type: string,
+      value: string,
+    }[];
+  };
+
+  const [loginData, setLoginData] = useState<LoginData>({
+    changeUserFirstName: [
+      {
+        inputTitle: 'Enter new First name',
+        inputPlaceholder: 'First Name',
+        inputName: 'firstName',
+        type: 'text',
+        value: '',
+      },
+    ],
+
+    changeUserSecondName: [
+      {
+        inputTitle: 'Enter new Second name',
+        inputPlaceholder: 'Second Name',
+        inputName: 'secondName',
+        type: 'text',
+        value: '',
+      },
+    ],
+
+    changeUserEmail: [
+      {
+        inputTitle: 'Enter new email',
+        inputPlaceholder: 'Email',
+        inputName: 'email',
+        type: 'text',
+        value: '',
+      },
+      {
+        inputTitle: 'Enter password',
+        inputPlaceholder: 'Password',
+        inputName: 'password',
+        type: 'password',
+        value: '',
+      },
+    ],
+
+    changeUserPassword: [
+      {
+        inputTitle: 'Enter password',
+        inputPlaceholder: 'Password',
+        inputName: 'password',
+        type: 'password',
+        value: '',
+      },
+      {
+        inputTitle: 'Enter new password',
+        inputPlaceholder: 'New password',
+        inputName: 'newPassword',
+        type: 'password',
+        value: '',
+      },
+    ],
+  });
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleOpenModal = (fieldName: string, event: MouseEvent) => {
+  const handleOpenModal = (fieldKey: string, event: MouseEvent) => {
     event.stopPropagation();
 
     setIsModalOpen(true);
-    setFieldToChange(fieldName);
+    setFieldToChange(fieldKey);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(/^[a-zA-Z0-9А-Яа-я \-\'\s]*$/);
-    const { name, value } = event.target;
+  const clearValue = () => {
+    setLoginData((prevState) => {
+      const newState = { ...prevState };
+      newState[fieldToChange]
+        .forEach((field) => (
+          field.value = ''
+        ))
 
-    if (!regex.test(value) && fieldToChange !== FieldNames.Email) {
-      return;
-    }
+      return newState;
+    });
+  };
 
-    switch (name) {
-      case FieldNames.Password: {
-        setPassword(value);
-        break;
-      }
-      case FieldNames.NewPassword: {
-        setNewPassword(value);
-        break;
-      }
-      default:
-        setNewValue({[fieldToChange]: value});
-    }
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const { value } = event.target;
+    setErrorMessageFromServer(null);
+    onChangeValidation(event);
+    setLoginData((prevState) => {
+      const newState = { ...prevState };
+      newState[fieldToChange][index].value = value;
 
-    setErrorMessage(null);
+      return newState;
+    });
+    setIsSubmit(false);
   };
 
   const closeModal = () => {
     setIsHideModal(true);
+    clearValue();
 
     const timer = setTimeout(() => {
       setIsHideModal(false);
       setIsModalOpen(false);
       setFieldToChange('');
-      setPassword('');
-      setNewPassword('');
-      setNewValue({});
-      setErrorMessage(null);
     }, 500);
+    setIsSubmit(false);
 
     return () => clearTimeout(timer);
   };
 
+  //TODO move close background to CSS
+
+  const updateSubmits: {[index: string]:any} = {
+    [ChangeUser.FirstName]: UserService.updateName,
+    [ChangeUser.SecondName]: UserService.updateName,
+    [ChangeUser.Email]: UserService.updateEmail,
+    [ChangeUser.Password]: UserService.updatePassword,
+  } as { [key in ChangeUser]: (userData: Partial<IRequestUserData>) => Promise<any> };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const emailBody = {email: newValue.email?.toLowerCase(), password};
-    const passwordBody = {password, newPassword};
+    let validationErrors: any;
+    setIsSubmit(true);
 
-    switch (fieldToChange) {
-      case FieldNames.Email: {
-        if (!newValue.email?.length) {
-          setErrorMessage('Enter Email');
-          return;
-        }
+    const submitMethod = updateSubmits[fieldToChange];
+    const inputsData = loginData[fieldToChange];
+    const dataToSend: { [key: string]: string } = {};
 
-        if (!password.length) {
-          setErrorMessage('Enter password');
-          return;
-        }
-        break;
-      }
-      case FieldNames.Password: {
-        if (!password.length) {
-          setErrorMessage('Enter password');
-          return;
-        }
+    inputsData.forEach((field) => {
+      dataToSend[field.inputName] = field.value;
+      validationErrors = onSubmitValidation(dataToSend, [field.inputName]);
+    });
 
-        if (!newPassword.length) {
-          setErrorMessage('Enter New password');
-          return;
-        }
-        break;
-      }
-    }
-
-    if (errorMessage?.length) {
+    if (validationErrors!.size > 0 || errors.size > 0) {
       return;
     }
 
     try {
-      switch (fieldToChange) {
-        case FieldNames.Email: {
-          await UserService.updateUserFieldByField(fieldToChange, emailBody);
-          break;
-        }
-        case FieldNames.Password: {
-          await UserService.updateUserFieldByField(fieldToChange, passwordBody);
-          break;
-        }
-        default: {
-          await UserService.updateUserFieldByField(fieldToChange, newValue);
-          break;
-        }
-      }
-
-      if (fieldToChange !== FieldNames.Password) {
-        dispatch(updateUser(newValue))
-      }
+      await submitMethod(dataToSend);
+      dispatch(updateUser(dataToSend))
       closeModal();
-      setNewValue({});
-    } catch (error) {
-      setErrorMessage(`Something wrong`);
+    } catch (e) {
+      const error = e as AxiosError;
+      setErrorMessageFromServer(error.response?.data as IBaseResponse<IValidationError>);
     }
   };
+
+  useEffect(() => {
+    const currentUserInfo: Data[] = [
+      {
+        title: 'First name',
+        value: user.firstName,
+      },
+      {
+        title: 'Second name',
+        value: user.secondName,
+      },
+      {
+        title: 'Email',
+        value: user.email,
+      },
+      {
+        title: 'Password',
+        value: '********',
+      }
+    ];
+    setUserInfo(currentUserInfo);
+  }, [user]);
 
   return (
     <PageLayout>
@@ -162,7 +231,7 @@ export const Account: React.FC = () => {
           <img src={avatar} alt="avatar"/>
 
           <div className={styles.chooseAvatar}>
-            <Icons name={'pencil'} />
+            <Icons name={'pencil'}/>
           </div>
         </div>
 
@@ -180,37 +249,23 @@ export const Account: React.FC = () => {
       </div>
 
       <FormLayout fullWidth={true}>
-        <AccountField
-          titleField={'First Name'}
-          nameField={FieldNames.FirstName}
-          inputValue={user.firstName}
-          btnName={'Change'}
-          handleClick={handleOpenModal}
-        />
+        {userInfo.map((item: any, index) => {
+          const {
+            title,
+            value,
+          } = item;
 
-        <AccountField
-          titleField={'Last Name'}
-          nameField={FieldNames.SecondName}
-          inputValue={user.secondName}
-          btnName={'Change'}
-          handleClick={handleOpenModal}
-        />
-
-        <AccountField
-          titleField={'Email'}
-          nameField={FieldNames.Email}
-          inputValue={user.email}
-          btnName={'Change'}
-          handleClick={handleOpenModal}
-        />
-
-        <AccountField
-          titleField={'Password'}
-          nameField={FieldNames.Password}
-          inputValue={'********'}
-          btnName={'Change'}
-          handleClick={handleOpenModal}
-        />
+          let action = Object.keys(loginData)[index]
+          return (
+            <AccountField
+              key={title}
+              title={title}
+              value={value}
+              btnName={'Change'}
+              handleClick={(data) => handleOpenModal(action, data)}
+            />
+          );
+        })}
       </FormLayout>
 
       <FormLayout fullWidth={true}>
@@ -228,124 +283,27 @@ export const Account: React.FC = () => {
               Tsks Free
             </span>
 
-            <MainButton name={'Upgrade to Pro'} gradient={true} />
+            <MainButton name={'Upgrade to Pro'} gradient={true}/>
           </div>
         </div>
       </FormLayout>
 
       <div className={styles.signOutWrapper}>
-        <MainButton name={'Sign out'} />
+        <MainButton name={'Sign out'}/>
       </div>
 
+
       {isModalOpen && (
-        <ModalWindow
+        <UpdateUserDataModal
+          isSubmit={isSubmit}
+          errorMessageFromServer={errorMessageFromServer}
+          errors={errors}
+          keyAction={loginData[fieldToChange]}
           closeModal={closeModal}
           isHideModal={isHideModal}
-        >
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit}
-          >
-            <div className={styles.modalFormFieldWrapper}>
-              <h4>
-                {fieldToChange === FieldNames.FirstName && (
-                  'Enter new First name'
-                )}
-
-                {fieldToChange === FieldNames.SecondName && (
-                  'Enter new Last name'
-                )}
-
-                {fieldToChange === FieldNames.Email && (
-                  'Enter new Email'
-                )}
-
-                {fieldToChange === FieldNames.Password && (
-                  'Enter your new password'
-                )}
-              </h4>
-
-              {fieldToChange === FieldNames.FirstName && (
-                <FormField
-                  placeholder={'First Name'}
-                  name={FieldNames.FirstName}
-                  value={newValue.firstName}
-                  maxLength={30}
-                  onChange={handleOnChange}
-                />
-              )}
-
-              {fieldToChange === FieldNames.SecondName && (
-                <FormField
-                  placeholder={'Last Name'}
-                  name={FieldNames.SecondName}
-                  value={newValue.secondName}
-                  maxLength={30}
-                  onChange={handleOnChange}
-                />
-              )}
-
-              {fieldToChange === FieldNames.Email && (
-                <>
-                  <FormField
-                    placeholder={'Email'}
-                    name={FieldNames.Email}
-                    value={newValue.email}
-                    onChange={handleOnChange}
-                  />
-
-                  <FormField
-                    type={'password'}
-                    placeholder={'Current password'}
-                    name={FieldNames.Password}
-                    value={password}
-                    onChange={handleOnChange}
-                  />
-                </>
-              )}
-
-              {fieldToChange === FieldNames.Password && (
-                <>
-                  <FormField
-                    type={'password'}
-                    placeholder={'Current password'}
-                    name={FieldNames.Password}
-                    value={password}
-                    onChange={handleOnChange}
-                  />
-
-                  <FormField
-                    type={'password'}
-                    placeholder={'New password'}
-                    name={FieldNames.NewPassword}
-                    value={newPassword}
-                    onChange={handleOnChange}
-                  />
-                </>
-              )}
-
-
-              {errorMessage && (
-                <div className={styles.errorMessage}>{errorMessage}</div>
-              )}
-
-            </div>
-
-            <div className={styles.modalBtnWrapper}>
-              <MainButton
-                name={'Accept'}
-                type={'submit'}
-                gradient={true}
-              />
-
-              <MainButton
-                name={'Cancel'}
-                type={'button'}
-                onClick={closeModal}
-              />
-            </div>
-          </form>
-        </ModalWindow>
+          handleSubmit={handleSubmit}
+          handleOnChange={handleOnChange}
+        />
       )}
     </PageLayout>
   );

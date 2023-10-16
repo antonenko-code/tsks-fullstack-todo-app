@@ -12,8 +12,8 @@ router.get('/', AuthMiddleware, userController.getUser);
 router.post('/forgot-password', forgotPasswordSchema, userController.requestPasswordReset)
 router.get('/reset-password/:token', userController.verifyResetPasswordLink);
 router.post('/reset-password/:token', userController.resetPassword);
-router.put('/', updateUserSchema, AuthMiddleware, userController.updateUser);
-router.put('/email', updateEmailSchema, AuthMiddleware, userController.updateUserEmail);
-router.put('/password', updatePasswordSchema, AuthMiddleware,userController.updateUserPassword);
+router.patch('/', updateUserSchema, AuthMiddleware, userController.updateUser);
+router.patch('/email', updateEmailSchema, AuthMiddleware, userController.updateUserEmail);
+router.patch('/password', updatePasswordSchema, AuthMiddleware,userController.updateUserPassword);
 
 export default router;
