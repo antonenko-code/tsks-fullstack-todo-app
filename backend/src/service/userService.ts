@@ -94,9 +94,7 @@ class UserService {
   }
 
   async updateUser(userId: string, body: RequestBody) {
-    const { firstName, secondName } = body;
-
-    await UserModel.updateOne({_id: userId}, {firstName, secondName});
+    await UserModel.updateOne({_id: userId}, body);
 
     return this.getUser(userId);
   }

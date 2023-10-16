@@ -4,6 +4,7 @@ export enum InputNames {
   Email = 'email',
   Password = 'password',
   RepeatPassword ='repeatPassword',
+  NewPassword = 'newPassword',
   FirstName = 'firstName',
   SecondName = 'secondName',
   CollectionName = 'collectionName',
@@ -34,6 +35,7 @@ export const UseHandlingErrors = () => {
         break
       }
       case InputNames.RepeatPassword:
+      case InputNames.NewPassword:
       case InputNames.Password: {
         if (value.trim().length === 0) {
           setErrors(prevState =>

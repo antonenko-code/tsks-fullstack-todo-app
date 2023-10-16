@@ -1,0 +1,87 @@
+@import '../../app/assets/styles/index';
+
+.form {
+  display: flex;
+  gap: 36px;
+  flex-direction: column;
+  width: 100%;
+  padding: 36px;
+}
+
+.modalFormFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formFieldWrapper {
+  margin-bottom: 10px;
+}
+
+.modalBtnWrapper {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  z-index: 0;
+}
+
+.background {
+  position: fixed;
+  padding: 24px 18px;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.containerModal {
+  display: flex;
+  width: 420px;
+  height: max-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 24px;
+  background: $secondary-background-color;
+  animation: moveUp 0.5s ease-in-out forwards;
+  box-shadow: 7px 7px 23px 0 $modal-box-shadow-color, 2px 2px 12px 0 $secondary-modal-box-shadow-color;
+}
+
+.containerHide {
+  animation: moveDown 0.5s ease-in-out forwards;
+}
+
+.errorMessage {
+  color: $hover-color;
+  font-size: 15px;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translate(0%, -100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0%, -100%);
+    opacity: 0;
+  }
+}
+

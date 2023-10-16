@@ -146,10 +146,9 @@ export const Collections: React.FC = () => {
     return viewCollections.filter(collection => collection.id === deletingId)[0];
   }, [deletingId]);
 
-    useEffect(() => {
-      getCollectionData();
-    }, [isAuth]);
-  console.log('render')
+  useEffect(() => {
+    getCollectionData();
+  }, [isAuth]);
   return (
     <PageLayout>
       <PageTitle
@@ -195,74 +194,42 @@ export const Collections: React.FC = () => {
             </button>
           )}
 
-            {isOpenModal && (
-              <ModalWindow
-                closeModal={closeModal}
-                isHideModal={isHideModal}
+          {isOpenModal && (
+            <ModalWindow
+              closeModal={closeModal}
+              isHideModal={isHideModal}
+            >
+              <form
+                className={styles.form}
+                onSubmit={handleOnSubmit}
               >
-                <form
-                  className={styles.form}
-                  onSubmit={handleOnSubmit}
-                >
-                  <div className={styles.modalIconSelectorWrapper}>
-                    <IconsSelector
-                      selectedIcon={selectedIcon}
-                      setSelectedIcon={setSelectedIcon}
-                    />
+                <div className={styles.modalIconSelectorWrapper}>
+                  <IconsSelector
+                    selectedIcon={selectedIcon}
+                    setSelectedIcon={setSelectedIcon}
+                  />
 
-                    <FormField
-                      placeholder={'Some text'}
-                      name={InputNames.CollectionName}
-                      value={title.collectionName}
-                      maxLength={12}
-                      onChange={handleOnChange}
-                    />
+                  <FormField
+                    placeholder={'Some text'}
+                    name={InputNames.CollectionName}
+                    value={title.collectionName}
+                    maxLength={12}
+                    onChange={handleOnChange}
+                  />
 
-                    {errors.has(InputNames.CollectionName) && isSubmit && (
-                      <div className={styles.errorMessage}>{errors.get(InputNames.CollectionName)}</div>
-                    )}
-                  </div>
-
-                  <div className={styles.modalBtnWrapper}>
-                    <MainButton
-                      name={'Create'}
-                      gradient={true}
-                      type={'submit'}
-                      fullwidth={true}
-                    />
-
-                    <MainButton
-                      name={'Cancel'}
-                      type={'button'}
-                      fullwidth={true}
-                      onClick={closeModal}
-                    />
-                  </div>
-                </form>
-              </ModalWindow>
-            )}
-          {isOpenAcceptingModal && (
-              <ModalWindow
-                closeModal={closeModal}
-                isHideModal={isHideModal}
-                isAccepting={true}
-              >
-                <div className={styles.acceptingTitle}>
-                  Attention!
+                  {errors.has(InputNames.CollectionName) && isSubmit && (
+                    <div className={styles.errorMessage}>{errors.get(InputNames.CollectionName)}</div>
+                  )}
                 </div>
 
-                <div className={styles.acceptingText}>
-                  Are you sure you want to delete the collection <b>{collectionForDelete.title}</b> and all tasks?
-                </div>
-
-                <div className={styles.btnsWrapper}>
+                <div className={styles.modalBtnWrapper}>
                   <MainButton
-                    name={'Delete'}
+                    name={'Create'}
                     gradient={true}
                     type={'submit'}
                     fullwidth={true}
-                    onClick={() => handleAcceptingDelete()}
                   />
+
                   <MainButton
                     name={'Cancel'}
                     type={'button'}
@@ -270,11 +237,43 @@ export const Collections: React.FC = () => {
                     onClick={closeModal}
                   />
                 </div>
-              </ModalWindow>
-            )
-          }
-        </div>
-      )}
+              </form>
+            </ModalWindow>
+          )}
+        {isOpenAcceptingModal && (
+            <ModalWindow
+              closeModal={closeModal}
+              isHideModal={isHideModal}
+              isAccepting={true}
+            >
+              <div className={styles.acceptingTitle}>
+                Attention!
+              </div>
+
+              <div className={styles.acceptingText}>
+                Are you sure you want to delete the collection <b>{collectionForDelete.title}</b> and all tasks?
+              </div>
+
+              <div className={styles.btnsWrapper}>
+                <MainButton
+                  name={'Delete'}
+                  gradient={true}
+                  type={'submit'}
+                  fullwidth={true}
+                  onClick={() => handleAcceptingDelete()}
+                />
+                <MainButton
+                  name={'Cancel'}
+                  type={'button'}
+                  fullwidth={true}
+                  onClick={closeModal}
+                />
+              </div>
+            </ModalWindow>
+          )
+        }
+      </div>
+    )}
     </PageLayout>
   );
 };
