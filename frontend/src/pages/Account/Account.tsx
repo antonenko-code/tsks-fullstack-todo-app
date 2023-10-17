@@ -147,6 +147,7 @@ export const Account: React.FC = () => {
   const closeModal = () => {
     setIsHideModal(true);
     clearValue();
+    setErrorMessageFromServer(null);
 
     const timer = setTimeout(() => {
       setIsHideModal(false);
@@ -285,11 +286,6 @@ export const Account: React.FC = () => {
           </div>
         </div>
       </FormLayout>
-
-      <div className={styles.signOutWrapper}>
-        <MainButton name={'Sign out'}/>
-      </div>
-
 
       {isModalOpen && (
         <UpdateUserDataModal
