@@ -88,7 +88,7 @@ export const UpdateUserDataModal: React.FC<Props> = ({
                     />
                   </div>
 
-                  {errors.size > 0 && isSubmit && (
+                  {errors.has(inputName) && isSubmit && (
                     <div className={styles.errorMessage}>{errors.get(inputName)}</div>
                   )}
                 </div>

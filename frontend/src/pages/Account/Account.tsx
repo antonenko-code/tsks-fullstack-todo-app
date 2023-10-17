@@ -30,6 +30,16 @@ type Data = {
   value: string | unknown,
 };
 
+type LoginData = {
+  [key: string]: {
+    inputTitle: string,
+    inputPlaceholder: string,
+    inputName: string,
+    type: string,
+    value: string,
+  }[];
+};
+
 export const Account: React.FC = () => {
   const { user } = useAppSelector(state => state.auth);
   const [userInfo, setUserInfo] = useState<Data[]>([]);
@@ -41,16 +51,6 @@ export const Account: React.FC = () => {
   const { onChangeValidation, onSubmitValidation, errors } = UseHandlingErrors();
   const [errorMessageFromServer, setErrorMessageFromServer] = useState<IBaseResponse<any> | null>(null);
   const dispatch = useAppDispatch();
-
-  type LoginData = {
-    [key: string]: {
-      inputTitle: string,
-      inputPlaceholder: string,
-      inputName: string,
-      type: string,
-      value: string,
-    }[];
-  };
 
   const [loginData, setLoginData] = useState<LoginData>({
     changeUserFirstName: [
