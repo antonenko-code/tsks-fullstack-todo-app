@@ -1,10 +1,10 @@
-![Weather Forecast](./frontend/public/images/app_preview_banner.jpg)
+![TSKS](./frontend/public/images/app_preview_banner.jpg)
 
 # TSKS - Fullstack Todo App
 **TSKS** is a comprehensive **fullstack** todo application designed to empower users in efficiently managing their tasks and categories. Whether you're a seasoned user or just exploring, you have the flexibility to register for a personalized experience or simply try out our demo mode.
 
 ## Live Demo
-:rocket: [**Live Demo**](https://Oleksandr-Antonenko.github.io/weather-forecast-app)
+:rocket: [**Live Demo**](https://tsks-app.onrender.com/)
 
 ## About Project
 

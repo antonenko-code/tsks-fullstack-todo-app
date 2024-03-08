@@ -62,7 +62,7 @@ npm run dev
 ```
 
 ## Contributing
-Contributions to the Weather Forecast App are welcome! If you find any issues or have suggestions for improvements, feel free to open a new issue or submit a pull request.
+Contributions to the TSKS App are welcome! If you find any issues or have suggestions for improvements, feel free to open a new issue or submit a pull request.
 
 ## License
 This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for personal and commercial purposes.
