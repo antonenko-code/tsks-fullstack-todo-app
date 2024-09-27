@@ -108,6 +108,6 @@ Contributions to the TSKS App are welcome! If you find any issues or have sugges
 This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for personal and commercial purposes.
 
 ## Contributors:
-- :ukraine: [Alexander Antonenko](https://github.com/Oleksandr-Antonenko) – Frontend/Backend Developer | Designer
+- :ukraine: [Alexander Antonenko](https://github.com/antonenko-code) – Frontend/Backend Developer | Designer
 - :ukraine: [Serhii Vorobei](https://github.com/sergey-vorobei) – Frontend Developer
 - :ukraine: [Maryna Kucher](https://github.com/mary-kucher) – Frontend Developer
